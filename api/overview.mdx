@@ -1,0 +1,100 @@
+---
+title: 'API Reference Overview — Chattrvox REST API'
+description: 'Complete reference for the Chattrvox REST API. Manage workflows, contacts, knowledge bases, campaigns, and usage programmatically.'
+---
+
+The Chattrvox REST API gives you programmatic access to the same capabilities available in the dashboard: create and trigger workflows, manage contacts, search knowledge bases, control campaigns, and query usage minutes. All endpoints are served under a single base URL and follow consistent conventions for authentication, headers, and error responses.
+
+## Base URL
+
+```
+https://your-domain.com/api/v1
+```
+
+Replace `your-domain.com` with your Chattrvox domain or custom white-label domain. All endpoints are relative to this base.
+
+## Authentication
+
+Every request requires an `Authorization` header with a Bearer token. Chattrvox supports two token types:
+
+- **API keys** (`wr_live_...`) — recommended for integrations, scripts, and MCP clients
+- **JWT tokens** — session tokens for browser-based requests
+
+See [Authentication](/api/authentication) for details on obtaining and using each token type.
+
+```bash
+curl https://your-domain.com/api/v1/workflows \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+## Workspace scoping
+
+Chattrvox is multi-workspace. When you operate within a specific workspace, pass its UUID in the `x-workspace-id` header. Omitting this header targets your default (personal) context.
+
+```bash
+curl https://your-domain.com/api/v1/workflows \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: 9f4e2a1b-3c7d-4f8e-a2b1-0c9d8e7f6a5b"
+```
+
+## Rate limits
+
+The API enforces rate limits per API key. If you exceed the limit, you receive a `429 Too Many Requests` response. Implement exponential backoff and retry logic in your integration.
+
+| Status | Meaning |
+|--------|---------|
+| `429`  | Rate limit exceeded — wait before retrying |
+
+## Error responses
+
+All errors follow the same structure. Check the HTTP status code first, then read the `error` field for a human-readable message.
+
+```json
+{
+  "error": "Workflow not found in this workspace"
+}
+```
+
+Some endpoints use `success: false` with a `message` field:
+
+```json
+{
+  "success": false,
+  "message": "Name is required"
+}
+```
+
+### Common status codes
+
+| Code | Meaning |
+|------|---------|
+| `200` | Request succeeded |
+| `400` | Bad request — missing or invalid parameters |
+| `401` | Unauthorized — missing or invalid token |
+| `403` | Forbidden — valid token but insufficient permissions |
+| `404` | Resource not found |
+| `429` | Rate limit exceeded |
+| `500` | Server error |
+
+## Available resources
+
+<CardGroup cols={2}>
+  <Card title="Workflows" icon="git-branch" href="/api/workflows">
+    Create, update, delete, and trigger automation workflows. View execution history and per-node logs.
+  </Card>
+  <Card title="Knowledge Base" icon="book-open" href="/api/knowledge-base">
+    Upload documents, manage knowledge bases, and run semantic search queries against your content.
+  </Card>
+  <Card title="Contacts" icon="users" href="/api/contacts">
+    Update contact records in your CRM. Changes sync automatically to connected HubSpot and GoHighLevel accounts.
+  </Card>
+  <Card title="Campaigns" icon="phone-call" href="/api/campaigns">
+    Start, pause, resume, and stop outbound dialing campaigns. Fetch live call statistics.
+  </Card>
+  <Card title="Authentication" icon="key" href="/api/authentication">
+    Generate API keys, understand JWT tokens, and learn how workspace scoping works.
+  </Card>
+  <Card title="Assistants" icon="bot" href="/api/assistants">
+    Learn how AI voice assistants are managed and what API surface exists for assistant operations.
+  </Card>
+</CardGroup>

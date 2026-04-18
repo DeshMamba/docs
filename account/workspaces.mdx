@@ -1,0 +1,101 @@
+---
+title: "Workspaces"
+description: "Create isolated environments for assistants, campaigns, and contacts. Invite team members, assign roles, and manage access across your organization."
+---
+
+Workspaces are self-contained environments inside your Chattrvox account. Each workspace has its own assistants, campaigns, contact lists, workflows, and credentials — nothing leaks between them. You can create multiple workspaces to separate clients, business units, or use cases, and grant each team member exactly the access they need.
+
+## Workspace types
+
+<CardGroup cols={2}>
+  <Card title="Simple workspace" icon="building">
+    The standard workspace type. Use it to organize assistants and campaigns for a single team or project. All plans include at least one simple workspace.
+  </Card>
+  <Card title="Agency workspace" icon="buildings">
+    Available on the Enterprise plan. An agency workspace can own and manage client sub-workspaces, letting you operate a multi-client setup from a single account.
+  </Card>
+</CardGroup>
+
+## Creating a workspace
+
+<Steps>
+  <Step title="Open Settings">
+    Go to **Settings** and click the **Workspace** tab.
+  </Step>
+  <Step title="Create a new workspace">
+    Click **Create Workspace**, enter a name, and choose the workspace type (Simple or Agency, depending on your plan).
+  </Step>
+  <Step title="Configure workspace details">
+    Optionally set a description and assign a minute budget from your account pool. You can adjust this later from the Billing page.
+  </Step>
+  <Step title="Save">
+    Click **Save**. Your new workspace is ready. Use the workspace switcher in the top navigation to move between workspaces.
+  </Step>
+</Steps>
+
+## Inviting team members
+
+Workspace invitations are sent by email. Before you can invite someone, you need to configure your SMTP credentials in **Settings → Integrations**.
+
+<Steps>
+  <Step title="Go to Workspace members">
+    In **Settings → Workspace**, open the **Members** section.
+  </Step>
+  <Step title="Enter the email address">
+    Type the team member's email and choose their role.
+  </Step>
+  <Step title="Send the invitation">
+    Click **Invite**. The recipient receives an email with a link to accept.
+  </Step>
+  <Step title="Manage pending invitations">
+    Pending invitations appear in the members list. You can resend or cancel them at any time. Only workspace owners and admins can invite members.
+  </Step>
+</Steps>
+
+<Note>
+  Invitations expire after 7 days. If a recipient misses the deadline, resend the invitation from the pending list to generate a fresh link.
+</Note>
+
+## Roles and permissions
+
+Each workspace member is assigned exactly one role. Roles are hierarchical — higher roles include all permissions of the roles below them.
+
+<AccordionGroup>
+  <Accordion title="Owner">
+    Full access to everything in the workspace, including billing, white-label settings, and the ability to delete the workspace. The account creator is the owner by default. There is one owner per workspace, and their role cannot be changed by other members.
+  </Accordion>
+  <Accordion title="Admin">
+    Can manage members (invite, remove, change roles), create and edit assistants, deploy workflows, run campaigns, and view all data. Cannot access billing or white-label settings.
+  </Accordion>
+  <Accordion title="Manager">
+    Can create and manage campaigns and contacts, including importing CSV files and applying tags. Cannot manage members, edit assistants, or deploy workflows.
+  </Accordion>
+  <Accordion title="Member">
+    Can use campaigns and view call data and conversation history. Cannot make structural changes to the workspace.
+  </Accordion>
+  <Accordion title="Viewer">
+    Read-only access. Can browse dashboards, call history, and analytics, but cannot take any action.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Assign the Viewer role to stakeholders who need reporting access without the ability to touch campaigns or assistants.
+</Tip>
+
+## Switching between workspaces
+
+Click the workspace name in the top navigation bar to open the workspace switcher. Select any workspace you belong to — the dashboard, assistants, campaigns, and contacts all update to reflect the selected workspace's data instantly.
+
+## Accepting a workspace invitation
+
+When you receive an invitation email, click the **Accept Invitation** link. You will be taken to the Chattrvox sign-in page if you are not already logged in.
+
+<Warning>
+  You must sign in with the same email address the invitation was sent to. Attempting to accept with a different account will result in an error.
+</Warning>
+
+Once you sign in, your membership is confirmed and you are redirected to the workspace automatically. You do not need to take any further steps.
+
+## Removing a member
+
+Workspace owners and admins can remove members at any time from **Settings → Workspace → Members**. Members can also remove themselves from a workspace. The workspace owner cannot be removed by other members.

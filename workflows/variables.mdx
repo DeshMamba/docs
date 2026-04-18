@@ -1,0 +1,160 @@
+---
+title: "Workflow Variables"
+description: "Learn how to use variables in Chattrvox workflows to insert live call data, contact details, and appointment info into messages and actions."
+---
+
+Variables are placeholders that get replaced with real data when a workflow runs. Wherever you see a text field in a node's configuration — an SMS message body, an API URL, a CRM field value — you can insert a variable and Chattrvox will substitute the actual value at runtime.
+
+Variables use the syntax `{variable_key}`. For example, a message body written as:
+
+```text
+Hi {name}, thanks for your call today. Here's what we discussed: {summary}
+```
+
+…is sent as:
+
+```text
+Hi Sarah, thanks for your call today. Here's what we discussed: You expressed interest in the Pro plan and asked for a follow-up demo next week.
+```
+
+## Inserting variables
+
+Every text field in a node's configuration panel has a **\+ Insert Variable** link. Clicking it opens the variable picker — a searchable popover organized by category. The picker only shows variables that are available based on your workflow's trigger type, so you won't see Facebook Lead variables in a workflow triggered by a call webhook, for example.
+
+To insert a variable:
+
+<Steps>
+  <Step title="Click the field you want to edit">
+    Open the node's config panel by clicking the node on the canvas.
+  </Step>
+  <Step title="Click + Insert Variable">
+    The variable picker popover opens. You can search by name or browse by category.
+  </Step>
+  <Step title="Select a variable">
+    Click any variable to insert it at your cursor position. The formatted placeholder (for example, `{name}`) appears in the field.
+  </Step>
+</Steps>
+
+<Tip>
+  You can type variable placeholders directly into any field — you don't have to use the picker. Just type `{` followed by the variable key and `}`.
+</Tip>
+
+---
+
+## Variable reference
+
+### Contact info
+
+These variables are always available regardless of the trigger type.
+
+| Variable | Description | Example value |
+| --- | --- | --- |
+| `{name}` | The contact's full name | `Sarah Chen` |
+| `{phone_number}` | The contact's phone number | `+14155551234` |
+| `{email}` | The contact's email address | `sarah@example.com` |
+
+---
+
+### Call data
+
+These variables are populated after a call ends and contain the AI-extracted results of the conversation. They are available in workflows triggered by the **End of Call** webhook trigger.
+
+| Variable | Description | Example value |
+| --- | --- | --- |
+| `{summary}` | AI-generated summary of the call | `Sarah asked about pricing and requested a demo.` |
+| `{outcome}` | The call outcome label | `booked`, `interested`, `not_interested` |
+| `{duration}` | Call length in seconds | `142` |
+| `{sentiment}` | Detected sentiment of the conversation | `positive`, `neutral`, `negative` |
+| `{transcript}` | Full text transcript of the call | _(full conversation text)_ |
+| `{urgent}` | Whether the call was flagged as urgent | `true` or `false` |
+| `{call_id}` | Unique identifier for the call record | `abc123` |
+| `{start_time}` | When the call started (ISO 8601) | `2026-04-18T14:23:00Z` |
+
+<Note>
+  Call data variables are only populated when the workflow is triggered by a completed call. If you use them in a workflow with a different trigger (for example, a Facebook Lead trigger), they will resolve to empty strings.
+</Note>
+
+---
+
+### Appointment
+
+These variables are available when a booking was made during the call. Check the `{appointment.status}` value before using the others — if no appointment was booked, the remaining fields will be empty.
+
+| Variable | Description | Example value |
+| --- | --- | --- |
+| `{appointment.status}` | Whether an appointment was booked | `booked` or `not_booked` |
+| `{appointment.start_time}` | Appointment start time (ISO 8601) | `2026-04-22T10:00:00Z` |
+| `{appointment.appointment_date}` | Human-readable appointment date | `April 22, 2026` |
+| `{appointment.timezone}` | Timezone of the appointment | `America/New_York` |
+| `{appointment.calendar}` | Calendar the appointment was added to | `Sales Demo Calendar` |
+
+<Tip>
+  Use a **Condition** node to check `{appointment.status} == 'booked'` before sending an appointment confirmation SMS, so the message only goes out when a booking actually occurred.
+</Tip>
+
+---
+
+### HubSpot contact
+
+These variables are available when the workflow uses a **HubSpot** trigger. They contain the HubSpot contact record's field values.
+
+| Variable | Description |
+| --- | --- |
+| `{firstname}` | Contact's first name |
+| `{lastname}` | Contact's last name |
+| `{email}` | Contact's email address |
+| `{phone}` | Contact's phone number |
+| `{company}` | Company the contact is associated with |
+| `{lifecyclestage}` | HubSpot lifecycle stage (for example, `lead`, `customer`) |
+
+Additional HubSpot contact properties — city, state, zip, country, and job title — are also available in the variable picker when a HubSpot trigger is selected.
+
+---
+
+### Facebook lead
+
+These variables are available when the workflow uses a **Facebook Lead** trigger. They contain the data submitted by the lead on the Facebook form.
+
+| Variable | Description | Example value |
+| --- | --- | --- |
+| `{full_name}` | Lead's full name from the form | `Marcus Rivera` |
+| `{email}` | Lead's email address | `marcus@example.com` |
+| `{phone_number}` | Lead's phone number | `+13105559876` |
+| `{ad_name}` | Name of the Facebook ad that generated the lead | `Spring Promo — Book a Call` |
+| `{campaign_name}` | Name of the Facebook ad campaign | `Q2 Lead Gen` |
+
+Additional Facebook lead fields — city and submission timestamp — are available in the picker when a Facebook Lead trigger is active.
+
+---
+
+### Custom variables
+
+Custom variables are user-defined placeholders you create directly on the trigger node. They let you pass arbitrary data into a workflow that isn't covered by the built-in variable categories.
+
+To add a custom variable, open your trigger node's configuration and add entries to the **Custom variables** list. Give each variable a key (for example, `account_tier`) and it becomes available throughout the workflow as `{account_tier}`.
+
+**Use case:** If you're triggering a workflow via a webhook and passing a custom payload, define the expected keys as custom variables so you can reference them in downstream nodes.
+
+---
+
+## Example: SMS follow-up after a booked call
+
+Here's how you might compose an SMS message body using multiple variable categories:
+
+```text
+Hi {name}! Your appointment is confirmed for {appointment.appointment_date} at {appointment.start_time} ({appointment.timezone}). 
+
+Here's a quick summary of our call: {summary}
+
+Reply STOP to opt out.
+```
+
+At runtime, this resolves to:
+
+```text
+Hi Marcus! Your appointment is confirmed for April 22, 2026 at 10:00 AM (America/New_York).
+
+Here's a quick summary of our call: Marcus is interested in the enterprise plan and wants to see a live demo with his team.
+
+Reply STOP to opt out.
+```

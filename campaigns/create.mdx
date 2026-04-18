@@ -1,0 +1,142 @@
+---
+title: "Create Campaigns"
+description: "Step-by-step guide to creating a Chattrvox campaign: choose an AI assistant, pick a contact source, set calling hours, retry logic, and start dialing."
+---
+
+Creating a campaign takes about two minutes. You give it a name, pick the AI assistant that will make the calls, choose your contacts, and set the schedule. When you're ready, you start it and Chattrvox begins dialing.
+
+## Before you start
+
+Make sure you have:
+
+- An AI assistant with a phone number assigned to it
+- At least one contact list in your CRM, or a CSV file uploaded to Contacts
+
+<Info>
+  You need the **Manager** role or higher to create and manage campaigns. Viewers and Members can see campaigns but cannot start, pause, or delete them.
+</Info>
+
+## Creating a campaign
+
+<Steps>
+  <Step title="Open the New Campaign dialog">
+    Go to **Campaigns** in the sidebar and select **New Campaign**. You will be asked to accept the terms of use before the settings form opens.
+  </Step>
+  <Step title="Name your campaign">
+    Enter a descriptive name so you can identify this campaign in the list. For example: "Database Reactivation Q2" or "May Follow-up Sequence".
+  </Step>
+  <Step title="Optionally attach a workflow">
+    If you want the campaign to follow an automated sequence — such as calling a contact, waiting, then sending an SMS — select a workflow from the **Workflow** dropdown. Leave this set to **None — simple dial-through** if you just want the AI to call each contact once (or a set number of times).
+  </Step>
+  <Step title="Choose your AI assistant and set a daily cap">
+    Select the assistant that will handle the calls. The assistant's voice, language model, and prompt will be used for every call in this campaign.
+
+    Set a **Daily Cap** — the maximum number of calls to place per day. The default is 100. The campaign pauses automatically when this limit is reached and resumes the next calling day.
+  </Step>
+  <Step title="Select a contact source">
+    Choose where the contacts come from:
+
+    <Tabs>
+      <Tab title="Contact list">
+        Select a named list from your CRM. The campaign will call every active, non-DNC contact in that list.
+      </Tab>
+      <Tab title="CSV import">
+        Select a CSV file you have previously uploaded to Contacts. The campaign will call every row in the file that is not marked do-not-call.
+      </Tab>
+    </Tabs>
+  </Step>
+  <Step title="Set calling days and hours">
+    Toggle the days of the week when the campaign is allowed to dial. By default, Monday through Friday are selected.
+
+    Use the hours range picker to set the start and end time for daily calling. Calls are only placed when the current hour falls within this window. The default window is 9 AM to 5 PM.
+
+    <Warning>
+      The calling hours are based on the server clock. Make sure the window matches your contacts' local time zone if you are calling across regions.
+    </Warning>
+  </Step>
+  <Step title="Configure retry logic (simple campaigns only)">
+    If you are not using a workflow, you can set Chattrvox to retry contacts who were not reached.
+
+    - **Max attempts** — how many times to try each contact before giving up (1–10)
+    - **Delay between attempts** — how many minutes to wait before the next attempt
+    - **Retry when call result is** — which outcomes trigger a retry: No Answer, Busy, Voicemail, or Failed
+
+    <Tip>
+      The default is one attempt per contact. If you increase max attempts, only contacts with the selected retry outcomes will be called again. Contacts marked as interested, not interested, or do-not-call are never retried.
+    </Tip>
+  </Step>
+  <Step title="Create the campaign">
+    Select **Create Campaign**. The campaign is saved with idle status and will appear in your campaigns list. It will not dial anyone until you start it.
+  </Step>
+</Steps>
+
+## Starting, pausing, and stopping
+
+Once a campaign is created, you control it from the campaigns list or from inside the campaign details view.
+
+<CardGroup cols={2}>
+  <Card title="Start" icon="play">
+    Hover over a campaign card and select the play button. The status changes to Running and dialing begins immediately if the current time is within the calling window.
+  </Card>
+
+  <Card title="Pause" icon="pause">
+    Select the pause button on a running campaign. Dialing stops and the status changes to Paused. Any calls already in progress will complete normally.
+  </Card>
+
+  <Card title="Resume" icon="play">
+    Select the play button on a paused campaign to resume. Dialing picks up where it left off.
+  </Card>
+
+  <Card title="Delete" icon="trash">
+    Select the trash icon to permanently delete a campaign and all its call records. This cannot be undone.
+  </Card>
+</CardGroup>
+
+<Warning>
+  You cannot restart a completed campaign. If you need to re-dial the same contacts, create a new campaign and select the same contact source.
+</Warning>
+
+## Understanding campaign results
+
+Click any campaign card to open the details panel. This shows the full list of calls made, with a row for each contact.
+
+Each call row shows:
+
+- **Contact name and phone number**
+- **Call status** — calling, answered, completed, failed, no answer, or busy
+- **Outcome** — the AI's classification of how the call went: interested, not interested, callback, do not call, voicemail, or wrong number
+- **Sentiment** — positive, neutral, negative, or frustrated, based on AI analysis of the transcript
+- **Duration** — how long the call lasted
+- **Time** — when the call was placed
+
+Expand any row to read the AI-generated call summary.
+
+### Summary metrics
+
+The top of the details panel shows aggregate stats for the campaign:
+
+<CardGroup cols={2}>
+  <Card title="Total dials" icon="phone">
+    The total number of calls placed since the campaign was created.
+  </Card>
+
+  <Card title="Total answered" icon="phone-call">
+    The number of calls that were picked up by a live person.
+  </Card>
+
+  <Card title="Interested" icon="star">
+    Contacts the AI classified as interested.
+  </Card>
+
+  <Card title="Do not call" icon="ban">
+    Contacts who asked not to be called again.
+  </Card>
+
+  <Card title="Avg duration" icon="clock">
+    The average length of answered calls.
+  </Card>
+
+  <Card title="Daily cap progress" icon="chart-bar">
+    How many calls have been placed today against the daily limit.
+  </Card>
+</CardGroup>

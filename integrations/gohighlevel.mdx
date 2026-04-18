@@ -1,0 +1,109 @@
+---
+title: "GoHighLevel"
+description: "Connect a GoHighLevel location to Chattrvox to trigger workflows from contact events, sync CRM data, and capture Facebook Lead Ads automatically."
+---
+
+The GoHighLevel integration connects a GHL location to Chattrvox using OAuth. When the connection is established, Chattrvox automatically registers a webhook in your GHL account so that contact creation events arrive in real time. You can use those events as workflow triggers, write contact updates back to GHL, and route Facebook Lead Ads through your GHL pipeline into Chattrvox workflows.
+
+## Connecting GoHighLevel
+
+<Steps>
+  <Step title="Open the integrations page">
+    In Chattrvox, click **Settings** in the left sidebar, then select the **Integrations** tab.
+  </Step>
+  <Step title="Click Connect on the GoHighLevel card">
+    Find the GoHighLevel card in the **CRM** section and click **Connect**. Chattrvox redirects you to the GoHighLevel marketplace authorization screen.
+  </Step>
+  <Step title="Select a location">
+    On the GoHighLevel screen, choose the **location** (sub-account) you want to connect to Chattrvox. If your GHL account has multiple locations, select the one that corresponds to the leads and contacts you want Chattrvox to access.
+  </Step>
+  <Step title="Authorize the integration">
+    Review the requested permissions and click **Allow**. GoHighLevel redirects you back to Chattrvox.
+  </Step>
+  <Step title="Confirm the connection">
+    The GoHighLevel card status changes to **Connected**, showing the location name. Chattrvox registers a contact-created webhook in GHL automatically in the background.
+  </Step>
+</Steps>
+
+<Note>
+  GoHighLevel's OAuth flow may drop query parameters during the redirect in some browser configurations. Chattrvox uses a fallback cookie mechanism to preserve your session, so the connection should complete successfully regardless.
+</Note>
+
+<Warning>
+  You must have **Agency Admin** or **Location Admin** access for the GHL location you want to connect. Sub-account users without admin rights cannot authorize third-party integrations.
+</Warning>
+
+---
+
+## What the integration enables
+
+### GHL contact created trigger
+
+After connecting, you can use the **Contact Created** event in GoHighLevel as the starting point for any Chattrvox workflow. In the **Workflow Builder**, add a **Trigger** node and select **GoHighLevel → Contact Created**.
+
+When a new contact is created in your GHL location, Chattrvox immediately executes any active workflow that uses this trigger — for example, placing an outbound AI call to the new contact or sending an SMS.
+
+### GHL CRM action nodes
+
+Inside a workflow, add a **GoHighLevel** action node to write data back to your CRM:
+
+- **Create Contact** — creates a new contact in the connected GHL location
+- **Update Contact** — updates fields on an existing GHL contact record
+- **Add to Campaign** — enrolls the contact in a GoHighLevel campaign sequence
+- **Add Tag** — applies a tag to the contact record
+
+These actions execute automatically as part of the workflow — no manual intervention required.
+
+### Facebook Lead Ads via GoHighLevel
+
+If you route Facebook Lead Ads through GoHighLevel, Chattrvox captures those leads through the GHL contact-created webhook. When someone submits a Facebook Lead Ad form connected to your GHL pipeline, GHL creates a contact and Chattrvox fires the **Contact Created** trigger, kicking off your follow-up workflow.
+
+<Tip>
+  For direct Facebook Lead Ads integration without GoHighLevel, connect Facebook separately under **Settings → Integrations → Facebook Leads**.
+</Tip>
+
+---
+
+## Using GHL contact variables
+
+When a workflow starts from a **GHL Contact Created** event, Chattrvox makes the contact's fields available as variables in any text field — SMS message body, call script, email content, or HTTP request payload.
+
+To insert a variable, click **+ Insert Variable** inside any text field in the **Node Config Panel** and select from the **Contact Info** category.
+
+Available GHL contact variables:
+
+| Variable | Description |
+|---|---|
+| `{name}` | Full contact name |
+| `{phone_number}` | Contact's phone number |
+| `{email}` | Contact's email address |
+
+<Note>
+  GHL contact variables are populated from the webhook payload sent by GoHighLevel. The fields available depend on what data your GHL forms and automations collect. If a field is empty in GHL, the variable resolves to an empty string.
+</Note>
+
+---
+
+## Two-way contact sync
+
+When Chattrvox receives a GHL contact-created event, it automatically checks whether the contact already exists in your Chattrvox contact list by matching phone number variants. If a match is found, Chattrvox updates the contact record with the latest GHL data. If no match is found, Chattrvox creates the contact and adds it to a **CRM Contacts** list. GoHighLevel is treated as the source of truth when the integration is active.
+
+---
+
+## Disconnecting GoHighLevel
+
+<Steps>
+  <Step title="Open the integrations page">
+    Go to **Settings → Integrations**.
+  </Step>
+  <Step title="Click Configure on the GoHighLevel card">
+    The card shows **Configure** when a connection is active.
+  </Step>
+  <Step title="Remove the connection">
+    Click **Disconnect** or the trash icon next to the connection entry. Chattrvox stops receiving webhook events from that GHL location immediately.
+  </Step>
+</Steps>
+
+<Warning>
+  Disconnecting GoHighLevel does not delete your Chattrvox workflows. Workflows that used the GHL trigger will stop firing until you reconnect a GHL location and re-deploy the workflow.
+</Warning>

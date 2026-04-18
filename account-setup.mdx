@@ -1,0 +1,148 @@
+---
+title: "Account Setup"
+description: "Set up your Chattrvox account for your team: create workspaces, invite members with the right roles, and connect Twilio and calendar credentials."
+---
+
+After completing the onboarding wizard, your next step is setting up your account for day-to-day use. This covers creating workspaces to organize your work, inviting your team and assigning roles, and connecting the external credentials your assistants need to make calls and book appointments.
+
+All of these settings live under **Settings** in the left sidebar, organized into four tabs: Account, Workspace, Integrations, and Billing.
+
+## Workspaces
+
+A workspace is a container for your assistants, campaigns, contacts, workflows, and credentials. Everything inside a workspace is scoped to that workspace — members only see what belongs to their workspace.
+
+### Workspace types
+
+There are two workspace types in Chattrvox:
+
+- **Simple workspace** — The default type. Suitable for a single team or project. One workspace per account on most plans.
+- **Agency workspace** — Available on agency plans. An agency workspace can own multiple client workspaces. This lets you manage separate clients with isolated data, minute allocations, and member lists under a single account.
+
+### Creating a workspace
+
+1. Go to **Settings → Workspace → Workspaces**.
+2. Click **New Workspace**.
+3. Enter a name and optional description, then click **Create**.
+
+Your plan determines the maximum number of workspaces you can create. The workspace counter at the top of the Workspaces panel shows how many you have used against your plan limit.
+
+<Note>
+  The **Workspaces** sub-tab only appears in Settings if your plan supports multiple workspaces. On a Starter plan, this tab is hidden because you are limited to one workspace.
+</Note>
+
+### Setting minute limits per workspace
+
+If you manage multiple client workspaces, you can allocate a portion of your total minute balance to each one. This prevents one client from consuming minutes intended for another.
+
+Enable minute limits from **Settings → Workspace → Workspaces**, toggle on **Limit minutes**, then edit each workspace to set its individual limit.
+
+### Switching between workspaces
+
+Use the workspace selector at the top of the left sidebar to switch your active workspace. All data you view and create after switching belongs to the selected workspace.
+
+---
+
+## Inviting team members
+
+### Sending an invitation
+
+1. Go to **Settings → Workspace → Members**.
+2. Click **Invite Member**.
+3. Enter the person's email address and select a role.
+4. Click **Send invitation**.
+
+The invitee receives an email with a link to accept. Pending invitations appear in the Members list until accepted or cancelled. If an invitation expires before the recipient accepts it, you can resend it from the same list.
+
+<Warning>
+  Sending invitations requires SMTP credentials to be configured in **Settings → Integrations**. If you have not set up SMTP, the invitation dialog will show an error and direct you to the Integrations tab.
+</Warning>
+
+### Roles and permissions
+
+Each member has one of five roles. Roles are scoped to the workspace they are assigned in — a person can have different roles in different workspaces.
+
+| Role | What they can do |
+| --- | --- |
+| **Owner** | Full access to all settings, billing, and white-label configuration. Assigned automatically to the account creator. |
+| **Admin** | Full workspace access. Can manage members, assistants, campaigns, and workspace settings. |
+| **Manager** | Can manage content and workflows. Has limited access to workspace settings. |
+| **Member** | Can create and edit assistants, campaigns, contacts, and workflows within the workspace. |
+| **Viewer** | Read-only access to workspace content. Cannot create or modify anything. |
+
+<Tip>
+  For client workspaces on an agency plan, assign external clients the **Viewer** role so they can monitor activity without changing anything.
+</Tip>
+
+### Changing a member's role
+
+In the Members list, click the three-dot menu next to any member (except the owner) and choose **Change role**. Select the new role from the sub-menu. The change takes effect immediately.
+
+### Removing a member
+
+Click the three-dot menu next to the member and choose **Remove from workspace**. You will be asked to confirm. Removal is immediate and cannot be undone — the person will need a new invitation to rejoin.
+
+---
+
+## Profile and account settings
+
+Go to **Settings → Account** to manage your personal profile.
+
+From this tab you can:
+
+- Update your display name and profile details.
+- Change your password.
+- Set your UI preferences — choose between the **Glass** and **Classic** visual themes, and toggle between light and dark mode.
+
+---
+
+## Connecting credentials
+
+Your assistants rely on external credentials to make phone calls and book calendar appointments. You connect these once at the account level, and they become available to assign to individual assistants.
+
+### Twilio (phone numbers)
+
+Twilio provides the phone numbers your assistants use to make and receive calls.
+
+1. Go to **Settings → Integrations**.
+2. Click **Connect Twilio**.
+3. Enter your **Account SID** and **Auth Token** from the [Twilio Console](https://console.twilio.com).
+4. Add a label (for example, "Main account") and click **Import from Twilio**.
+
+Chattrvox creates a SIP trunk in your Twilio account and imports your phone numbers. Your numbers are then available to assign to assistants from the assistant editor.
+
+<Warning>
+  Do not delete or modify the SIP trunk that Chattrvox creates in your Twilio account. Removing it will break call routing for all assistants using that credential set.
+</Warning>
+
+You can connect multiple Twilio accounts if needed — for example, one per client. Each credential set is labeled separately.
+
+### Cal.com (calendar booking)
+
+Connect Cal.com so your AI assistants can check availability and book appointments during calls.
+
+1. Go to **Settings → Integrations**.
+2. Click the calendar integration option.
+3. Select **Cal.com** as the provider.
+4. Enter your Cal.com API key and the event type ID for the calendar slot your assistant should book.
+5. Click **Save**.
+
+Once connected, assign this calendar credential to an assistant from the assistant's **Advanced** tab. The assistant will check availability in real time during calls and create bookings on your Cal.com calendar.
+
+<Note>
+  Appointment data extracted from calls — booking status, date, time, and timezone — is available as variables in workflows. You can use these to send confirmation SMS messages or update your CRM automatically after a booking is made.
+</Note>
+
+---
+
+## White-label settings
+
+If your plan includes white-label capabilities, you can configure a custom domain and branding from **Settings → Workspace → Whitelabel**.
+
+White-label configuration covers:
+
+- Your brand name and logo
+- Custom domain (requires a DNS CNAME record pointing to Chattrvox)
+- Colors and visual identity for your branded portal
+- Privacy policy and terms of service URLs shown on the login page
+
+White-label is available on qualifying plans. If the Whitelabel sub-tab does not appear in your Workspace settings, your current plan does not include it. You can upgrade from **Settings → Billing**.

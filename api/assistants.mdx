@@ -1,0 +1,88 @@
+---
+title: 'AI Voice Assistants — Dashboard and API Reference'
+description: 'Learn how Chattrvox AI assistants work, how to manage them via the dashboard, and what API surface exists for assistant-adjacent operations.'
+---
+
+Assistants are the AI voice agents at the core of Chattrvox. Each assistant has its own system prompt, voice configuration, Twilio phone number, language model settings, and workflow linkages. You configure assistants through the dashboard; creating and editing assistants does not go through a dedicated REST endpoint — it is handled within the dashboard directly.
+
+This page explains how assistants integrate with the REST API and what operations you can perform programmatically against assistant-related resources.
+
+## What you manage in the dashboard
+
+The following assistant operations are available in the **Assistants** section of the dashboard:
+
+- **Create an assistant** — six-tab wizard covering model, voice, SMS, call analysis, advanced settings, and workflow connections
+- **Edit an assistant** — update any configuration field
+- **Assign a phone number** — link a Twilio number to the assistant
+- **Connect a knowledge base** — attach a knowledge base for RAG-powered responses
+- **Link workflows** — associate one or more workflows that fire after calls
+
+To create or edit an assistant, go to **Assistants → Create Assistant** or click an existing assistant card.
+
+## Assistants and the REST API
+
+While there is no standalone REST endpoint for creating or deleting assistants, assistants interact with several REST API resources:
+
+### Workflow execution triggered by an assistant
+
+When a call handled by an assistant ends, the platform fires `POST /api/v1/workflows/trigger` internally to run any linked workflows. If you are building an external integration that needs to replay this trigger, see [Workflows — trigger execution](/api/workflows#trigger-workflow-execution).
+
+### Knowledge base attachment
+
+You can attach documents to a knowledge base and associate that knowledge base with an assistant programmatically using the knowledge base endpoints. See [Knowledge Base](/api/knowledge-base) for upload and management endpoints.
+
+### Initiating outbound calls
+
+You can programmatically initiate an outbound AI call. The platform dispatches the specified assistant to call the given phone number using your connected Twilio credentials.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/livekit/outbound-calls/initiate \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "assistantId": "asst_uuid",
+    "phoneNumber": "+15551234567"
+  }'
+```
+
+This endpoint requires a valid assistant ID and a Twilio phone number linked to that assistant.
+
+## Minutes usage
+
+Every call an assistant handles consumes from your minutes balance. To check current usage:
+
+```bash
+curl https://your-domain.com/api/v1/minutes \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+```json
+{
+  "success": true,
+  "data": {
+    "totalMinutes": 500,
+    "usedMinutes": 142,
+    "remainingMinutes": 358,
+    "percentageUsed": 28,
+    "planName": "Professional"
+  }
+}
+```
+
+See [the minutes API](#) for workspace-level breakdown and assignment endpoints.
+
+## Call data after each conversation
+
+After each call, the platform automatically analyzes the conversation and records:
+
+- **Summary** — a plain-English summary of what was discussed
+- **Outcome** — the call result (for example, `interested`, `not_interested`, `callback`)
+- **Sentiment** — detected caller sentiment (`positive`, `neutral`, `negative`)
+- **Transcript** — the full text of the conversation
+- **Urgent** — whether the caller flagged something time-sensitive
+
+These results are available as variables in any workflow attached to the assistant. See [Workflows](/api/workflows) for how to create and trigger automations that act on this data.
+
+<Note>
+If you need to run AI analysis on a specific transcript programmatically, use `POST /api/v1/workflows/extract`. This runs the extraction independently of any linked workflow.
+</Note>

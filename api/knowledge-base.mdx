@@ -1,0 +1,418 @@
+---
+title: 'Knowledge Base API — Upload, Manage, and Search'
+description: 'Upload documents, manage knowledge bases, and run semantic search with the Chattrvox Knowledge Base API. Documents are vectorized for accurate retrieval.'
+---
+
+The Knowledge Base API lets you create and manage collections of documents that your AI assistants use to answer questions accurately. Uploaded documents are processed into a vector search index — chunked, embedded, and made searchable via semantic similarity. You can also query any knowledge base directly to retrieve relevant content.
+
+All knowledge base endpoints require authentication. See [Authentication](/api/authentication) for token options.
+
+---
+
+## Create a knowledge base
+
+Creates a new knowledge base. Provide a `companyId` (your user or workspace identifier) and a `name`.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/knowledge-base/knowledge-bases \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "companyId": "your-company-id",
+    "name": "Product FAQ",
+    "description": "Frequently asked questions about our product line."
+  }'
+```
+
+**Request body**
+
+<ParamField body="companyId" type="string" required>
+  Your user or workspace identifier. All documents and knowledge bases are scoped to this ID.
+</ParamField>
+
+<ParamField body="name" type="string" required>
+  Display name for the knowledge base.
+</ParamField>
+
+<ParamField body="description" type="string">
+  Optional description of the knowledge base contents.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "knowledgeBase": {
+    "id": "kb_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "company_id": "your-company-id",
+    "name": "Product FAQ",
+    "description": "Frequently asked questions about our product line.",
+    "created_at": "2026-04-18T10:00:00.000Z"
+  }
+}
+```
+
+---
+
+## List knowledge bases for a company
+
+Returns all knowledge bases scoped to a given `companyId`.
+
+```bash
+curl https://your-domain.com/api/v1/knowledge-base/knowledge-bases/company/YOUR_COMPANY_ID \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+**Path parameters**
+
+<ParamField path="companyId" type="string" required>
+  The company or workspace identifier to filter by.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "knowledgeBases": [
+    {
+      "id": "kb_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Product FAQ",
+      "description": "Frequently asked questions about our product line.",
+      "created_at": "2026-04-18T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+---
+
+## Get a knowledge base with documents
+
+Returns a single knowledge base record along with all documents associated with it.
+
+```bash
+curl https://your-domain.com/api/v1/knowledge-base/knowledge-bases/KB_ID \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+**Path parameters**
+
+<ParamField path="kbId" type="string" required>
+  UUID of the knowledge base to retrieve.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "knowledgeBase": {
+    "id": "kb_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Product FAQ",
+    "description": "Frequently asked questions about our product line.",
+    "documents": [
+      {
+        "doc_id": "doc-uuid",
+        "original_filename": "faq-v2.pdf",
+        "content_name": "Product FAQ v2",
+        "content_type": "document",
+        "status": "embedded",
+        "file_size": 48920,
+        "upload_timestamp": "2026-04-15T09:30:00.000Z"
+      }
+    ]
+  }
+}
+```
+
+---
+
+## Upload a document
+
+Uploads a file and associates it with a knowledge base. The document is processed asynchronously: it is parsed, chunked, embedded, and indexed for semantic search. Check the document status endpoint to track progress.
+
+This endpoint accepts `multipart/form-data`.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/knowledge-base/upload \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -F "file=@/path/to/your/document.pdf" \
+  -F "companyId=your-company-id" \
+  -F "knowledgeBaseId=kb-uuid" \
+  -F "contentName=Product FAQ v2" \
+  -F "contentDescription=Updated FAQ for Q2 2026" \
+  -F "contentType=document"
+```
+
+**Form fields**
+
+<ParamField body="file" type="file" required>
+  The document file to upload. Supported formats include PDF, DOCX, and TXT.
+</ParamField>
+
+<ParamField body="companyId" type="string" required>
+  Your company or workspace identifier.
+</ParamField>
+
+<ParamField body="knowledgeBaseId" type="string">
+  UUID of the knowledge base to associate this document with. If omitted, the document is stored but not embedded.
+</ParamField>
+
+<ParamField body="contentName" type="string">
+  Human-readable name for the document.
+</ParamField>
+
+<ParamField body="contentDescription" type="string">
+  Optional description of the document's contents.
+</ParamField>
+
+<ParamField body="contentType" type="string">
+  Content type hint. One of `document`, `text`, or `website`. Defaults to `document`.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "document": {
+    "doc_id": "doc-uuid",
+    "filename": "document.pdf",
+    "file_size": 48920,
+    "status": "uploaded",
+    "upload_timestamp": "2026-04-18T10:05:00.000Z",
+    "content_name": "Product FAQ v2",
+    "content_description": "Updated FAQ for Q2 2026",
+    "content_type": "document"
+  }
+}
+```
+
+<ResponseField name="document.doc_id" type="string">
+  Unique document identifier. Use this to check processing status.
+</ResponseField>
+
+<ResponseField name="document.status" type="string">
+  Processing status. Progresses through: `uploaded` → `parsed` → `chunked` → `embedded`.
+</ResponseField>
+
+---
+
+## Add text content to a knowledge base
+
+Creates a document from a plain-text string and processes it into the knowledge base. Useful for programmatically adding dynamic content without a file.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/knowledge-base/knowledge-bases/KB_ID/content/text \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "companyId": "your-company-id",
+    "contentName": "Pricing Information",
+    "contentDescription": "Current pricing tiers as of Q2 2026",
+    "contentText": "Starter plan: $49/month, 100 minutes...",
+    "contentType": "text"
+  }'
+```
+
+**Path parameters**
+
+<ParamField path="kbId" type="string" required>
+  UUID of the knowledge base to add this text to.
+</ParamField>
+
+**Request body**
+
+<ParamField body="companyId" type="string" required>
+  Your company or workspace identifier.
+</ParamField>
+
+<ParamField body="contentName" type="string" required>
+  Name for the text document.
+</ParamField>
+
+<ParamField body="contentText" type="string" required>
+  The text content to embed and index.
+</ParamField>
+
+<ParamField body="contentDescription" type="string">
+  Optional description.
+</ParamField>
+
+<ParamField body="contentType" type="string">
+  Defaults to `text`.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "document": {
+    "doc_id": "doc-uuid",
+    "content_name": "Pricing Information",
+    "content_type": "text",
+    "file_size": 312,
+    "status": "uploaded",
+    "upload_timestamp": "2026-04-18T10:10:00.000Z"
+  }
+}
+```
+
+---
+
+## Check document status
+
+Returns the current processing status of a document.
+
+```bash
+curl https://your-domain.com/api/v1/knowledge-base/documents/DOC_ID/status \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+**Path parameters**
+
+<ParamField path="docId" type="string" required>
+  UUID of the document to check.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "doc_id": "doc-uuid",
+  "status": "embedded",
+  "filename": "faq-v2.pdf",
+  "created_at": "2026-04-18T10:05:00.000Z",
+  "updated_at": "2026-04-18T10:06:30.000Z"
+}
+```
+
+| Status | Meaning |
+|--------|---------|
+| `uploaded` | File received, queued for processing |
+| `parsed` | Text extracted from the file |
+| `chunked` | Text split into indexable chunks |
+| `embedded` | Chunks vectorized and indexed — ready to search |
+
+---
+
+## Semantic search (context retrieval)
+
+Runs a semantic search against a knowledge base and returns the most relevant content chunks. This is the same retrieval call your AI assistants make during live calls.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/knowledge-base/knowledge-bases/KB_ID/context \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "companyId": "your-company-id",
+    "query": "What is the refund policy?",
+    "top_k": 5,
+    "snippet_size": 500
+  }'
+```
+
+**Path parameters**
+
+<ParamField path="kbId" type="string" required>
+  UUID of the knowledge base to search.
+</ParamField>
+
+**Request body**
+
+<ParamField body="query" type="string" required>
+  The natural language query to search for.
+</ParamField>
+
+<ParamField body="companyId" type="string" required>
+  Your company or workspace identifier.
+</ParamField>
+
+<ParamField body="top_k" type="number">
+  Number of results to return. Defaults to `5`.
+</ParamField>
+
+<ParamField body="snippet_size" type="number">
+  Maximum character length per returned chunk. Defaults to `500`.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "results": [
+    {
+      "score": 0.94,
+      "content": "Our refund policy allows full refunds within 30 days of purchase...",
+      "document": {
+        "doc_id": "doc-uuid",
+        "content_name": "Refund Policy 2026",
+        "content_type": "document"
+      }
+    },
+    {
+      "score": 0.87,
+      "content": "To request a refund, contact support@example.com with your order number...",
+      "document": {
+        "doc_id": "doc-uuid-2",
+        "content_name": "Support FAQ",
+        "content_type": "document"
+      }
+    }
+  ]
+}
+```
+
+<ResponseField name="results[].score" type="number">
+  Semantic similarity score from 0 to 1. Higher is more relevant.
+</ResponseField>
+
+<ResponseField name="results[].content" type="string">
+  The matching text snippet from the document.
+</ResponseField>
+
+<ResponseField name="results[].document.doc_id" type="string">
+  UUID of the source document.
+</ResponseField>
+
+---
+
+## Delete a knowledge base
+
+Permanently deletes a knowledge base and all associated metadata.
+
+```bash
+curl -X DELETE https://your-domain.com/api/v1/knowledge-base/knowledge-bases/KB_ID \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+**Response**
+
+```json
+{
+  "success": true,
+  "message": "Knowledge base deleted successfully"
+}
+```
+
+---
+
+## Delete a document
+
+Removes a single document from the system.
+
+```bash
+curl -X DELETE https://your-domain.com/api/v1/knowledge-base/documents/DOC_ID \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+**Response**
+
+```json
+{
+  "success": true,
+  "message": "Document deleted successfully"
+}
+```

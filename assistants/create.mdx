@@ -1,0 +1,133 @@
+---
+title: "Create an agent"
+description: "Walk through the assistant creation wizard — system prompt, voice selection, call analysis settings, advanced options, and connecting a phone number."
+---
+
+Creating an assistant takes only a few minutes. You give it a name, write its instructions, choose a voice, and optionally connect a phone number — then it's ready to handle calls. This guide walks through every setting in the creation wizard so you know exactly what each option does.
+
+## Open the wizard
+
+Navigate to **Agents** in the sidebar, then click **New Agent**. You can also pass a `name` query parameter in the URL (`/assistants/create?name=My+Agent`) to pre-fill the assistant name.
+
+<Note>
+  You need the **Create Assistants** permission on your workspace role to create a new assistant. Owners, admins, and managers have this permission by default.
+</Note>
+
+## Step-by-step setup
+
+<Steps>
+  <Step title="Name your assistant">
+    Enter a name for your assistant at the top of the page. You can rename it at any time by clicking the name while in edit mode — an inline editor appears on hover.
+  </Step>
+  <Step title="Write the assistant instructions (Model tab)">
+    The **Model** tab is where you define how the assistant thinks and speaks.
+
+    **Opening Greeting** — The first thing the assistant says when a call connects. Keep it concise and natural, for example: _"Hi, this is Helen from Sunrise Dental. How can I help you today?"_
+
+    **Assistant Instructions** — The system prompt. Write in plain language and be specific:
+
+    - Define the assistant's name and persona
+    - Describe its primary goal (book appointments, qualify leads, answer support questions)
+    - List topics it should and should not discuss
+    - Include any scripts or escalation rules
+
+    <Tip>
+      Focused, specific instructions produce more consistent call behavior. Treat this like onboarding a new employee — tell the assistant exactly what success looks like.
+    </Tip>
+
+    **Agent Settings sidebar** — on the right side of the Model tab, configure:
+
+    | Setting | Description |
+    | --- | --- |
+    | Language | The spoken language for the call. Choose from English, Spanish, French, German, Portuguese, Dutch, Italian, Hindi, Chinese, or bilingual English & Spanish. |
+    | Voice | The Cartesia voice the assistant uses. Click the play button next to the dropdown to preview any voice. |
+    | Speed | How fast the assistant speaks — drag the slider from Slower to Faster. |
+    | Response Style | Controls how consistent the assistant's phrasing is. **Focused** (recommended) stays on-script. **Balanced** varies phrasing naturally. **Creative** is more expressive. |
+    | Knowledge Base | Attach a knowledge base so the assistant can retrieve relevant information during calls. |
+    | Calendar Integration | Connect a Cal.com integration to let the assistant book appointments. Once selected, choose an Event Type. |
+    | Who Speaks First | Whether the assistant greets the caller immediately or waits for the caller to speak first. |
+  </Step>
+  <Step title="Configure call management (Model tab — optional)">
+    Expand the **Call Management** section at the bottom of the Model tab to configure call-handling behavior:
+
+    - **End Call Message** — What the assistant says before hanging up.
+    - **Idle Messages** — Phrases the assistant uses when the caller goes silent (for example, _"Are you still there?"_). Pick from a preset list.
+    - **Max Idle Messages** — How many idle messages to send before ending the call automatically.
+    - **Idle Timeout** — Seconds of silence before sending an idle message (default: 10 seconds).
+    - **Maximum Call Duration** — Automatically end calls after this many minutes to prevent unexpected charges.
+  </Step>
+  <Step title="Set up call analysis (Analysis tab)">
+    The **Analysis** tab controls what the AI captures and evaluates after every call.
+
+    **Call Summary** — Always enabled. The AI writes a plain-English summary after each call. Leave the prompt blank to use the default, or write a custom prompt to focus the summary on what matters most to you.
+
+    **Success Evaluation** — The AI scores each call as successful or not based on your definition. Toggle it on and write a specific success criteria, for example: _"A call is successful if the customer books an appointment or expresses clear intent to move forward."_
+
+    **Data Capture** — Add structured fields the AI extracts from every call transcript:
+
+    <Tabs>
+      <Tab title="Preset fields">
+        Click **Common fields** to expand a list of ready-made presets: First Name, Last Name, Email Address, Phone Number, Appointment Set, Budget, Follow Up Needed, Interest Level, and Call Outcome. Click any preset to add it instantly.
+      </Tab>
+      <Tab title="Custom fields">
+        Click **Add Field** to create your own. Give the field a name, an optional description to guide the AI, and choose the data type:
+
+        - **Text** — names, notes, addresses, free-form answers
+        - **Number** — budget, age, quantity
+        - **Yes / No** — appointment booked, interested, follow-up needed
+      </Tab>
+    </Tabs>
+
+    <Tip>
+      The AI auto-generates the extraction prompt from your configured fields. You can override it in the **Extraction Prompt** card if you need precise control over how data is pulled from transcripts.
+    </Tip>
+  </Step>
+  <Step title="Configure advanced settings (Advanced tab)">
+    The **Advanced** tab covers phone number assignment, call behavior, transfer rules, recording, messaging, and the web widget.
+
+    **Phone Number** — Select which imported Twilio number this assistant answers. If no numbers appear, go to **Agents → Phone Numbers** and import a number first.
+
+    **Call Behavior**
+
+    | Setting | Description |
+    | --- | --- |
+    | Voicemail Detection | When enabled, the assistant leaves a custom message if it reaches an answering machine. |
+    | Background Sound | Ambient audio played during calls to reduce silence. Options: Off, Office — Standard, Office — Quiet, Office — Busy, White Noise. |
+    | Date & Time Format | How the assistant speaks dates and times — US (1pm, Feb 17) or International (13:00, 17 Feb). |
+
+    **Call Transfer** — Toggle on to enable cold transfer to a human agent. Set the destination phone number, a transfer message the assistant speaks before transferring, and a condition that triggers the transfer.
+
+    <Note>
+      Only cold transfer (immediate handoff) is currently available. Warm transfer (where the assistant introduces the caller first) is coming soon.
+    </Note>
+
+    **Privacy & Recording**
+
+    - **HIPAA Compliant** — Available on Enterprise plans. Ensures protected health information is handled securely.
+    - **Audio Recording** — Records all calls for monitoring and quality assurance. Recordings are stored securely and accessible from the call history.
+
+    **Messaging** — Toggle **SMS Auto Reply** to have the assistant automatically respond to inbound SMS messages on the assigned phone number.
+
+    **Web Widget** — Embed a voice widget on your website. Click **Modify** to configure the widget's color, avatar, theme, position, CTA text, and allowed domains. Once saved, copy the iframe embed code and paste it into your site's HTML.
+  </Step>
+  <Step title="Save the assistant">
+    Click **Save** in the top-right corner. The assistant is saved immediately and you are returned to the Agents list. The assistant is now active — if you assigned a phone number, it will answer calls to that number right away.
+  </Step>
+</Steps>
+
+## Connect a phone number
+
+If you skipped phone number assignment during setup, you can assign one at any time:
+
+1. Go to **Agents** and click the assistant to open its configuration.
+2. Open the **Advanced** tab.
+3. Under **Phone Number**, select a number from the dropdown.
+4. Click **Save**.
+
+<Warning>
+  Each phone number can only be assigned to one assistant at a time. If a number shows "(in use)" in the dropdown, it is currently assigned to another assistant. Reassigning it will remove it from the previous assistant.
+</Warning>
+
+## Delete an assistant
+
+On the edit page for any assistant, scroll to the bottom and click **Delete Agent**. Confirm the deletion in the dialog. This action is permanent and cannot be undone.

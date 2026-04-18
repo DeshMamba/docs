@@ -1,0 +1,128 @@
+---
+title: 'API Authentication — API Keys, Tokens, and Workspace'
+description: 'Authenticate Chattrvox API requests with API keys or session JWTs. Learn the key format, how to generate keys, and how to scope requests to a workspace.'
+---
+
+Every request to the Chattrvox API requires an `Authorization` header. The API supports two bearer token types: API keys for integrations and long-lived programmatic access, and session JWTs for browser-based or session-scoped requests. API keys are the recommended choice for any external integration.
+
+## API keys (recommended)
+
+API keys are long-lived tokens designed for machine-to-machine use. They work with AI clients (Claude Desktop, Cursor), scripts, webhooks, and the Chattrvox MCP endpoint.
+
+### Key format
+
+Every API key follows this format:
+
+```
+wr_live_<32 random alphanumeric characters>
+
+Example: wr_live_a8f3k2m9x1p4q7r0s6t5u2v3w8y1z4n
+```
+
+- `wr_` — product prefix, makes keys easy to identify in code
+- `live_` — environment indicator
+- 32 random chars — unique and unguessable
+
+<Warning>
+Keys are shown exactly once at generation time. Copy your key immediately — you cannot retrieve it again. If lost, revoke the key and generate a new one.
+</Warning>
+
+### Generating an API key
+
+<Steps>
+  <Step title="Open Settings">
+    Navigate to **Settings** in the left sidebar.
+  </Step>
+  <Step title="Go to Integrations">
+    Click the **Integrations** tab.
+  </Step>
+  <Step title="Open API Keys">
+    Scroll to the **API Keys** section and click **Generate New Key**.
+  </Step>
+  <Step title="Name your key">
+    Enter a descriptive label (for example, `Claude Desktop` or `Zapier`). Click **Generate**.
+  </Step>
+  <Step title="Copy the key">
+    Your raw key is displayed once. Click **Copy** and store it in a secrets manager or environment variable.
+  </Step>
+</Steps>
+
+### Using an API key
+
+Pass the key in the `Authorization` header as a Bearer token:
+
+```bash
+curl https://your-domain.com/api/v1/workflows \
+  -H "Authorization: Bearer wr_live_a8f3k2m9x1p4q7r0s6t5u2v3w8y1z4n" \
+  -H "x-workspace-id: 9f4e2a1b-3c7d-4f8e-a2b1-0c9d8e7f6a5b"
+```
+
+### Managing keys
+
+You can list your active keys and revoke any key from **Settings → Integrations → API Keys**. Revoking a key immediately invalidates it — any request using a revoked key returns `401 Unauthorized`.
+
+The raw key value is never stored on the server and cannot be recovered after the initial display.
+
+---
+
+## JWT tokens (session-based)
+
+Session tokens are issued at login and are used by the Chattrvox web application for browser-based requests. You can use them for API calls during a session, but they expire (typically within an hour) and are not suitable for integrations or scripts.
+
+```bash
+curl https://your-domain.com/api/v1/workflows \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+```
+
+The API automatically detects the token type by its prefix:
+- `wr_` prefix → API key authentication
+- `eyJ` prefix → session JWT validation
+
+---
+
+## Workspace scoping with `x-workspace-id`
+
+Chattrvox supports multiple workspaces per account. Pass the `x-workspace-id` header to scope your request to a specific workspace. Without this header, requests target your personal (non-workspace) context.
+
+```bash
+curl https://your-domain.com/api/v1/workflows \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: 9f4e2a1b-3c7d-4f8e-a2b1-0c9d8e7f6a5b"
+```
+
+Your workspace UUID is visible in the URL when you switch workspaces in the dashboard, or you can retrieve it from your account settings.
+
+---
+
+## Error codes
+
+| Code | Cause | Resolution |
+|------|-------|-----------|
+| `401` | Missing, malformed, or revoked token | Check your `Authorization` header |
+| `403` | Valid token but insufficient role or wrong workspace | Verify workspace membership and role |
+| `429` | Rate limit exceeded | Implement exponential backoff and retry |
+
+### 401 example
+
+```json
+{
+  "error": "Missing or invalid authorization header"
+}
+```
+
+### 403 example
+
+```json
+{
+  "error": "Admin access required"
+}
+```
+
+---
+
+## Security recommendations
+
+- Store API keys in environment variables or a secrets manager. Never commit them to source control.
+- Name each key after its purpose (e.g., `Production Zapier`, `Claude Desktop`). This makes auditing and revocation straightforward.
+- Revoke unused keys. Each key is a permanent credential until explicitly revoked.
+- Use workspace scoping. Passing `x-workspace-id` limits the blast radius if a key is compromised.

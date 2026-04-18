@@ -1,0 +1,456 @@
+---
+title: 'Workflows API — Create, Manage, Trigger, and Debug'
+description: 'Full REST API for Chattrvox workflow automation: list, create, update, delete workflows, trigger execution, and query run history.'
+---
+
+The Workflows API gives you programmatic control over your automation workflows: the visual node-based sequences that run after calls, on CRM events, or on demand. You can create and manage workflows via the API in the same way the Composer canvas does, and you can trigger workflow execution externally for testing or custom integrations.
+
+All workflow endpoints require authentication. See [Authentication](/api/authentication) for details.
+
+---
+
+## List workflows
+
+Returns all workflows scoped to the authenticated user and workspace, ordered by creation date descending.
+
+```bash
+curl https://your-domain.com/api/v1/workflows \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: your-workspace-id"
+```
+
+**Response**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "wf_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Post-Call Follow-up",
+      "is_active": true,
+      "status": "active",
+      "category": "follow-up",
+      "description": "Sends an SMS summary and updates HubSpot after every call.",
+      "nodes": [...],
+      "edges": [...],
+      "created_at": "2026-03-15T10:00:00.000Z",
+      "updated_at": "2026-04-10T14:22:00.000Z"
+    }
+  ]
+}
+```
+
+<ResponseField name="data" type="array">
+  Array of workflow objects belonging to the current user and workspace.
+</ResponseField>
+
+<ResponseField name="data[].id" type="string">
+  Unique workflow UUID.
+</ResponseField>
+
+<ResponseField name="data[].name" type="string">
+  Human-readable name of the workflow.
+</ResponseField>
+
+<ResponseField name="data[].is_active" type="boolean">
+  Whether the workflow fires automatically on qualifying events.
+</ResponseField>
+
+<ResponseField name="data[].status" type="string">
+  One of `active`, `draft`, or `paused`.
+</ResponseField>
+
+<ResponseField name="data[].nodes" type="array">
+  Node definitions for the workflow canvas.
+</ResponseField>
+
+<ResponseField name="data[].edges" type="array">
+  Edge definitions connecting nodes on the canvas.
+</ResponseField>
+
+---
+
+## Create a workflow
+
+Creates a new workflow. You must provide a `name`. Nodes and edges are optional — you can create an empty workflow and populate it later using the Composer canvas or a subsequent PATCH.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/workflows \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: your-workspace-id" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "HubSpot Lead Follow-up",
+    "is_active": false,
+    "assistant_id": "asst_uuid_here",
+    "nodes": [],
+    "edges": []
+  }'
+```
+
+**Request body**
+
+<ParamField body="name" type="string" required>
+  Display name for the workflow.
+</ParamField>
+
+<ParamField body="assistant_id" type="string">
+  UUID of the assistant to link this workflow to. The workflow fires after calls handled by this assistant.
+</ParamField>
+
+<ParamField body="is_active" type="boolean">
+  Whether the workflow is active. Defaults to `true`.
+</ParamField>
+
+<ParamField body="nodes" type="array">
+  Workflow node objects. Defaults to an empty array.
+</ParamField>
+
+<ParamField body="edges" type="array">
+  Workflow edge objects. Defaults to an empty array.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "wf_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "HubSpot Lead Follow-up",
+    "is_active": false,
+    "assistant_id": "asst_uuid_here",
+    "nodes": [],
+    "edges": [],
+    "workspace_id": "9f4e2a1b-3c7d-4f8e-a2b1-0c9d8e7f6a5b",
+    "created_at": "2026-04-18T12:00:00.000Z",
+    "updated_at": "2026-04-18T12:00:00.000Z"
+  }
+}
+```
+
+---
+
+## Update a workflow
+
+Updates one or more fields of an existing workflow. Only fields you include in the request body are changed. Ownership and workspace membership are validated — you can only update workflows that belong to you within the current workspace.
+
+```bash
+curl -X PATCH https://your-domain.com/api/v1/workflows/WORKFLOW_ID \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: your-workspace-id" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Updated Workflow Name",
+    "is_active": true
+  }'
+```
+
+**Path parameters**
+
+<ParamField path="id" type="string" required>
+  UUID of the workflow to update.
+</ParamField>
+
+**Request body**
+
+<ParamField body="name" type="string">
+  New display name.
+</ParamField>
+
+<ParamField body="is_active" type="boolean">
+  Enable or disable automatic firing.
+</ParamField>
+
+<ParamField body="nodes" type="array">
+  Full replacement node list for the canvas.
+</ParamField>
+
+<ParamField body="edges" type="array">
+  Full replacement edge list for the canvas.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "data": {
+    "id": "wf_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "Updated Workflow Name",
+    "is_active": true,
+    "updated_at": "2026-04-18T13:45:00.000Z"
+  }
+}
+```
+
+---
+
+## Delete a workflow
+
+Permanently deletes a workflow. This action is irreversible. Only the workflow owner within the current workspace can delete it.
+
+```bash
+curl -X DELETE https://your-domain.com/api/v1/workflows/WORKFLOW_ID \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: your-workspace-id"
+```
+
+**Path parameters**
+
+<ParamField path="id" type="string" required>
+  UUID of the workflow to delete.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "message": "Workflow deleted"
+}
+```
+
+---
+
+## Trigger workflow execution
+
+Manually triggers all active workflows linked to a given assistant for a specified event and call context. Use this to test workflows or replay a trigger from an external system.
+
+This is a fire-and-forget operation — the response returns immediately while execution continues asynchronously.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/workflows/trigger \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userId": "user-uuid",
+    "assistantId": "asst-uuid",
+    "event": "call_ended",
+    "outcome": "interested",
+    "callData": {
+      "transcript": "Hello, I am interested in your offer...",
+      "summary": "Contact expressed interest in the product.",
+      "sentiment": "positive",
+      "duration": 183,
+      "call_id": "call-uuid"
+    }
+  }'
+```
+
+<Note>
+This endpoint is primarily used by the platform internally after each call. You can also call it externally to replay a trigger or test a workflow against custom call data.
+</Note>
+
+**Request body**
+
+<ParamField body="userId" type="string" required>
+  UUID of the user who owns the assistant.
+</ParamField>
+
+<ParamField body="assistantId" type="string" required>
+  UUID of the assistant whose linked workflows should fire.
+</ParamField>
+
+<ParamField body="event" type="string" required>
+  Event name that triggered execution. Typically `call_ended`.
+</ParamField>
+
+<ParamField body="outcome" type="string">
+  Call outcome string (e.g., `interested`, `not_interested`, `callback`, `no_answer`).
+</ParamField>
+
+<ParamField body="callData" type="object">
+  Structured call data passed to workflow nodes as variables. Can include `transcript`, `summary`, `sentiment`, `duration`, `call_id`, `start_time`, and any appointment fields.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "message": "Workflow execution started"
+}
+```
+
+---
+
+## Run AI extraction on a call
+
+Runs the AI extraction pipeline against a call transcript and saves the results to the call record. This runs unconditionally — no workflow needs to be linked to the assistant.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/workflows/extract \
+  -H "Content-Type: application/json" \
+  -d '{
+    "assistantId": "asst-uuid",
+    "callData": {
+      "transcript": "Hi, I saw your ad and wanted to ask about pricing...",
+      "call_id": "call-uuid",
+      "start_time": "2026-04-18T10:00:00.000Z"
+    }
+  }'
+```
+
+**Request body**
+
+<ParamField body="callData" type="object" required>
+  Call data object. Must contain either `transcript` (plain text string) or `transcription` (array of turn objects).
+</ParamField>
+
+<ParamField body="assistantId" type="string">
+  UUID of the assistant that handled the call. Used to look up any structured extraction schema defined on the assistant.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "extracted": {
+    "name": "Sarah Johnson",
+    "email": "sarah@example.com",
+    "outcome": "interested",
+    "sentiment": "positive",
+    "summary": "Caller is interested in the starter plan and asked about onboarding.",
+    "urgent": false,
+    "appointment": {
+      "status": "booked",
+      "appointment_date": "2026-04-22",
+      "start_time": "14:00",
+      "timezone": "America/New_York"
+    }
+  }
+}
+```
+
+---
+
+## List execution history
+
+Returns a paginated log of workflow execution records. Filter by workflow, status, or date range.
+
+```bash
+curl "https://your-domain.com/api/v1/workflows/executions?workflow_id=wf-uuid&status=failed&limit=20" \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+**Query parameters**
+
+<ParamField query="workflow_id" type="string">
+  Filter to a specific workflow UUID.
+</ParamField>
+
+<ParamField query="status" type="string">
+  Filter by execution status. One of `running`, `completed`, `failed`, `partial`.
+</ParamField>
+
+<ParamField query="from" type="string">
+  ISO 8601 datetime — return executions created at or after this time.
+</ParamField>
+
+<ParamField query="to" type="string">
+  ISO 8601 datetime — return executions created at or before this time.
+</ParamField>
+
+<ParamField query="limit" type="number">
+  Maximum records to return. Defaults to `50`.
+</ParamField>
+
+<ParamField query="offset" type="number">
+  Pagination offset. Defaults to `0`.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "exec-uuid",
+      "workflow_id": "wf-uuid",
+      "call_id": "call-uuid",
+      "status": "completed",
+      "started_at": "2026-04-18T10:02:00.000Z",
+      "completed_at": "2026-04-18T10:02:04.000Z",
+      "created_at": "2026-04-18T10:02:00.000Z",
+      "workflow": {
+        "id": "wf-uuid",
+        "name": "Post-Call Follow-up"
+      }
+    }
+  ],
+  "count": 1,
+  "limit": 50,
+  "offset": 0
+}
+```
+
+---
+
+## Get node-level execution logs
+
+Returns per-node logs for a single execution, ordered by start time. Use this to diagnose which node in a workflow failed and why.
+
+```bash
+curl https://your-domain.com/api/v1/workflows/executions/EXECUTION_ID/logs \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+**Path parameters**
+
+<ParamField path="executionId" type="string" required>
+  UUID of the workflow execution to inspect.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "log-uuid",
+      "execution_id": "exec-uuid",
+      "node_type": "twilio_sms",
+      "status": "completed",
+      "started_at": "2026-04-18T10:02:01.000Z",
+      "input": { "to": "+15551234567", "body": "Thanks for your time today!" },
+      "output": { "messageSid": "SM1234abcd" },
+      "error": null
+    }
+  ]
+}
+```
+
+---
+
+## Failing workflows
+
+Returns workflows that have 5 or more consecutive execution failures, sorted by severity (highest failure streak first). Use this endpoint to surface workflows that need attention before they affect customers.
+
+```bash
+curl https://your-domain.com/api/v1/workflows/failing \
+  -H "Authorization: Bearer wr_live_xxxx"
+```
+
+**Response**
+
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": "wf-uuid",
+      "name": "HubSpot CRM Update",
+      "failed_count": 12,
+      "consecutive_failures": 8,
+      "last_failed_at": "2026-04-18T09:55:00.000Z",
+      "last_execution_id": "exec-uuid",
+      "failed_node_type": "action",
+      "error_message": "HubSpot token expired"
+    }
+  ]
+}
+```

@@ -1,0 +1,148 @@
+---
+title: "Cal.com"
+description: "Connect Cal.com or Google Calendar so your AI assistant can book appointments during calls and pass booking data to post-call workflows."
+---
+
+Chattrvox supports AI-powered appointment booking during live calls. When you connect a calendar, your AI assistant can offer available time slots to callers and confirm bookings without any human involvement. Once a booking is made, the appointment details are available as variables in post-call workflows — useful for sending confirmation SMS, updating your CRM, or triggering a follow-up sequence.
+
+Two calendar providers are supported: **Cal.com** (API key) and **Google Calendar** (OAuth).
+
+---
+
+## Connecting Cal.com
+
+<Steps>
+  <Step title="Generate a Cal.com API key">
+    In your Cal.com account, go to **Settings → Developer → API Keys** and create a new API key. Copy the key — it starts with `cal_live_`.
+  </Step>
+  <Step title="Open the integrations page in Chattrvox">
+    In Chattrvox, go to **Settings → Integrations** and find the **Calendar** section.
+  </Step>
+  <Step title="Click Connect Calendar">
+    Click **Connect Calendar** on the calendar card. A dialog opens.
+  </Step>
+  <Step title="Select Cal.com as the provider">
+    In the **Calendar Provider** dropdown, select **Cal.com**.
+  </Step>
+  <Step title="Enter your credentials">
+    Fill in the following fields:
+
+    - **Label** — a name for this connection, e.g., `Sales Booking Calendar`
+    - **API Key** — paste your `cal_live_...` key
+  </Step>
+  <Step title="Save the connection">
+    Click **Connect Calendar**. The connection appears in the calendar card with an **Active** badge.
+  </Step>
+</Steps>
+
+<Note>
+  The event type is selected when you configure the individual AI assistant, not here. You can connect multiple Cal.com accounts and assign different event types to different assistants.
+</Note>
+
+---
+
+## Connecting Google Calendar
+
+<Steps>
+  <Step title="Open the integrations page in Chattrvox">
+    Go to **Settings → Integrations** and find the **Calendar** section.
+  </Step>
+  <Step title="Click Connect Calendar">
+    Click **Connect Calendar** on the calendar card.
+  </Step>
+  <Step title="Select Google Calendar as the provider">
+    In the **Calendar Provider** dropdown, select **Google Calendar**.
+  </Step>
+  <Step title="Authorize with Google">
+    Click **Connect Calendar** and complete the Google OAuth flow. Grant Chattrvox permission to view and manage your calendar events.
+  </Step>
+  <Step title="Confirm the connection">
+    Google redirects you back to Chattrvox. The calendar card shows the connected Google account with an **Active** badge.
+  </Step>
+</Steps>
+
+---
+
+## How AI assistants book appointments
+
+Once a calendar is connected, you enable booking on a per-assistant basis:
+
+1. Open or create an AI assistant under **Assistants**.
+2. In the assistant configuration, go to the **Calendar** tab.
+3. Select the connected calendar and, for Cal.com, choose the event type the assistant should book.
+4. Save the assistant.
+
+During a call, when the conversation reaches a booking intent, the assistant queries your calendar for available slots in real time and presents options to the caller. When the caller confirms a time, the assistant creates the booking and receives confirmation back into the call context.
+
+<Tip>
+  Keep your Cal.com event type set to a reasonable buffer time (e.g., 15 minutes between bookings) so the AI does not offer back-to-back slots that cause scheduling conflicts.
+</Tip>
+
+---
+
+## Appointment variables in post-call workflows
+
+After a call where an appointment was booked, the booking data is available in the workflow execution context. You can use these variables in any downstream workflow node — for example, an SMS confirmation or a CRM update.
+
+| Variable | Description |
+| --- | --- |
+| `{appointment.status}` | Booking status: `confirmed`, `pending`, or `cancelled` |
+| `{appointment.start_time}` | Full ISO 8601 start datetime |
+| `{appointment.appointment_date}` | Human-readable appointment date |
+| `{appointment.timezone}` | Timezone of the booked slot |
+| `{appointment.calendar}` | Name of the connected calendar |
+
+### Example: send a confirmation SMS after booking
+
+Build a post-call workflow with the **End of Call** trigger connected to a **Condition** node that checks whether `{appointment.status}` equals `confirmed`. If true, route to a **Send SMS** node with a message body like:
+
+```text
+Your appointment is confirmed for {appointment.appointment_date} at {appointment.start_time} ({appointment.timezone}). Reply STOP to cancel.
+```
+
+The variables are resolved automatically when the workflow executes.
+
+---
+
+## Testing calendar booking
+
+To verify that booking works end-to-end before going live:
+
+<Steps>
+  <Step title="Start a test call">
+    Open your assistant and click **Test Call** to start a browser-based test call.
+  </Step>
+  <Step title="Ask the assistant to book an appointment">
+    Say something like "I'd like to schedule a call" or "Can we set up a meeting?" The assistant should respond with available time slots from your connected calendar.
+  </Step>
+  <Step title="Confirm a slot">
+    Select a time. The assistant should confirm the booking and you should see a new event in your Cal.com or Google Calendar account within a few seconds.
+  </Step>
+  <Step title="Check the workflow variables">
+    If you have a post-call workflow connected to this assistant, open the **Workflow Executions** log and confirm that `{appointment.status}` and the other appointment variables are populated correctly.
+  </Step>
+</Steps>
+
+<Warning>
+  Test bookings create real calendar events. Delete the test event from your calendar after testing, or use a separate Cal.com event type or Google Calendar for testing purposes.
+</Warning>
+
+---
+
+## Removing a calendar connection
+
+<Steps>
+  <Step title="Open the integrations page">
+    Go to **Settings → Integrations**.
+  </Step>
+  <Step title="Click Configure on the calendar card">
+    The dialog lists all connected calendar accounts.
+  </Step>
+  <Step title="Click the trash icon next to the connection">
+    Confirm the removal. Chattrvox immediately stops using that connection for booking.
+  </Step>
+</Steps>
+
+<Note>
+  Removing a calendar connection does not cancel existing bookings. Events already created in your calendar remain unchanged. Assistants that relied on the removed connection will fail to book new appointments until you connect a replacement calendar and update the assistant configuration.
+</Note>

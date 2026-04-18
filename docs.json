@@ -1,0 +1,109 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "maple",
+  "name": "Chattrvox",
+  "colors": {
+    "primary": "#668CFF",
+    "light": "#668CFF",
+    "dark": "#0c0c0c"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "account-setup"
+            ]
+          },
+          {
+            "group": "Agents",
+            "pages": [
+              "assistants/overview",
+              "assistants/create",
+              "assistants/voice-settings",
+              "assistants/knowledge-base"
+            ]
+          },
+          {
+            "group": "Campaigns",
+            "pages": [
+              "campaigns/overview",
+              "campaigns/create",
+              "campaigns/contacts"
+            ]
+          },
+          {
+            "group": "Workflows",
+            "pages": [
+              "workflows/overview",
+              "workflows/building",
+              "workflows/triggers",
+              "workflows/actions",
+              "workflows/variables"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/overview",
+              "integrations/hubspot",
+              "integrations/gohighlevel",
+              "integrations/calendar"
+            ]
+          },
+          {
+            "group": "Account & Billing",
+            "pages": [
+              "account/workspaces",
+              "account/billing",
+              "account/white-label"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API & MCP",
+        "hidden": true,
+        "groups": [
+          {
+            "group": "API Reference",
+            "hidden": true,
+            "pages": [
+              "api/overview",
+              "api/authentication",
+              "api/assistants",
+              "api/campaigns",
+              "api/workflows",
+              "api/contacts",
+              "api/knowledge-base"
+            ]
+          },
+          {
+            "group": "MCP Integration",
+            "pages": [
+              "mcp/overview",
+              "mcp/connect",
+              "mcp/tools"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "appearance": {
+    "default": "system"
+  },
+  "icons": {
+    "library": "fontawesome"
+  },
+  "interaction": {
+    "drilldown": false
+  },
+  "favicon": "/images/favicon.ico",
+  "logo": "/images/chattrvoxaiicon.png"
+}

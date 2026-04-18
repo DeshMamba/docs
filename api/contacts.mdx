@@ -1,0 +1,167 @@
+---
+title: 'Contacts API — Update Records and Sync to CRM'
+description: 'Update contact records via the Chattrvox REST API. Changes sync automatically to any connected HubSpot or GoHighLevel account in the background.'
+---
+
+The Contacts API lets you update individual contact records stored in Chattrvox. When you update a contact, the platform automatically syncs the change to any active CRM integration — HubSpot or GoHighLevel — in the background. The sync is fire-and-forget and does not block the API response.
+
+Contact records include a name, phone number, email, list assignment, and status flags. Bulk contact management (CSV import, list creation) is handled in the dashboard under **Contacts**.
+
+All contact endpoints require authentication. See [Authentication](/api/authentication) for token options.
+
+---
+
+## Update a contact
+
+Updates one or more fields on a contact record. Only fields present in the request body are changed — omitted fields are left as-is. The contact must belong to the authenticated user.
+
+```bash
+curl -X PATCH https://your-domain.com/api/v1/contacts/CONTACT_ID \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "first_name": "Sarah",
+    "last_name": "Johnson",
+    "email": "sarah.johnson@example.com",
+    "status": "active"
+  }'
+```
+
+**Path parameters**
+
+<ParamField path="id" type="string" required>
+  UUID of the contact to update.
+</ParamField>
+
+**Request body**
+
+<ParamField body="first_name" type="string">
+  Contact's first name.
+</ParamField>
+
+<ParamField body="last_name" type="string">
+  Contact's last name.
+</ParamField>
+
+<ParamField body="phone" type="string">
+  Phone number in E.164 format (e.g., `+15551234567`).
+</ParamField>
+
+<ParamField body="email" type="string">
+  Email address.
+</ParamField>
+
+<ParamField body="list_id" type="string">
+  UUID of the contact list to assign this contact to.
+</ParamField>
+
+<ParamField body="status" type="string">
+  Contact status. One of `active`, `inactive`, or `do-not-call`.
+</ParamField>
+
+<ParamField body="do_not_call" type="boolean">
+  When `true`, marks the contact as do-not-call. The platform will not dial this contact in any campaign.
+</ParamField>
+
+**Response**
+
+```json
+{
+  "success": true,
+  "contact": {
+    "id": "ct_a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "first_name": "Sarah",
+    "last_name": "Johnson",
+    "phone": "+15551234567",
+    "email": "sarah.johnson@example.com",
+    "status": "active",
+    "do_not_call": false,
+    "list_id": "list-uuid",
+    "user_id": "user-uuid",
+    "created_at": "2026-01-10T08:00:00.000Z",
+    "updated_at": "2026-04-18T14:00:00.000Z"
+  }
+}
+```
+
+<ResponseField name="contact.id" type="string">
+  Unique contact UUID.
+</ResponseField>
+
+<ResponseField name="contact.first_name" type="string">
+  Contact's first name.
+</ResponseField>
+
+<ResponseField name="contact.last_name" type="string">
+  Contact's last name.
+</ResponseField>
+
+<ResponseField name="contact.phone" type="string">
+  Contact's phone number.
+</ResponseField>
+
+<ResponseField name="contact.email" type="string">
+  Contact's email address.
+</ResponseField>
+
+<ResponseField name="contact.status" type="string">
+  One of `active`, `inactive`, or `do-not-call`.
+</ResponseField>
+
+<ResponseField name="contact.do_not_call" type="boolean">
+  Whether the contact is on the do-not-call list.
+</ResponseField>
+
+<ResponseField name="contact.updated_at" type="string">
+  ISO 8601 timestamp of the most recent update.
+</ResponseField>
+
+**Error — contact not found**
+
+```json
+{
+  "success": false,
+  "error": "Contact not found"
+}
+```
+
+---
+
+## CRM sync behavior
+
+When a contact update succeeds, the platform fires asynchronous sync jobs to any active CRM integrations on your account:
+
+**HubSpot:** The platform searches for a matching HubSpot contact by email or phone. If found, it patches the record. If not found, it creates a new HubSpot contact.
+
+**GoHighLevel:** The platform searches by phone number (including E.164 retry). If found, it updates the GHL contact. If not found and phone or email is present, it creates a new GHL contact.
+
+CRM sync failures are logged but do not affect the API response. Your Chattrvox contact record is always updated regardless of CRM sync outcome.
+
+<Note>
+To connect HubSpot or GoHighLevel, go to **Settings → Integrations** and complete the OAuth flow. Once connected, all contact updates will sync automatically.
+</Note>
+
+---
+
+## Contact statuses
+
+| Status | Meaning |
+|--------|---------|
+| `active` | Contact is reachable and eligible for campaigns |
+| `inactive` | Contact is not currently being targeted |
+| `do-not-call` | Contact has opted out — excluded from all campaigns |
+
+Setting `do_not_call: true` also sets `status` to `do-not-call` automatically. Contacts on the do-not-call list are skipped during campaign dialing.
+
+---
+
+## Bulk contact management
+
+The following operations are handled through the dashboard and are not currently available as REST endpoints:
+
+- **CSV import** — Upload a CSV file to create or update contacts in bulk (**Contacts → Import**)
+- **Create contact lists** — Organize contacts into named lists for targeting in campaigns
+- **Delete contacts** — Remove individual or bulk contact records
+- **Tag contacts** — Apply tags via workflow automation using the Tag Contact node in the Composer
+
+For workflow-driven tagging during or after a call, see [Workflows](/api/workflows).

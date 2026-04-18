@@ -1,0 +1,214 @@
+---
+title: 'Campaigns API — Start, Pause, and Monitor'
+description: 'Start, pause, resume, and stop outbound voice campaigns via the REST API. Fetch real-time call statistics and monitor campaign execution status.'
+---
+
+The Campaigns API lets you control the execution state of outbound dialing campaigns and retrieve live statistics. Campaign records themselves are created and configured through the dashboard; the REST API surface covers lifecycle operations (start, pause, resume, stop) and status retrieval.
+
+All campaign endpoints are under `/api/v1/campaigns/:id` and require authentication. See [Authentication](/api/authentication) for token options.
+
+---
+
+## Start a campaign
+
+Initiates dialing for a campaign that is in `pending` or `paused` state. Returns an error if the campaign is already running or has completed.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/campaigns/CAMPAIGN_ID/start \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: your-workspace-id"
+```
+
+**Response**
+
+```json
+{
+  "success": true,
+  "message": "Campaign started successfully"
+}
+```
+
+**Error — already running**
+
+```json
+{
+  "success": false,
+  "message": "Campaign is already running"
+}
+```
+
+**Error — already completed**
+
+```json
+{
+  "success": false,
+  "message": "Cannot start a completed campaign"
+}
+```
+
+---
+
+## Pause a campaign
+
+Suspends an actively running campaign. The dialer stops placing new calls. Existing calls in progress are not interrupted. Use [resume](#resume-a-campaign) to continue.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/campaigns/CAMPAIGN_ID/pause \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: your-workspace-id"
+```
+
+**Response**
+
+```json
+{
+  "success": true,
+  "message": "Campaign paused successfully"
+}
+```
+
+---
+
+## Resume a campaign
+
+Resumes a paused campaign from where it stopped. New calls begin queuing immediately.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/campaigns/CAMPAIGN_ID/resume \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: your-workspace-id"
+```
+
+**Response**
+
+```json
+{
+  "success": true,
+  "message": "Campaign resumed successfully"
+}
+```
+
+---
+
+## Stop a campaign
+
+Terminates a campaign permanently. All queued calls are cancelled. A stopped campaign cannot be restarted — create a new campaign if you need to dial again.
+
+```bash
+curl -X POST https://your-domain.com/api/v1/campaigns/CAMPAIGN_ID/stop \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: your-workspace-id"
+```
+
+**Response**
+
+```json
+{
+  "success": true,
+  "message": "Campaign stopped successfully"
+}
+```
+
+---
+
+## Get campaign status and metrics
+
+Returns the current execution state and a breakdown of call outcomes for a campaign.
+
+```bash
+curl https://your-domain.com/api/v1/campaigns/CAMPAIGN_ID/status \
+  -H "Authorization: Bearer wr_live_xxxx" \
+  -H "x-workspace-id: your-workspace-id"
+```
+
+**Response**
+
+```json
+{
+  "success": true,
+  "campaign": {
+    "id": "c3f1a2b4-9d0e-4f7a-b8c2-1e3d5f6a7b8c",
+    "name": "Q2 Follow-up Outreach",
+    "execution_status": "running",
+    "status": "active",
+    "created_at": "2026-04-10T09:00:00.000Z",
+    "updated_at": "2026-04-18T14:32:00.000Z"
+  },
+  "stats": {
+    "total": 250,
+    "pending": 108,
+    "calling": 3,
+    "completed": 132,
+    "failed": 7,
+    "answered": 98,
+    "noAnswer": 34,
+    "busy": 12,
+    "interested": 41,
+    "notInterested": 29,
+    "callback": 18
+  }
+}
+```
+
+<ResponseField name="campaign.execution_status" type="string">
+  Runtime state of the dialer. One of `pending`, `running`, `paused`, or `completed`.
+</ResponseField>
+
+<ResponseField name="stats.total" type="number">
+  Total number of contacts in the campaign.
+</ResponseField>
+
+<ResponseField name="stats.pending" type="number">
+  Contacts not yet dialed.
+</ResponseField>
+
+<ResponseField name="stats.calling" type="number">
+  Contacts currently being called.
+</ResponseField>
+
+<ResponseField name="stats.completed" type="number">
+  Calls that have finished (any outcome).
+</ResponseField>
+
+<ResponseField name="stats.answered" type="number">
+  Calls where the contact picked up.
+</ResponseField>
+
+<ResponseField name="stats.interested" type="number">
+  Contacts the AI classified as interested.
+</ResponseField>
+
+<ResponseField name="stats.notInterested" type="number">
+  Contacts the AI classified as not interested.
+</ResponseField>
+
+<ResponseField name="stats.callback" type="number">
+  Contacts who requested a callback.
+</ResponseField>
+
+<ResponseField name="stats.noAnswer" type="number">
+  Calls that went unanswered.
+</ResponseField>
+
+<ResponseField name="stats.busy" type="number">
+  Calls where the line was busy.
+</ResponseField>
+
+<ResponseField name="stats.failed" type="number">
+  Calls that failed due to a technical error.
+</ResponseField>
+
+---
+
+## Campaign lifecycle states
+
+| State | Description |
+|-------|-------------|
+| `pending` | Campaign exists but has not been started |
+| `running` | Dialer is actively placing calls |
+| `paused` | Dialer is suspended; can be resumed |
+| `completed` | Campaign has ended; cannot be restarted |
+
+<Note>
+Campaign records (name, contact list, assistant, schedule, concurrency) are created and edited in the dashboard under **Campaigns**. Use the lifecycle endpoints above to control execution programmatically.
+</Note>

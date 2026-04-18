@@ -1,0 +1,72 @@
+---
+title: "MCP Integration: Control Chattrvox from AI Clients"
+description: "Connect Claude Desktop, Cursor, or Windsurf to Chattrvox via the hosted MCP endpoint and manage your account through natural language prompts."
+---
+
+The Chattrvox MCP integration exposes your account as a set of tools that any Model Context Protocol (MCP) compatible AI assistant can call. Instead of opening the Chattrvox dashboard, you describe what you want in plain language inside Claude Desktop, Cursor, or Windsurf — and your AI assistant builds workflows, searches knowledge bases, triggers campaigns, and manages contacts on your behalf.
+
+## What the MCP integration does
+
+Chattrvox hosts a permanent MCP endpoint at `https://mcp.waverunner.digital/mcp`. When you point your AI client at this URL and authenticate with an API key, the client gains access to nine tools that map directly to your Chattrvox account. Every action the AI takes is scoped to your workspace — no other accounts are accessible.
+
+<CardGroup cols={3}>
+  <Card title="Claude Desktop" icon="message-square">
+    Add the Chattrvox server in your `claude_desktop_config.json` and start issuing voice workflow commands from the Claude chat interface.
+  </Card>
+  <Card title="Cursor" icon="code">
+    Register the MCP server under **Settings → MCP** and control Chattrvox directly from your editor while you build outreach scripts or integrations.
+  </Card>
+  <Card title="Windsurf" icon="wind">
+    Configure the server in Windsurf's MCP settings to manage campaigns and workflows without leaving your development environment.
+  </Card>
+</CardGroup>
+
+## What you can do once connected
+
+Once your AI client is connected, you can issue natural language prompts to accomplish any of the following:
+
+- **Build workflows** — Describe the automation you want and let your AI assistant create the workflow, set its status, and confirm it's live.
+- **Trigger campaigns** — Kick off a workflow run for a specific contact to test your outreach or handle a one-off call.
+- **Search knowledge bases** — Ask questions against any knowledge base in your account and get back matching content without opening the editor.
+- **Check usage** — Ask how many call minutes you have remaining and what your current limit is.
+- **Inspect integrations** — List every active connection (HubSpot, GoHighLevel, Slack, and others) to confirm what's available before building an automation.
+
+### Example
+
+You type into Claude Desktop:
+
+> "Create a workflow that calls every new HubSpot lead within 5 minutes."
+
+Claude calls the Chattrvox `create_workflow` tool, assembles the trigger and action nodes, saves the workflow as active, and confirms the name and ID. The workflow appears in your Composer immediately — you never open the dashboard.
+
+## Connection details
+
+Your AI client connects to Chattrvox using a single URL and an API key you generate from your settings:
+
+| Field | Value |
+|-------|-------|
+| **Server URL** | `https://mcp.waverunner.digital/mcp` |
+| **Authentication** | API key (`wr_live_...`) |
+
+<Note>
+  API keys are generated under **Settings → Integrations → API Keys**. Each key is shown only once when created — copy it before closing the dialog.
+</Note>
+
+## Prerequisites
+
+Before connecting, you need:
+
+1. An active Chattrvox account.
+2. An API key from **Settings → Integrations → API Keys**.
+3. An MCP-compatible AI client: Claude Desktop, Cursor, or Windsurf.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Connect your AI client" href="/mcp/connect" icon="plug">
+    Step-by-step setup for Claude Desktop, Cursor, and Windsurf.
+  </Card>
+  <Card title="MCP tools reference" href="/mcp/tools" icon="wrench">
+    Full reference for all nine tools, their parameters, and example prompts.
+  </Card>
+</CardGroup>

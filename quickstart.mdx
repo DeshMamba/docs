@@ -1,0 +1,132 @@
+---
+title: "Quickstart: Your First AI Call in 15 Minutes"
+description: "Create your Chattrvox account, build an AI phone assistant, connect a Twilio number, and make your first outbound AI call — step by step from scratch."
+---
+
+This guide takes you from a blank account to a working AI phone call. You will create a workspace, configure an assistant, connect a phone number, and place a test call. The whole process takes about 15 minutes.
+
+<Steps>
+
+  <Step title="Create your account">
+    Go to the Chattrvox sign-up page and create a free account using your email address or your Google account.
+
+    After you submit the sign-up form, the onboarding wizard launches automatically. It will ask you for a few things:
+
+    - **Your name** — used to personalize the dashboard experience.
+    - **Your use case** — choose the scenario that best describes what you are building: appointment setting, outbound sales, customer service, or lead follow-up. This configures default templates and theming for your workspace.
+    - **Your business profile** — name and description of your organization.
+    - **Your plan** — pick the plan that fits your needs. A free tier is available to explore the platform before upgrading.
+
+    <Tip>
+      If you received a workspace invitation from a team or agency, click the link in the invitation email instead of signing up directly. You will be added to their workspace automatically after you complete account setup.
+    </Tip>
+  </Step>
+
+  <Step title="Complete the onboarding wizard">
+    The wizard walks you through nine steps: Welcome, Name, Use Case, Business Profile, Preferences, Phone Verification, Pricing Plan, Payment, and Complete.
+
+    You can move forward and back through steps at any time. A progress indicator at the top of the screen shows where you are.
+
+    Once you reach the **Complete** screen, your account is ready and you land on the main dashboard.
+
+    <Note>
+      Your onboarding choices are not permanent. You can update your business profile, use-case theme, and UI preferences any time under **Settings → Account**.
+    </Note>
+  </Step>
+
+  <Step title="Create or switch to a workspace">
+    Every resource in Chattrvox belongs to a workspace. A default workspace is created for you automatically during onboarding.
+
+    To create an additional workspace, go to **Settings → Workspace → Workspaces** and click **New Workspace**. Give it a name and an optional description. Your plan determines how many workspaces you can create.
+
+    To switch workspaces, click the workspace selector at the top of the left sidebar and choose the workspace you want to work in.
+
+    <Tip>
+      If you manage multiple clients, create a separate workspace for each one. This keeps their contacts, assistants, campaigns, and call history fully isolated.
+    </Tip>
+  </Step>
+
+  <Step title="Connect a Twilio phone number">
+    Your AI assistant needs a phone number to make and receive calls. Chattrvox uses Twilio as the telephony carrier, so you need to connect your Twilio account first.
+
+    1. Go to **Settings → Integrations**.
+    2. Find the **Twilio** card and click **Connect Twilio**.
+    3. Enter your **Twilio Account SID** and **Auth Token** from the [Twilio Console](https://console.twilio.com), then add a label for this credential set.
+    4. Click **Import from Twilio**. Your phone numbers are imported automatically.
+
+    After connecting, your Twilio numbers appear in the phone number selector when you configure an assistant.
+
+    <Warning>
+      Chattrvox creates a SIP trunk in your Twilio account during connection. Do not delete or modify this trunk manually — it is required for call routing.
+    </Warning>
+  </Step>
+
+  <Step title="Create your first assistant">
+    Navigate to **Assistants** in the left sidebar and click **Create Assistant** (or the **+** button).
+
+    The assistant editor has six tabs:
+
+    <Tabs>
+      <Tab title="Model">
+        Set the assistant's name, system prompt, and language model. The system prompt defines the assistant's persona, goals, and instructions — treat it like a job description for your AI agent.
+
+        Write clearly: tell the assistant who it is, what it should accomplish on each call, how to handle objections, and when to book appointments or escalate.
+      </Tab>
+      <Tab title="Voice">
+        Choose the voice your assistant will speak in. Preview different options before committing. You can also adjust speaking speed and configure silence detection behavior.
+      </Tab>
+      <Tab title="SMS">
+        Enable automated SMS follow-up after calls. Configure the message template and the conditions under which the SMS fires — for example, only when the call outcome is "interested".
+      </Tab>
+      <Tab title="Analysis">
+        Define the structured data fields the assistant should extract from each call: outcome, sentiment, appointment status, custom fields. Extracted data appears in the call record and is available as variables in workflows.
+      </Tab>
+      <Tab title="Advanced">
+        Attach a knowledge base so the assistant can answer questions from your documents. Set language, call transfer numbers, and other advanced parameters.
+      </Tab>
+      <Tab title="Phone Number">
+        Assign a Twilio phone number to this assistant. Inbound calls to that number will be answered by this assistant. Outbound calls will appear to come from this number.
+      </Tab>
+    </Tabs>
+
+    Fill in at minimum the **Model** tab (name and system prompt) and assign a phone number on the **Phone Number** tab. You can return to refine other settings later.
+
+    Click **Save** to create the assistant.
+  </Step>
+
+  <Step title="Make your first call">
+    With an assistant created and a phone number assigned, you are ready to test.
+
+    **Test call from the dashboard:**
+    Open the assistant you just created, click the phone icon or **Test Call** button, and enter the phone number you want to call. The assistant will initiate an outbound call immediately.
+
+    **Inbound test:**
+    Call the Twilio phone number you assigned to the assistant from your mobile phone. The assistant picks up and responds in real time.
+
+    After the call ends, go to **Conversations** or back to the assistant's call history to see the full transcript, summary, outcome, and any structured data the assistant extracted.
+
+    <Tip>
+      Keep your first system prompt simple — something like "You are a friendly assistant for [Company Name]. Introduce yourself and ask how you can help." You can iterate from there once you confirm the call flow is working end-to-end.
+    </Tip>
+  </Step>
+
+</Steps>
+
+## What to do next
+
+Now that your first call is working, here are the natural next steps depending on what you want to build:
+
+<CardGroup cols={2}>
+  <Card title="Account Setup" icon="gear" href="/account-setup">
+    Invite team members, configure roles, and set up your workspace for your team.
+  </Card>
+  <Card title="Build a Campaign" icon="megaphone" href="/campaigns/create">
+    Run outbound calls against a contact list with automated retry logic.
+  </Card>
+  <Card title="Create a Workflow" icon="diagram-project" href="/workflows/overview">
+    Automate what happens after every call: SMS, CRM updates, bookings, and more.
+  </Card>
+  <Card title="Upload a Knowledge Base" icon="book" href="/assistants/knowledge-base">
+    Give your assistant documents to answer questions from during calls.
+  </Card>
+</CardGroup>

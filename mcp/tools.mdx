@@ -1,0 +1,210 @@
+---
+title: "Chattrvox MCP Tools — Complete Reference"
+description: "Full reference for all nine Chattrvox MCP tools: parameters, accepted values, and example prompts for workflows, usage, knowledge base, and integrations."
+---
+
+Once your AI client is connected to the Chattrvox MCP server, it has access to nine tools that cover workflows, usage monitoring, knowledge base search, and integration management. Your AI assistant selects and calls these tools automatically based on what you ask — you do not invoke them directly. This page documents what each tool does, what parameters it accepts, and what kind of prompt causes it to be used.
+
+<Note>
+  All tools operate within your authenticated workspace. No tool can access data from another account.
+</Note>
+
+---
+
+## Workflow tools
+
+<AccordionGroup>
+  <Accordion title="list_workflows — List all workflows">
+    Returns all workflows in your account. You can optionally filter by status to see only active, draft, or paused workflows.
+
+    **Parameters**
+
+    | Parameter | Type | Required | Description |
+    |-----------|------|----------|-------------|
+    | `status` | string | No | Filter results. Accepted values: `active`, `draft`, `paused`. Omit to return all workflows. |
+
+    **Example prompt**
+
+    > "Show me all my active workflows."
+
+    > "List every workflow I have, including drafts."
+  </Accordion>
+
+  <Accordion title="get_workflow — Get workflow details">
+    Returns the full definition of a single workflow, including its node graph and edge connections as stored on the canvas.
+
+    **Parameters**
+
+    | Parameter | Type | Required | Description |
+    |-----------|------|----------|-------------|
+    | `id` | string | Yes | The unique ID of the workflow to retrieve. |
+
+    **Example prompt**
+
+    > "Show me the full details of my HubSpot lead follow-up workflow."
+
+    > "What nodes are in workflow ID `abc-123`?"
+  </Accordion>
+
+  <Accordion title="create_workflow — Create a new workflow">
+    Creates a new workflow in your account. You can specify a name, description, initial status, and optionally pre-populate the canvas with nodes and edges. If you omit nodes and edges, an empty workflow is created and saved as a draft.
+
+    **Parameters**
+
+    | Parameter | Type | Required | Description |
+    |-----------|------|----------|-------------|
+    | `name` | string | Yes | Display name for the workflow. |
+    | `description` | string | No | Optional description shown in the workflow list. |
+    | `category` | string | No | Category label for organizing workflows. |
+    | `status` | string | No | Initial status. Accepted values: `draft` (default), `active`. |
+    | `nodes` | array | No | Array of node objects to pre-populate the workflow canvas. |
+    | `edges` | array | No | Array of edge objects defining connections between nodes on the canvas. |
+
+    **Example prompt**
+
+    > "Create a workflow called 'New HubSpot Lead — 5 Minute Call' that calls every new HubSpot lead within 5 minutes of them entering the CRM."
+
+    > "Create a draft workflow named 'Post-Call SMS Follow-up'."
+  </Accordion>
+
+  <Accordion title="update_workflow — Update an existing workflow">
+    Updates the name, status, or canvas of an existing workflow. Only the fields you provide are changed — omitted fields remain unchanged.
+
+    **Parameters**
+
+    | Parameter | Type | Required | Description |
+    |-----------|------|----------|-------------|
+    | `id` | string | Yes | The unique ID of the workflow to update. |
+    | `name` | string | No | New display name for the workflow. |
+    | `status` | string | No | New status. Accepted values: `active`, `draft`, `paused`. |
+    | `nodes` | array | No | Replacement node array for the canvas. |
+    | `edges` | array | No | Replacement edge array for the canvas. |
+
+    **Example prompt**
+
+    > "Pause my 'Cold Outreach' workflow."
+
+    > "Rename workflow `abc-123` to 'Priority Lead Caller'."
+  </Accordion>
+
+  <Accordion title="delete_workflow — Delete a workflow">
+    Permanently deletes a workflow from your account. This action cannot be undone.
+
+    **Parameters**
+
+    | Parameter | Type | Required | Description |
+    |-----------|------|----------|-------------|
+    | `id` | string | Yes | The unique ID of the workflow to delete. |
+
+    <Warning>
+      Deletion is permanent. There is no recycle bin or restore option. Confirm the workflow ID before instructing your AI client to delete.
+    </Warning>
+
+    **Example prompt**
+
+    > "Delete the workflow called 'Old Test Flow'."
+
+    > "Remove workflow ID `abc-123` permanently."
+  </Accordion>
+
+  <Accordion title="trigger_workflow — Manually trigger a workflow">
+    Runs a workflow immediately for a specific contact. Use this to test a workflow without waiting for the trigger condition, or to handle a one-off contact outside your normal campaign flow.
+
+    **Parameters**
+
+    | Parameter | Type | Required | Description |
+    |-----------|------|----------|-------------|
+    | `workflow_id` | string | Yes | The ID of the workflow to trigger. |
+    | `contact` | object | Yes | Contact information for the run. Provide at least one of `phone`, `email`, or `name`. |
+    | `contact.phone` | string | No | Contact's phone number. |
+    | `contact.email` | string | No | Contact's email address. |
+    | `contact.name` | string | No | Contact's name. |
+    | `event_data` | object | No | Additional key-value data passed as event context to the workflow nodes. |
+
+    **Example prompt**
+
+    > "Trigger the 'New Lead Follow-Up' workflow for contact Jane Smith at +14155550100."
+
+    > "Run workflow `abc-123` as a test for phone number +14155550100."
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Usage tools
+
+<AccordionGroup>
+  <Accordion title="get_usage — Check call minutes usage">
+    Returns your current call minutes balance: the total limit on your plan, the number of minutes used so far, the number remaining, and the percentage consumed.
+
+    **Parameters**
+
+    This tool takes no parameters.
+
+    **Example prompt**
+
+    > "How many call minutes do I have left?"
+
+    > "What's my current usage — how close am I to my limit?"
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Knowledge base tools
+
+<AccordionGroup>
+  <Accordion title="search_knowledge_base — Search a knowledge base">
+    Runs a semantic search against one of your knowledge bases and returns the most relevant content chunks. Use this to retrieve specific information your AI assistants have been trained on, or to verify what content is available before building a workflow.
+
+    **Parameters**
+
+    | Parameter | Type | Required | Description |
+    |-----------|------|----------|-------------|
+    | `knowledge_base_id` | string | Yes | The ID of the knowledge base to search. |
+    | `query` | string | Yes | The search query. Natural language works best. |
+    | `max_results` | number | No | Maximum number of content chunks to return. Defaults to `5`. |
+
+    **Example prompt**
+
+    > "Search my 'Product FAQ' knowledge base for information about cancellation policies."
+
+    > "What does my knowledge base say about pricing tiers? Return the top 3 results."
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Integration tools
+
+<AccordionGroup>
+  <Accordion title="list_connections — List active integrations">
+    Returns all active integration connections on your account — including Slack, HubSpot, GoHighLevel, Facebook Lead Ads, and Twilio. Use this to confirm which integrations are available before building a workflow that depends on them.
+
+    **Parameters**
+
+    This tool takes no parameters.
+
+    **Example prompt**
+
+    > "Which integrations do I have connected?"
+
+    > "Is my HubSpot account connected to Chattrvox?"
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Tool summary
+
+| Tool | Category | Parameters |
+|------|----------|------------|
+| `list_workflows` | Workflows | `status` (optional) |
+| `get_workflow` | Workflows | `id` |
+| `create_workflow` | Workflows | `name`, `description`, `category`, `status`, `nodes`, `edges` |
+| `update_workflow` | Workflows | `id`, `name`, `status`, `nodes`, `edges` |
+| `delete_workflow` | Workflows | `id` |
+| `trigger_workflow` | Workflows | `workflow_id`, `contact`, `event_data` |
+| `get_usage` | Usage | — |
+| `search_knowledge_base` | Knowledge base | `knowledge_base_id`, `query`, `max_results` |
+| `list_connections` | Integrations | — |

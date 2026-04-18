@@ -1,0 +1,236 @@
+---
+title: "Triggers"
+description: "Full reference for every trigger and action node available in the Chattrvox Composer, including configuration options for each node type."
+---
+
+Every workflow is made up of two kinds of nodes: a single **trigger** that starts the workflow, and one or more **actions** that the workflow performs. This page documents all available node types and their configuration options.
+
+<Tabs>
+  <Tab title="Triggers">
+    A trigger is the entry point of every workflow. It defines the event or condition that causes the workflow to start. You can only have one trigger per workflow.
+
+    <AccordionGroup>
+      <Accordion title="Campaign">
+        Starts the workflow when a contact enters a campaign. Use this to build sequences that run alongside outbound dialing campaigns — for example, sending an SMS before a call attempt or tagging contacts based on campaign outcome.
+
+        **Configuration:** Select the campaign this trigger is associated with. No additional fields are required; the workflow fires automatically as the campaign processes each contact.
+
+        <Note>
+          Campaign-triggered workflows are linked to a campaign, not to a specific assistant. They run in parallel with the campaign's dialing logic.
+        </Note>
+      </Accordion>
+
+      <Accordion title="End of Call">
+        Starts the workflow after a call handled by your AI assistant ends. This is the most common trigger for post-call automation: sending follow-up SMS messages, updating CRM records, or initiating callback calls.
+
+        **Configuration:** Select the assistant(s) this trigger should watch. The workflow fires once per completed call and receives the full call payload including transcript, summary, outcome, and any structured data extracted during the call.
+
+        **Available data after trigger:** All [Call Data variables](/workflows/variables#call-data) and [Contact Info variables](/workflows/variables#contact-info).
+      </Accordion>
+
+      <Accordion title="Manual">
+        Lets you start a workflow by hand from the dashboard. Useful for testing your workflow configuration or for one-off operations that don't need to be automated.
+
+        **Configuration:** No additional setup required. When you want to run the workflow, open it in the Composer and click **Run manually**.
+      </Accordion>
+
+      <Accordion title="HubSpot events">
+        Starts the workflow when a specific event occurs inside your connected HubSpot account. You must have HubSpot connected in **Settings → Integrations** before using this trigger.
+
+        **Available HubSpot trigger events:**
+
+        _Contacts_
+
+        - New Contact — a contact is created
+        - Contact Recently Created or Updated — a contact is added or modified
+        - New Contact in List — a contact is added to a specific list
+        - New Contact Property Change — a selected contact property changes
+
+        _Companies_
+
+        - New Company — a company is created
+        - Company Recently Created or Updated — a company is added or modified
+        - New Company Property Change — a company property changes
+
+        _Deals_
+
+        - New Deal — a deal is created
+        - New Deal Property Change — a deal property is updated
+        - Updated Deal Stage — a deal enters a specific stage
+
+        _Line Items & Products_
+
+        - New Line Item — a line item is created
+        - Line Item Recently Created or Updated
+        - New Product — a product is created
+        - Product Recently Created or Updated
+
+        _Tickets_
+
+        - New Ticket — a ticket is created
+        - New Ticket Property Change — a ticket property changes
+
+        _Tasks & Engagements_
+
+        - New Task — a task is created
+        - New Engagement — an engagement is logged
+
+        _Email & Communication_
+
+        - New Email Event — a tracked email event occurs
+        - New Email Subscriptions Timeline — an email subscription is added
+
+        _Forms & Content_
+
+        - New Form Submission — a form is submitted
+        - New COS Blog Article — a blog post is published
+
+        _Custom Objects_
+
+        - New Custom Object — a custom object is created
+        - New Custom Object Property Change — a custom object property changes
+
+        **Available data after trigger:** [HubSpot Contact variables](/workflows/variables#hubspot-contact).
+      </Accordion>
+
+      <Accordion title="GoHighLevel">
+        Starts the workflow when a contact is created in your connected GoHighLevel account. Requires GoHighLevel to be connected in **Settings → Integrations**.
+
+        **Available event:** Contact Created — fires when a new contact appears in GoHighLevel.
+
+        **Available data after trigger:** Contact details passed through from GoHighLevel.
+      </Accordion>
+
+      <Accordion title="Facebook Lead">
+        Starts the workflow when a new lead is captured from a Facebook Lead Ad. Requires Facebook to be connected in **Settings → Integrations** and a lead form to be mapped.
+
+        **Configuration:** Select the Facebook page and lead form to watch.
+
+        **Available data after trigger:** [Facebook Lead variables](/workflows/variables#facebook-lead) — including the lead's name, email, phone, and the ad and campaign that generated the lead.
+      </Accordion>
+    </AccordionGroup>
+  </Tab>
+  <Tab title="Actions">
+    Actions are the steps your workflow performs after the trigger fires. You can chain as many actions as needed, and use connection conditions to branch your logic.
+
+    <AccordionGroup>
+      <Accordion title="Call Lead">
+        Initiates an AI-powered outbound call to the contact. The call is placed using your connected Twilio number and dispatched to the AI assistant you select.
+
+        **Configuration:**
+
+        - **Assistant** — the AI assistant that will handle the call
+        - **Phone number** — the number to dial (defaults to `{phone_number}` to use the contact's number on file)
+        - **Call script / context** — optional instructions or context to pass to the assistant for this specific call
+
+        **Use case:** Automatically call a new Facebook lead within seconds of form submission, or call back a contact who requested a follow-up during a previous call.
+      </Accordion>
+
+      <Accordion title="Send SMS (Twilio)">
+        Sends an SMS message to the contact using your connected Twilio account.
+
+        **Configuration:**
+
+        - **To** — the recipient's phone number (defaults to `{phone_number}`)
+        - **Message body** — the text to send. Use the variable picker to insert dynamic values like `{name}`, `{summary}`, or `{appointment.start_time}`.
+
+        **Requirements:** A Twilio account and phone number must be connected in **Settings → Integrations**.
+
+        <Tip>
+          Keep SMS messages under 160 characters to avoid carrier splitting. Variable values count toward the character limit at their resolved length.
+        </Tip>
+      </Accordion>
+
+      <Accordion title="Condition">
+        Evaluates a true/false condition and routes the workflow down one of two branches. Use this when you need to take different actions depending on a value — for example, only sending a confirmation SMS when `{outcome}` equals "booked".
+
+        **Configuration:**
+
+        - **Condition expression** — the rule to evaluate, using variable syntax (for example, `{sentiment} == 'positive'`)
+
+        The node has two output handles: **True** and **False**. Connect different nodes to each handle to define what happens in each case.
+      </Accordion>
+
+      <Accordion title="Router">
+        Splits the workflow into multiple branches based on per-branch conditions. Unlike the Condition node (which is binary), a Router supports as many branches as you need.
+
+        **Configuration:**
+
+        - Add a branch for each path you want to support
+        - Write a condition expression for each branch
+        - Connect each branch handle to the next action for that path
+
+        **Use case:** Route a contact to different follow-up sequences based on call outcome — one path for "booked", one for "interested but not booked", and one for "not interested".
+      </Accordion>
+
+      <Accordion title="Wait">
+        Pauses workflow execution for a specified duration before continuing to the next node.
+
+        **Configuration:**
+
+        - **Duration** — how long to wait
+        - **Unit** — seconds, minutes, or hours
+
+        **Use case:** Wait 30 minutes after a call before sending a follow-up SMS, so the message feels timely rather than immediate.
+
+        <Note>
+          The actual delay may be slightly longer than configured during periods of high platform load.
+        </Note>
+      </Accordion>
+
+      <Accordion title="Tag Contact">
+        Applies a tag to the current contact in your CRM. Tags help you segment contacts, filter lists, and trigger other automations.
+
+        **Configuration:**
+
+        - **Tag** — the label to apply to the contact
+
+        **Use case:** Tag a contact as "interested" when the call outcome matches, then use that tag to filter your contact list for a follow-up campaign.
+      </Accordion>
+
+      <Accordion title="HubSpot CRM actions">
+        Performs a write operation in your connected HubSpot account.
+
+        **Available actions:**
+
+        - **Create Contact** — creates a new HubSpot contact with fields mapped from variables
+        - **Update Contact** — updates an existing contact's properties
+        - **Create Deal** — creates a new deal and associates it with a contact
+        - **Create Company** — creates a new company record
+        - **Create Associations** — links two existing HubSpot objects (for example, a contact to a deal)
+
+        **Requirements:** HubSpot must be connected in **Settings → Integrations** with a valid OAuth connection.
+      </Accordion>
+
+      <Accordion title="GoHighLevel CRM actions">
+        Performs a write operation in your connected GoHighLevel account.
+
+        **Available actions:**
+
+        - **Create Contact** — creates a new contact
+        - **Update Contact** — updates an existing contact's fields
+        - **Add to Campaign** — enrolls the contact in a GoHighLevel campaign
+        - **Add Tag** — applies a tag to the contact in GoHighLevel
+
+        **Requirements:** GoHighLevel must be connected in **Settings → Integrations**.
+      </Accordion>
+
+      <Accordion title="HTTP Request">
+        Makes an HTTP call to any external API or webhook URL. Use this to integrate with services that aren't natively supported in the Composer.
+
+        **Available methods:**
+
+        - GET, POST, PUT, PATCH, DELETE
+
+        **Configuration:**
+
+        - **URL** — the endpoint to call. Supports variables (for example, `https://api.example.com/contacts/{phone_number}`)
+        - **Method** — the HTTP method to use
+        - **Headers** — key-value pairs for authorization or content type
+        - **Body** — JSON payload for POST/PUT/PATCH requests. Use variables to inject dynamic data.
+
+        **Use case:** Push call summaries to a custom webhook, update a record in a database, or trigger a notification in a third-party tool.
+      </Accordion>
+    </AccordionGroup>
+  </Tab>
+</Tabs>

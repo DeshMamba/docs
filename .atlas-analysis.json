@@ -1,0 +1,132 @@
+{
+  "projectType": "saas",
+  "projectName": "Chattrvox",
+  "projectDescription": "A white-label AI voice platform that lets agencies and sales teams deploy AI phone agents, run outbound campaigns, automate follow-ups, and manage contacts — all under their own brand.",
+  "theme": "almond",
+  "primaryColor": "#e55b6b",
+  "lightColor": "#6767e3",
+  "darkColor": "#0c0c0c",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "account-setup"
+            ]
+          },
+          {
+            "group": "AI Assistants",
+            "pages": [
+              "assistants/overview",
+              "assistants/create",
+              "assistants/voice-settings",
+              "assistants/knowledge-base"
+            ]
+          },
+          {
+            "group": "Campaigns",
+            "pages": [
+              "campaigns/overview",
+              "campaigns/create",
+              "campaigns/contacts"
+            ]
+          },
+          {
+            "group": "Workflows",
+            "pages": [
+              "workflows/overview",
+              "workflows/building",
+              "workflows/triggers-actions",
+              "workflows/variables"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/overview",
+              "integrations/hubspot",
+              "integrations/gohighlevel",
+              "integrations/calendar"
+            ]
+          },
+          {
+            "group": "Account & Billing",
+            "pages": [
+              "account/workspaces",
+              "account/billing",
+              "account/white-label"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API & MCP",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": [
+              "api/overview",
+              "api/authentication",
+              "api/assistants",
+              "api/campaigns",
+              "api/workflows",
+              "api/contacts",
+              "api/knowledge-base"
+            ]
+          },
+          {
+            "group": "MCP Integration",
+            "pages": [
+              "mcp/overview",
+              "mcp/connect",
+              "mcp/tools"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "AI phone agents for inbound and outbound voice calls",
+    "Visual workflow automation builder (Composer)",
+    "Outbound dialing campaigns with real-time analytics",
+    "Knowledge base with RAG-powered AI responses",
+    "SMS conversations and automated follow-ups",
+    "CRM with contact lists, CSV import, and tagging",
+    "White-label platform for agencies",
+    "Multi-workspace team management with role-based access",
+    "Integrations: HubSpot, GoHighLevel, Slack, Facebook, Cal.com",
+    "MCP server for AI assistant tool access",
+    "Call recording, transcription, and AI analysis",
+    "Stripe-based subscription and per-minute billing"
+  ],
+  "publicApiSurface": [
+    "POST /api/v1/user/signup",
+    "POST /api/v1/user/login",
+    "GET /api/v1/workspaces",
+    "POST /api/v1/workspaces",
+    "GET /api/v1/workflows",
+    "POST /api/v1/workflows",
+    "PATCH /api/v1/workflows/:id",
+    "DELETE /api/v1/workflows/:id",
+    "POST /api/v1/workflows/execution/trigger",
+    "GET /api/v1/knowledge-base",
+    "POST /api/v1/knowledge-base/upload",
+    "POST /api/v1/knowledge-base/:kbId/context",
+    "GET /api/v1/connections",
+    "GET /api/v1/minutes",
+    "POST /api/v1/minutes-pricing/purchase",
+    "GET /api/v1/subscription",
+    "POST /api/v1/api-keys",
+    "GET /api/v1/api-keys",
+    "DELETE /api/v1/api-keys/:id",
+    "POST /api/v1/livekit/outbound-calls/initiate",
+    "GET /mcp",
+    "POST /mcp"
+  ]
+}
