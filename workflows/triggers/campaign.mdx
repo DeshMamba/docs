@@ -1,0 +1,37 @@
+---
+title: "Campaign"
+sidebarTitle: "Campaign"
+description: "Start a workflow when a contact enters a campaign."
+---
+
+The Campaign trigger fires when a contact is processed by a campaign.
+
+Use it to build sequences that run alongside outbound dialing: send an SMS before the call attempt, tag contacts based on outcome, or update your CRM after every dial.
+
+## Configuration
+
+Select the campaign this trigger watches. The workflow fires automatically as the campaign processes each contact.
+
+<Note>
+  Campaign-triggered workflows are linked to a campaign, not to a specific agent. They run in parallel with the campaign's dialing logic.
+</Note>
+
+## Available variables
+
+| Variable | Description |
+| --- | --- |
+| `{name}` | Contact's full name |
+| `{first_name}` | Contact's first name |
+| `{last_name}` | Contact's last name |
+| `{phone_number}` | Contact's phone number |
+| `{email}` | Contact's email address |
+
+## Use case
+
+A re-engagement campaign processes 500 contacts. For every contact the campaign dials, the Campaign trigger fires a workflow that checks call outcome, tags interested contacts in HubSpot, and sends a follow-up SMS to anyone who didn't answer.
+
+## Next steps
+
+<Card title="Actions" icon="play" href="/workflows/actions/overview">
+  Choose what Chattrvox does after the trigger fires.
+</Card>

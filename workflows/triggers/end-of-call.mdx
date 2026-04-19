@@ -1,0 +1,41 @@
+---
+title: "End of call"
+sidebarTitle: "End of call"
+description: "Start a workflow automatically when an agent call ends."
+---
+
+The End of Call trigger fires once every time a call handled by your agent ends.
+
+It's the most common trigger for post-call automation: sending a follow-up SMS, updating your CRM, or placing a callback.
+
+## Configuration
+
+Select the agent this trigger watches. The workflow fires once per completed call for that agent, regardless of outcome.
+
+## Available variables
+
+| Variable | Description |
+| --- | --- |
+| `{name}` | Contact's full name |
+| `{first_name}` | Contact's first name |
+| `{last_name}` | Contact's last name |
+| `{phone_number}` | Contact's phone number |
+| `{email}` | Contact's email address |
+| `{summary}` | AI-generated call summary |
+| `{outcome}` | Call outcome (e.g. interested, voicemail, do_not_call) |
+| `{sentiment}` | Call sentiment (positive, neutral, negative, frustrated) |
+| `{duration}` | Call duration in seconds |
+| `{transcript}` | Full call transcript |
+| `{call_id}` | Unique call identifier |
+| `{start_time}` | Call start time |
+| `{agent_phone_number}` | Phone number the agent used |
+
+## Use case
+
+A lead says they're interested but can't talk. Chattrvox ends the call, the End of Call trigger fires, a Condition node checks that the outcome is `interested`, and a Send SMS action sends a booking link within seconds.
+
+## Next steps
+
+<Card title="Actions" icon="play" href="/workflows/actions/overview">
+  Choose what Chattrvox does after the trigger fires.
+</Card>

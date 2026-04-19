@@ -1,0 +1,32 @@
+---
+title: "Slack"
+sidebarTitle: "Slack"
+description: "Send a message to a Slack channel or user from a workflow."
+---
+
+The Slack action sends a message to a Slack channel or direct message when the workflow reaches this node.
+
+## Requirements
+
+Slack must be connected under **Settings → Integrations** before this action is available.
+
+## Configuration
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **Channel** | Yes | Channel name (e.g. `#sales`) or user ID |
+| **Message** | Yes | Message content. Supports variables. Maximum 2,000 characters |
+
+<Note>
+  Private Slack channels require you to invite the Chattrvox app to the channel before it can post. Run `/invite @Chattrvox` in the channel.
+</Note>
+
+## Use case
+
+An End of Call trigger fires when a call outcome is `interested`. The Slack action posts to `#sales`: "New interested lead: {name} ({phone_number}). Call summary: {summary}." The sales team sees every hot lead in real time without checking the dashboard.
+
+## Next steps
+
+<Card title="Variables" icon="code" href="/workflows/variables">
+  Insert call data and contact details into your Slack messages.
+</Card>

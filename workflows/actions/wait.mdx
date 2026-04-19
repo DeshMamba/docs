@@ -1,0 +1,24 @@
+---
+title: "Wait"
+sidebarTitle: "Wait"
+description: "Pause workflow execution for a set duration before continuing."
+---
+
+The Wait action pauses the workflow for a duration you set before moving to the next node.
+
+## Configuration
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **Duration** | Yes | How long to wait |
+| **Unit** | Yes | Seconds, minutes, hours, or days |
+
+## Use case
+
+An End of Call trigger fires when a call ends with no answer. A Wait node pauses for 30 minutes, then a Call Lead node dials again. If there's still no answer after two attempts, a Send SMS action sends a text instead.
+
+## Next steps
+
+<Card title="Call Lead" icon="phone" href="/workflows/actions/call-lead">
+  Use Wait before a Call Lead to space out retry attempts.
+</Card>

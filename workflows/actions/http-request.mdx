@@ -1,0 +1,35 @@
+---
+title: "HTTP Request"
+sidebarTitle: "HTTP Request"
+description: "Make an HTTP call to any external API or webhook URL from a workflow."
+---
+
+The HTTP Request action calls any external API or webhook endpoint. Use it to connect Chattrvox to tools not natively supported in the Composer.
+
+## Configuration
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **URL** | Yes | The endpoint to call. Supports variables (e.g. `https://api.example.com/contacts/{phone_number}`) |
+| **Method** | Yes | GET, POST, PUT, PATCH, or DELETE |
+| **Headers** | No | Key-value pairs for authorization or content type |
+| **Body** | No | JSON payload for POST/PUT/PATCH requests. Supports variables |
+| **Expected outputs** | No | Response field names to extract as variables for downstream nodes |
+
+## Response handling
+
+The HTTP Request node returns the response status code and body. Use **Expected outputs** to extract specific fields from the response and pass them to downstream nodes as variables.
+
+## Technical limits
+
+Requests time out after 30 seconds.
+
+## Use case
+
+After a call ends, an HTTP Request posts the call summary to a custom CRM webhook: `POST https://crm.example.com/calls` with a JSON body containing `{phone_number}`, `{outcome}`, and `{summary}`. A downstream Condition node checks the response status to confirm the record was saved.
+
+## Next steps
+
+<Card title="Variables" icon="code" href="/workflows/variables">
+  Use variables to build dynamic URLs and request bodies.
+</Card>

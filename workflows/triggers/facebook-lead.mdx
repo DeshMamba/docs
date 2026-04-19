@@ -1,0 +1,40 @@
+---
+title: "Facebook Lead"
+sidebarTitle: "Facebook Lead"
+description: "Start a workflow when a new lead is captured from a Facebook Lead Ad."
+---
+
+The Facebook Lead trigger fires when someone submits a Facebook Lead Ad form connected to your workspace.
+
+Use it to call new leads within seconds of form submission, before they lose interest.
+
+## Requirements
+
+Facebook must be connected under **Settings → Integrations** before this trigger is available.
+
+## Configuration
+
+Select the Facebook page and lead form to watch. The trigger fires once per new lead submission on that form.
+
+## Available variables
+
+| Variable | Description |
+| --- | --- |
+| `{first_name}` | Lead's first name from the form |
+| `{last_name}` | Lead's last name from the form |
+| `{phone_number}` | Lead's phone number from the form |
+| `{email}` | Lead's email address from the form |
+| `{fb_ad_name}` | Name of the Facebook ad |
+| `{fb_campaign_name}` | Name of the Facebook campaign |
+
+See [Variables](/workflows/variables) for the full Facebook Lead variable list.
+
+## Use case
+
+A Facebook ad captures a lead for a home services company. The trigger fires, a Call Lead action dials within 30 seconds, and the agent qualifies the lead before any human touches it. The call outcome routes to either a HubSpot deal creation or a Send SMS with a booking link.
+
+## Next steps
+
+<Card title="Actions" icon="play" href="/workflows/actions/overview">
+  Choose what Chattrvox does after the trigger fires.
+</Card>

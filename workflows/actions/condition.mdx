@@ -1,0 +1,34 @@
+---
+title: "Condition"
+sidebarTitle: "Condition"
+description: "Route a workflow down a true or false branch based on a condition."
+---
+
+The Condition action evaluates a rule and routes the workflow down one of two branches: **True** or **False**.
+
+## Configuration
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **Condition expression** | Yes | The rule to evaluate using variable syntax. Example: `{sentiment} == 'positive'` |
+
+Connect different nodes to the **True** and **False** output handles to define what happens in each case.
+
+## Supported operators
+
+| Operator | Description |
+| --- | --- |
+| `==` | Equals |
+| `!=` | Not equals |
+| `contains` | String contains value |
+| `not_contains` | String does not contain value |
+
+## Use case
+
+After a Call Lead action, a Condition node checks `{outcome} == 'interested'`. If true, a HubSpot action creates a deal. If false, a Wait node pauses for 24 hours before a Send SMS action sends a re-engagement message.
+
+## Next steps
+
+<Card title="Router" icon="diagram-project" href="/workflows/actions/router">
+  Need more than two branches? Use Router for multi-path logic.
+</Card>

@@ -1,0 +1,31 @@
+---
+title: "HubSpot"
+sidebarTitle: "HubSpot"
+description: "Create or update HubSpot records from a workflow."
+---
+
+The HubSpot action writes data to your connected HubSpot account after a call or trigger event.
+
+## Requirements
+
+HubSpot must be connected under **Settings → Integrations** before this action is available.
+
+## Available actions
+
+| Action | Description |
+| --- | --- |
+| **Create Contact** | Creates a new HubSpot contact with fields mapped from variables |
+| **Update Contact** | Updates an existing contact's properties |
+| **Create Deal** | Opens a new deal and associates it with a contact |
+| **Create Company** | Creates a new company record |
+| **Create Associations** | Links two HubSpot objects (e.g. a contact to a deal) |
+
+## Use case
+
+An End of Call trigger fires with outcome `interested`. A HubSpot action creates a deal in the "New Lead" pipeline stage, maps `{name}` to the contact name and `{summary}` to the deal description. A second HubSpot action updates the contact's last call date. The rep opens HubSpot and the record is already built.
+
+## Next steps
+
+<Card title="Variables" icon="code" href="/workflows/variables">
+  Map call and contact data to HubSpot fields using variables.
+</Card>

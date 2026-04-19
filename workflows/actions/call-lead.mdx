@@ -1,0 +1,35 @@
+---
+title: "Call Lead"
+sidebarTitle: "Call Lead"
+description: "Place an AI-powered outbound call to a contact from a workflow."
+---
+
+The Call Lead action places an outbound call to the contact using your AI agent.
+
+## Configuration
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **Assistant** | Yes | The agent that handles the call |
+| **Phone number** | Yes | Number to dial. Defaults to `{phone_number}` |
+| **Recipient name** | No | Name passed to the agent. Defaults to `{name}` |
+
+## Outputs
+
+The Call Lead node has three output branches. Connect different nodes to each to handle every outcome:
+
+| Output | When it fires |
+| --- | --- |
+| Call Completed | The call was answered and ended normally |
+| Call Failed | The call could not be placed (no phone number, agent misconfigured) |
+| Voicemail Detected | The call reached voicemail |
+
+## Use case
+
+A Facebook Lead Ad fires the trigger. A Call Lead action dials the lead within 30 seconds. A Condition node reads the outcome: if completed and interested, a HubSpot action creates a deal. If voicemail, a Send SMS action sends a follow-up text with a booking link.
+
+## Next steps
+
+<Card title="Variables" icon="code" href="/workflows/variables">
+  Use variables to populate the phone number and recipient name dynamically.
+</Card>

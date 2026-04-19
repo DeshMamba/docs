@@ -1,0 +1,32 @@
+---
+title: "Schedule"
+sidebarTitle: "Schedule"
+description: "Start a workflow at a specific date, time, or recurring interval."
+---
+
+The Schedule trigger fires at a time you define, either once or on a repeating interval.
+
+Use it for recurring automations that are not tied to a call or contact event: daily follow-up sequences, weekly check-ins, or monthly re-engagement campaigns.
+
+## Configuration
+
+Set the date, time, and recurrence for the trigger.
+
+- **One-time:** Set a future date and time. The workflow fires once and stops.
+- **Recurring:** Set the interval (minutes, hours, days, weekly, or monthly) and an optional end date. The workflow fires on every interval until the end date or until you deactivate it.
+
+## Available variables
+
+Schedule triggers do not fire on behalf of a specific contact. Use custom variables or connect downstream actions that fetch contact data from your CRM.
+
+See [Variables](/workflows/variables) for how to define custom variables.
+
+## Use case
+
+Every Monday at 9 AM, the workflow fires, sends a Slack message to your sales team with a summary of last week's call outcomes, and posts the data to a webhook for your reporting dashboard.
+
+## Next steps
+
+<Card title="Actions" icon="play" href="/workflows/actions/overview">
+  Choose what Chattrvox does after the trigger fires.
+</Card>

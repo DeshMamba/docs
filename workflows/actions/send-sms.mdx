@@ -1,0 +1,38 @@
+---
+title: "Send SMS"
+sidebarTitle: "Send SMS"
+description: "Send a text message to a contact from a workflow."
+---
+
+The Send SMS action sends an SMS to the contact using your connected phone number.
+
+## Configuration
+
+| Field | Required | Description |
+| --- | --- | --- |
+| **To** | Yes | Recipient phone number. Defaults to `{phone_number}` |
+| **Message body** | Yes | The text to send. Supports variables via the variable picker |
+
+<Tip>
+  Keep messages under 160 characters to avoid carrier splitting. Variable values count toward the limit at their resolved length.
+</Tip>
+
+## Variable support
+
+Use the variable picker in the message body to insert dynamic values. Examples:
+
+- `Hi {first_name}, here's your booking link: ...`
+- `Call summary: {summary}`
+- `Your appointment is confirmed for {appointment.start_time}`
+
+See [Variables](/workflows/variables) for the full list.
+
+## Use case
+
+An End of Call trigger fires when a call ends with a voicemail outcome. The Send SMS action sends: "Hi {first_name}, we tried to reach you. Reply here or book a time: [link]." The contact gets a personal follow-up without any manual work.
+
+## Next steps
+
+<Card title="Variables" icon="code" href="/workflows/variables">
+  See every variable available for SMS message bodies.
+</Card>

@@ -1,0 +1,35 @@
+---
+title: "GoHighLevel"
+sidebarTitle: "GoHighLevel"
+description: "Start a workflow when a contact is created in GoHighLevel."
+---
+
+The GoHighLevel trigger fires when a new contact is created in your connected GoHighLevel account.
+
+Use it to call new leads the moment they enter your GHL pipeline.
+
+## Requirements
+
+GoHighLevel must be connected under **Settings → Integrations** before this trigger is available.
+
+## Configuration
+
+No additional configuration required. The trigger watches for any new contact created in your connected GoHighLevel account.
+
+**Available event:** Contact Created.
+
+## Available variables
+
+Contact details passed through from GoHighLevel are available as variables in downstream action nodes, including name, phone number, and email.
+
+See [Variables](/workflows/variables) for the full variable reference.
+
+## Use case
+
+A contact fills out a GoHighLevel landing page form. The trigger fires immediately, a Wait node pauses for two minutes, then a Call Lead action dials the contact while the lead is still warm.
+
+## Next steps
+
+<Card title="Actions" icon="play" href="/workflows/actions/overview">
+  Choose what Chattrvox does after the trigger fires.
+</Card>

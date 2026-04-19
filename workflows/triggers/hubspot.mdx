@@ -1,0 +1,81 @@
+---
+title: "HubSpot"
+sidebarTitle: "HubSpot"
+description: "Start a workflow when a HubSpot event occurs in your connected account."
+---
+
+The HubSpot trigger fires when a specific event occurs in your connected HubSpot account.
+
+Use it to act on CRM activity: call a new lead the moment they enter HubSpot, update records after deal stage changes, or fire follow-up sequences on form submissions.
+
+## Requirements
+
+HubSpot must be connected under **Settings → Integrations** before this trigger is available.
+
+## Configuration
+
+Select the HubSpot event to watch. Available events:
+
+**Contacts**
+- New Contact
+- Contact Recently Created or Updated
+- New Contact in List
+- New Contact Property Change
+
+**Companies**
+- New Company
+- Company Recently Created or Updated
+- New Company Property Change
+
+**Deals**
+- New Deal
+- Updated Deal Stage
+- New Deal Property Change
+
+**Line items & products**
+- New Line Item
+- Line Item Recently Created or Updated
+- New Product
+- Product Recently Created or Updated
+
+**Tickets**
+- New Ticket
+- New Ticket Property Change
+
+**Tasks & engagements**
+- New Task
+- New Engagement
+
+**Email**
+- New Email Event
+- New Email Subscriptions Timeline
+
+**Forms & content**
+- New Form Submission
+- New Blog Article
+
+**Custom objects**
+- New Custom Object
+- New Custom Object Property Change
+
+## Available variables
+
+| Variable | Description |
+| --- | --- |
+| `{hs_firstname}` | HubSpot contact first name |
+| `{hs_lastname}` | HubSpot contact last name |
+| `{hs_email}` | HubSpot contact email |
+| `{hs_phone}` | HubSpot contact phone number |
+| `{hs_company}` | HubSpot contact company name |
+
+See [Variables](/workflows/variables) for the full HubSpot variable list.
+
+## Use case
+
+A form submission on your website creates a new HubSpot contact. The HubSpot trigger fires on New Form Submission, a Call Lead action dials the contact within 60 seconds, and a HubSpot action updates the contact record with the call outcome.
+
+## Next steps
+
+<Card title="Actions" icon="play" href="/workflows/actions/overview">
+  Choose what Chattrvox does after the trigger fires.
+</Card>

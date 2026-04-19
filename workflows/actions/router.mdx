@@ -1,0 +1,39 @@
+---
+title: "Router"
+sidebarTitle: "Router"
+description: "Split a workflow into multiple branches based on per-branch conditions."
+---
+
+The Router action splits the workflow into multiple branches, each with its own condition. Use it when you need more than two paths.
+
+## Configuration
+
+Add a branch for each path. For each branch:
+
+- **Label** — a name for the branch (e.g. "Interested", "Voicemail", "Not interested")
+- **Condition** — a variable, operator, and value (e.g. `{outcome}` equals `interested`)
+
+Connect each branch to its next action node on the canvas.
+
+## Supported operators
+
+| Operator | Description |
+| --- | --- |
+| `equals` | Exact match |
+| `not_equals` | Does not match |
+| `contains` | String contains value |
+| `not_contains` | String does not contain value |
+
+## Use case
+
+After a Call Lead action, a Router splits contacts into three paths based on `{outcome}`:
+
+- **Interested** → HubSpot creates a deal
+- **Voicemail** → Wait 30 minutes → Send SMS follow-up
+- **Do not call** → workflow ends with no further action
+
+## Next steps
+
+<Card title="Condition" icon="code-branch" href="/workflows/actions/condition">
+  Need just two branches? Condition is simpler for true/false logic.
+</Card>

@@ -1,0 +1,30 @@
+---
+title: "GoHighLevel"
+sidebarTitle: "GoHighLevel"
+description: "Create or update GoHighLevel records from a workflow."
+---
+
+The GoHighLevel action writes data to your connected GoHighLevel account after a call or trigger event.
+
+## Requirements
+
+GoHighLevel must be connected under **Settings → Integrations** before this action is available.
+
+## Available actions
+
+| Action | Description |
+| --- | --- |
+| **Create Contact** | Creates a new contact in GoHighLevel |
+| **Update Contact** | Updates an existing contact's fields |
+| **Add to Campaign** | Enrolls the contact in a GoHighLevel campaign |
+| **Add Tag** | Applies a tag to the contact in GoHighLevel |
+
+## Use case
+
+A Facebook Lead trigger fires on a new ad submission. A Call Lead action dials the lead. If the outcome is `interested`, a GoHighLevel action creates the contact and adds them to the "Hot Leads" campaign in GHL. The agency's GHL pipeline updates automatically without any manual data entry.
+
+## Next steps
+
+<Card title="Variables" icon="code" href="/workflows/variables">
+  Map call and contact data to GoHighLevel fields using variables.
+</Card>

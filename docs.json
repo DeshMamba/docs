@@ -51,9 +51,38 @@
             "pages": [
               "workflows/overview",
               "workflows/building",
-              "workflows/triggers",
-              "workflows/actions",
-              "workflows/variables"
+              {
+                "group": "Triggers",
+                "pages": [
+                  "workflows/triggers/overview",
+                  "workflows/triggers/end-of-call",
+                  "workflows/triggers/campaign",
+                  "workflows/triggers/manual",
+                  "workflows/triggers/hubspot",
+                  "workflows/triggers/gohighlevel",
+                  "workflows/triggers/facebook-lead",
+                  "workflows/triggers/schedule",
+                  "workflows/triggers/webhook"
+                ]
+              },
+              {
+                "group": "Actions",
+                "pages": [
+                  "workflows/actions/overview",
+                  "workflows/actions/call-lead",
+                  "workflows/actions/send-sms",
+                  "workflows/actions/slack",
+                  "workflows/actions/condition",
+                  "workflows/actions/router",
+                  "workflows/actions/wait",
+                  "workflows/actions/tag-contact",
+                  "workflows/actions/hubspot",
+                  "workflows/actions/gohighlevel",
+                  "workflows/actions/http-request"
+                ]
+              },
+              "workflows/variables",
+              "workflows/executions"
             ]
           },
           {

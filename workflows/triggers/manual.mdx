@@ -1,0 +1,29 @@
+---
+title: "Manual"
+sidebarTitle: "Manual"
+description: "Start a workflow by hand from the Composer dashboard."
+---
+
+The Manual trigger fires when you click **Run manually** inside the workflow in the Composer.
+
+Use it to test your workflow before connecting a live trigger, or to run a one-off operation that doesn't need to be automated.
+
+## Configuration
+
+No setup required. Open the workflow in the Composer and click **Run manually** in the toolbar.
+
+## Available variables
+
+Manual runs do not inject contact or call data automatically. If your workflow actions use variables like `{phone_number}` or `{name}`, provide test values using custom variables before running.
+
+See [Variables](/workflows/variables) for how to define custom variables.
+
+## Use case
+
+You've built a workflow that sends a Slack notification and creates a HubSpot deal. Before connecting it to a live End of Call trigger, run it manually to confirm both actions execute and the variable values resolve correctly.
+
+## Next steps
+
+<Card title="Actions" icon="play" href="/workflows/actions/overview">
+  Choose what Chattrvox does after the trigger fires.
+</Card>
