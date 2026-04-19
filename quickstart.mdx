@@ -3,7 +3,7 @@ title: "Quickstart: Your First AI Call in 15 Minutes"
 description: "Create your Chattrvox account, build an AI phone assistant, connect a Twilio number, and make your first outbound AI call — step by step from scratch."
 ---
 
-This guide takes you from a blank account to a working AI phone call. You will create a workspace, configure an assistant, connect a phone number, and place a test call. The whole process takes about 15 minutes.
+Chattrvox goes from blank account to live AI phone call in under 15 minutes.
 
 <Steps>
 
@@ -47,17 +47,14 @@ This guide takes you from a blank account to a working AI phone call. You will c
   </Step>
 
   <Step title="Connect a Twilio phone number">
-    Your AI assistant needs a phone number to make and receive calls. Chattrvox uses Twilio as the telephony carrier, so you need to connect your Twilio account first.
+    Your AI assistant needs a phone number to make and receive calls. Chattrvox uses Twilio as the telephony carrier, so connect your Twilio account first.
 
-    1. Go to **Settings → Integrations**.
-    2. Find the **Twilio** card and click **Connect Twilio**.
-    3. Enter your **Twilio Account SID** and **Auth Token** from the [Twilio Console](https://console.twilio.com), then add a label for this credential set.
-    4. Click **Import from Twilio**. Your phone numbers are imported automatically.
+    Go to **Settings → Integrations** and find the **Twilio** card. Click **Connect Twilio**. Enter your **Twilio Account SID** and **Auth Token** from the [Twilio Console](https://console.twilio.com), add a label for this credential set, then click **Import from Twilio**. Your phone numbers are imported automatically.
 
     After connecting, your Twilio numbers appear in the phone number selector when you configure an assistant.
 
     <Warning>
-      Chattrvox creates a SIP trunk in your Twilio account during connection. Do not delete or modify this trunk manually — it is required for call routing.
+      Chattrvox creates a SIP trunk in your Twilio account during connection. Do not delete or modify this trunk manually. It is required for call routing.
     </Warning>
   </Step>
 
@@ -68,7 +65,7 @@ This guide takes you from a blank account to a working AI phone call. You will c
 
     <Tabs>
       <Tab title="Model">
-        Set the assistant's name, system prompt, and language model. The system prompt defines the assistant's persona, goals, and instructions — treat it like a job description for your AI agent.
+        Set the assistant's name, system prompt, and language model. The system prompt defines the assistant's persona, goals, and instructions. Treat it like a job description for your AI agent.
 
         Write clearly: tell the assistant who it is, what it should accomplish on each call, how to handle objections, and when to book appointments or escalate.
       </Tab>
@@ -76,7 +73,7 @@ This guide takes you from a blank account to a working AI phone call. You will c
         Choose the voice your assistant will speak in. Preview different options before committing. You can also adjust speaking speed and configure silence detection behavior.
       </Tab>
       <Tab title="SMS">
-        Enable automated SMS follow-up after calls. Configure the message template and the conditions under which the SMS fires — for example, only when the call outcome is "interested".
+        Enable automated SMS follow-up after calls. Configure the message template and the conditions under which the SMS fires: for example, only when the call outcome is "interested".
       </Tab>
       <Tab title="Analysis">
         Define the structured data fields the assistant should extract from each call: outcome, sentiment, appointment status, custom fields. Extracted data appears in the call record and is available as variables in workflows.
@@ -97,24 +94,20 @@ This guide takes you from a blank account to a working AI phone call. You will c
   <Step title="Make your first call">
     With an assistant created and a phone number assigned, you are ready to test.
 
-    **Test call from the dashboard:**
-    Open the assistant you just created, click the phone icon or **Test Call** button, and enter the phone number you want to call. The assistant will initiate an outbound call immediately.
+    **Test call from the dashboard:** Open the assistant you just created, click the phone icon or **Test Call** button, and enter the phone number you want to call. The assistant initiates an outbound call immediately.
 
-    **Inbound test:**
-    Call the Twilio phone number you assigned to the assistant from your mobile phone. The assistant picks up and responds in real time.
+    **Inbound test:** Call the Twilio phone number you assigned to the assistant from your mobile phone. The assistant picks up and responds in real time.
 
     After the call ends, go to **Conversations** or back to the assistant's call history to see the full transcript, summary, outcome, and any structured data the assistant extracted.
 
     <Tip>
-      Keep your first system prompt simple — something like "You are a friendly assistant for [Company Name]. Introduce yourself and ask how you can help." You can iterate from there once you confirm the call flow is working end-to-end.
+      Keep your first system prompt simple: "You are a friendly assistant for [Company Name]. Introduce yourself and ask how you can help." Iterate from there once you confirm the call flow is working end-to-end.
     </Tip>
   </Step>
 
 </Steps>
 
 ## What to do next
-
-Now that your first call is working, here are the natural next steps depending on what you want to build:
 
 <CardGroup cols={2}>
   <Card title="Account Setup" icon="gear" href="/account-setup">
