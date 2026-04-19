@@ -1,108 +1,106 @@
 ---
-title: "Campaigns Overview"
-description: "Learn how Chattrvox campaigns work: connect an AI assistant to a contact list, set a schedule, and let the AI call every contact automatically."
+title: "Campaigns overview"
+sidebarTitle: "Overview"
+description: "Campaigns run automated outbound calls against a contact list using your AI agent."
 ---
 
-Campaigns let you run fully automated outbound dialing at scale. You connect one of your AI assistants to a contact list or CSV import, configure a daily calling schedule, and Chattrvox handles the rest — placing calls, tracking results, and updating contact statuses in real time.
+Campaigns run automated outbound calls against a contact list.
 
-## How a campaign works
+Connect an agent to a list of contacts, set your calling schedule, and Chattrvox dials every contact automatically. After each call, outcomes are recorded and contact statuses update in real time.
 
-When you launch a campaign, Chattrvox queues every contact in your list and begins dialing them during the hours and days you specify. Each call is handled by the AI assistant you selected, using the assistant's configured voice, prompt, and call-analysis settings. After each call, the outcome is recorded and the contact's status is updated automatically.
+## How to run a campaign
 
-<CardGroup cols={2}>
-  <Card title="Upload contacts" icon="users">
-    Use a saved contact list from your CRM or upload a CSV file directly when creating the campaign.
-  </Card>
-
-  <Card title="Select an AI assistant" icon="robot">
-    Choose which AI assistant makes the calls. The assistant's voice, language, and prompt all apply.
-  </Card>
-
-  <Card title="Set your schedule" icon="calendar">
-    Pick which days and hours the campaign is allowed to dial, and cap the number of calls per day.
-  </Card>
-
-  <Card title="Launch and monitor" icon="chart-line">
-    Start the campaign and watch live metrics update as calls are placed, answered, and completed.
-  </Card>
-</CardGroup>
+<Steps>
+  <Step title="Upload contacts">
+    Use a saved contact list or upload a CSV file. Every active, non-DNC contact in the list will be called.
+  </Step>
+  <Step title="Select an agent">
+    Choose which agent makes the calls. The agent's voice, prompt, and analysis settings apply to every call.
+  </Step>
+  <Step title="Set your schedule">
+    Pick calling days and hours, and set a daily cap. Chattrvox only dials within your configured window.
+  </Step>
+  <Step title="Launch and monitor">
+    Start the campaign. Live metrics update as calls are placed, answered, and completed.
+  </Step>
+</Steps>
 
 ## Campaign statuses
 
-Every campaign moves through a set of statuses as it progresses.
-
 <AccordionGroup>
   <Accordion title="Idle">
-    The campaign has been created and saved but has not been started yet. No calls are being placed.
+    The campaign has been created but not started. No calls are being placed.
   </Accordion>
-
   <Accordion title="Running">
     The campaign is active. Chattrvox is dialing contacts according to your schedule and daily cap.
   </Accordion>
-
   <Accordion title="Paused">
-    Dialing has been manually paused, or the campaign automatically paused because the daily cap was reached or the current time is outside the configured calling hours. You can resume it at any time.
+    Dialing has stopped. This happens manually, when the daily cap is reached, or when the current time is outside your calling hours. Resume at any time.
   </Accordion>
-
   <Accordion title="Completed">
-    All contacts have been attempted the maximum number of times allowed. No further calls will be placed.
+    Every contact has been attempted the maximum number of times. No further calls will be placed.
   </Accordion>
-
   <Accordion title="Error">
-    The campaign encountered a problem it could not recover from automatically. Check your assistant's phone number configuration and try restarting.
+    The campaign hit a problem it could not recover from. Check the agent's phone number configuration and try restarting.
   </Accordion>
 </AccordionGroup>
 
 <Note>
-  A campaign pauses automatically when it hits the daily cap or when the current time falls outside the configured calling hours. It resumes on the next scheduled calling window.
+  Chattrvox pauses a campaign automatically when the daily cap is reached or when the current time falls outside your calling hours. It resumes on the next valid window.
 </Note>
 
-## Real-time metrics
+## Live metrics
 
-The campaigns list shows live stats for every campaign without needing to open it.
+The campaigns list shows stats for every campaign without opening it.
 
 <CardGroup cols={2}>
   <Card title="Pickup rate" icon="phone">
-    The percentage of dials that were answered. Color-coded green above 20%, amber above 10%.
+    The percentage of dials that were answered.
   </Card>
-
   <Card title="Interested" icon="star">
-    The number of contacts the AI classified as interested based on the call outcome.
+    Contacts the agent classified as interested based on call outcome.
   </Card>
-
   <Card title="DNC" icon="ban">
-    Contacts who asked not to be called again. These are automatically marked do-not-call in your CRM.
+    Contacts who asked not to be called again. Chattrvox marks them do-not-call automatically.
   </Card>
-
   <Card title="Today's progress" icon="chart-bar">
-    A progress bar showing how many calls have been placed today against your daily cap.
+    Calls placed today against your daily cap.
   </Card>
 </CardGroup>
 
-Opening a campaign shows a full breakdown of every call, including contact name, outcome, sentiment, call duration, and an AI-generated summary.
+Open a campaign to see a full breakdown of every call: contact name, outcome, sentiment, duration, and AI-generated summary.
 
 ## Retry logic
 
-For simple dial-through campaigns (no workflow attached), you can configure Chattrvox to retry contacts who were not reached. You set the maximum number of attempts per contact, the delay between attempts in minutes, and which outcomes should trigger a retry — for example, no answer, busy, or failed.
+For simple campaigns (no workflow attached), configure Chattrvox to retry contacts who were not reached. Set the maximum number of attempts (1–10), the delay between attempts (in minutes), and which outcomes trigger a retry: No Answer, Busy, Voicemail, or Failed.
 
 <Tip>
-  The default retry behavior is one attempt per contact with no retry. Increase max attempts when you want Chattrvox to follow up automatically before marking a contact as complete.
+  The default is one attempt per contact. Contacts marked interested, not interested, or do-not-call are never retried.
 </Tip>
 
 ## Workflow campaigns
 
-Instead of a simple dial-through, you can attach a Workflow to a campaign. Workflow campaigns follow a visual automation sequence you build in the Composer — for example: call the contact, wait two hours, send an SMS, then call again. Retry and follow-up logic in workflow campaigns is configured directly inside the workflow using Wait and Call Lead nodes.
+Attach a workflow to a campaign to run a multi-step sequence instead of a simple dial-through. For example: call the contact, wait two hours, send an SMS, then call again. Retry logic for workflow campaigns is configured inside the workflow using Wait and Call Lead nodes.
 
 ## Calling windows
 
-The campaign only dials contacts when all three conditions are met:
+Chattrvox only dials when all three conditions are met:
 
-- The current day is one of the selected calling days.
-- The current hour falls within the configured calling hours window.
-- The number of calls placed today is below the daily cap.
-
-If any condition is not met, the campaign pauses and automatically resumes when the next valid window opens.
+- The current day is one of your selected calling days
+- The current hour falls within your calling hours window
+- Calls placed today are below the daily cap
 
 ## Exporting results
 
-You can export all campaign data — call records and summary statistics — to an Excel file from the Campaigns page. Select **Export** from the page header to download a spreadsheet containing every call made across all your campaigns.
+Select **Export** from the Campaigns page to download an Excel file with every call record and campaign summary stats.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Create a campaign" icon="plus" href="/campaigns/create">
+    Step-by-step walkthrough of every campaign setting.
+  </Card>
+  <Card title="Manage contacts" icon="address-book" href="/campaigns/contacts">
+    Import contacts and organize them into lists.
+  </Card>
+</CardGroup>

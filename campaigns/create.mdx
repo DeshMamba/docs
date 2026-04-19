@@ -1,142 +1,111 @@
 ---
-title: "Create Campaigns"
-description: "Step-by-step guide to creating a Chattrvox campaign: choose an AI assistant, pick a contact source, set calling hours, retry logic, and start dialing."
+title: "Create a campaign"
+sidebarTitle: "Create a campaign"
+description: "Build a Chattrvox campaign: choose an agent, pick a contact source, set calling hours, configure retry logic, and start dialing."
 ---
 
-Creating a campaign takes about two minutes. You give it a name, pick the AI assistant that will make the calls, choose your contacts, and set the schedule. When you're ready, you start it and Chattrvox begins dialing.
+Campaigns connect an agent to a contact list and dial automatically on a schedule you set.
 
-## Before you start
+Before you start, make sure you have an agent with a phone number assigned and at least one contact list or CSV file in Contacts.
 
-Make sure you have:
-
-- An AI assistant with a phone number assigned to it
-- At least one contact list in your CRM, or a CSV file uploaded to Contacts
-
-<Info>
+<Note>
   You need the **Manager** role or higher to create and manage campaigns. Viewers and Members can see campaigns but cannot start, pause, or delete them.
-</Info>
+</Note>
 
 ## Creating a campaign
 
 <Steps>
-  <Step title="Open the New Campaign dialog">
-    Go to **Campaigns** in the sidebar and select **New Campaign**. You will be asked to accept the terms of use before the settings form opens.
+  <Step title="Open the new campaign dialog">
+    Go to **Campaigns** in the navbar and click **New Campaign**. Accept the terms of use when prompted.
   </Step>
   <Step title="Name your campaign">
-    Enter a descriptive name so you can identify this campaign in the list. For example: "Database Reactivation Q2" or "May Follow-up Sequence".
+    Enter a name you will recognize in the campaigns list. For example: "Database Reactivation Q2" or "May Follow-up Sequence".
   </Step>
-  <Step title="Optionally attach a workflow">
-    If you want the campaign to follow an automated sequence — such as calling a contact, waiting, then sending an SMS — select a workflow from the **Workflow** dropdown. Leave this set to **None — simple dial-through** if you just want the AI to call each contact once (or a set number of times).
+  <Step title="Attach a workflow (optional)">
+    Select a workflow from the **Workflow** dropdown to run a multi-step sequence instead of a simple dial-through. Leave it set to **None** to dial each contact directly.
   </Step>
-  <Step title="Choose your AI assistant and set a daily cap">
-    Select the assistant that will handle the calls. The assistant's voice, language model, and prompt will be used for every call in this campaign.
+  <Step title="Select an agent and set a daily cap">
+    Choose the agent that handles the calls. The agent's voice, prompt, and analysis settings apply to every call in this campaign.
 
-    Set a **Daily Cap** — the maximum number of calls to place per day. The default is 100. The campaign pauses automatically when this limit is reached and resumes the next calling day.
+    Set a **Daily Cap** — the maximum calls per day (1–1,000). The default is 100. Chattrvox pauses the campaign when this limit is reached and resumes the next calling day.
   </Step>
   <Step title="Select a contact source">
-    Choose where the contacts come from:
-
     <Tabs>
       <Tab title="Contact list">
-        Select a named list from your CRM. The campaign will call every active, non-DNC contact in that list.
+        Select a named list from your contacts. Chattrvox calls every active, non-DNC contact in that list.
       </Tab>
       <Tab title="CSV import">
-        Select a CSV file you have previously uploaded to Contacts. The campaign will call every row in the file that is not marked do-not-call.
+        Select a CSV file you have already uploaded to Contacts. Chattrvox calls every row not marked do-not-call.
       </Tab>
     </Tabs>
   </Step>
   <Step title="Set calling days and hours">
-    Toggle the days of the week when the campaign is allowed to dial. By default, Monday through Friday are selected.
+    Toggle the days the campaign is allowed to dial. Monday through Friday are selected by default.
 
-    Use the hours range picker to set the start and end time for daily calling. Calls are only placed when the current hour falls within this window. The default window is 9 AM to 5 PM.
+    Set the start and end time for daily calling. The default window is 9 AM to 5 PM.
 
     <Warning>
-      The calling hours are based on the server clock. Make sure the window matches your contacts' local time zone if you are calling across regions.
+      Calling hours run on the server clock. Match the window to your contacts' local time zone if you are calling across regions.
     </Warning>
   </Step>
   <Step title="Configure retry logic (simple campaigns only)">
-    If you are not using a workflow, you can set Chattrvox to retry contacts who were not reached.
+    Set Chattrvox to retry contacts who were not reached:
 
-    - **Max attempts** — how many times to try each contact before giving up (1–10)
-    - **Delay between attempts** — how many minutes to wait before the next attempt
-    - **Retry when call result is** — which outcomes trigger a retry: No Answer, Busy, Voicemail, or Failed
+    - **Max attempts** — how many times to try each contact (1–10)
+    - **Delay between attempts** — minutes to wait before the next attempt (1–10,080)
+    - **Retry when call result is** — No Answer, Busy, Voicemail, or Failed
 
     <Tip>
-      The default is one attempt per contact. If you increase max attempts, only contacts with the selected retry outcomes will be called again. Contacts marked as interested, not interested, or do-not-call are never retried.
+      The default is one attempt per contact. Contacts marked interested, not interested, or do-not-call are never retried.
     </Tip>
   </Step>
   <Step title="Create the campaign">
-    Select **Create Campaign**. The campaign is saved with idle status and will appear in your campaigns list. It will not dial anyone until you start it.
+    Click **Create Campaign**. The campaign saves with idle status. Chattrvox does not dial anyone until you start it.
   </Step>
 </Steps>
 
 ## Starting, pausing, and stopping
 
-Once a campaign is created, you control it from the campaigns list or from inside the campaign details view.
-
 <CardGroup cols={2}>
   <Card title="Start" icon="play">
-    Hover over a campaign card and select the play button. The status changes to Running and dialing begins immediately if the current time is within the calling window.
+    Hover over a campaign card and click the play button. Dialing begins immediately if the current time is within your calling window.
   </Card>
-
   <Card title="Pause" icon="pause">
-    Select the pause button on a running campaign. Dialing stops and the status changes to Paused. Any calls already in progress will complete normally.
+    Click the pause button on a running campaign. Calls already in progress complete normally.
   </Card>
-
   <Card title="Resume" icon="play">
-    Select the play button on a paused campaign to resume. Dialing picks up where it left off.
+    Click the play button on a paused campaign. Dialing picks up where it left off.
   </Card>
-
   <Card title="Delete" icon="trash">
-    Select the trash icon to permanently delete a campaign and all its call records. This cannot be undone.
+    Click the trash icon to permanently delete a campaign and all its call records. This cannot be undone.
   </Card>
 </CardGroup>
 
 <Warning>
-  You cannot restart a completed campaign. If you need to re-dial the same contacts, create a new campaign and select the same contact source.
+  Completed campaigns cannot be restarted. To re-dial the same contacts, create a new campaign with the same contact source.
 </Warning>
 
-## Understanding campaign results
+## Campaign results
 
-Click any campaign card to open the details panel. This shows the full list of calls made, with a row for each contact.
+Click any campaign card to see the full call list. Each row shows:
 
-Each call row shows:
-
-- **Contact name and phone number**
-- **Call status** — calling, answered, completed, failed, no answer, or busy
-- **Outcome** — the AI's classification of how the call went: interested, not interested, callback, do not call, voicemail, or wrong number
-- **Sentiment** — positive, neutral, negative, or frustrated, based on AI analysis of the transcript
-- **Duration** — how long the call lasted
-- **Time** — when the call was placed
+- Contact name and phone number
+- Call status: calling, answered, completed, failed, no answer, or busy
+- Outcome: interested, not interested, callback, do not call, voicemail, or wrong number
+- Sentiment: positive, neutral, negative, or frustrated
+- Duration and time of call
 
 Expand any row to read the AI-generated call summary.
 
-### Summary metrics
+The top of the details panel shows aggregate stats: total dials, total answered, interested count, DNC count, average duration, and daily cap progress.
 
-The top of the details panel shows aggregate stats for the campaign:
+## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Total dials" icon="phone">
-    The total number of calls placed since the campaign was created.
+  <Card title="Manage contacts" icon="address-book" href="/campaigns/contacts">
+    Import and organize the contacts your campaigns will call.
   </Card>
-
-  <Card title="Total answered" icon="phone-call">
-    The number of calls that were picked up by a live person.
-  </Card>
-
-  <Card title="Interested" icon="star">
-    Contacts the AI classified as interested.
-  </Card>
-
-  <Card title="Do not call" icon="ban">
-    Contacts who asked not to be called again.
-  </Card>
-
-  <Card title="Avg duration" icon="clock">
-    The average length of answered calls.
-  </Card>
-
-  <Card title="Daily cap progress" icon="chart-bar">
-    How many calls have been placed today against the daily limit.
+  <Card title="Workflows" icon="diagram-project" href="/workflows/overview">
+    Build multi-step campaign sequences with wait times, SMS, and branching logic.
   </Card>
 </CardGroup>

@@ -1,138 +1,121 @@
 ---
-title: "Managing Contacts"
-description: "Add contacts manually or import via CSV, organize them into lists, filter by status, and use bulk actions to tag, clean, and manage your CRM in Chattrvox."
+title: "Contacts"
+sidebarTitle: "Contacts"
+description: "Import, organize, and manage the contacts your Chattrvox agents will call."
 ---
 
-The Contacts page is your CRM inside Chattrvox. You store the phone numbers, emails, and names of the people your AI assistants will call. Contacts are organized into named lists, and those lists can be used directly when creating campaigns.
+Contacts stores every person your agents call.
+
+Each contact belongs to a list. Lists are what you select when creating a campaign. Organize contacts by audience, client, or use case.
 
 ## Contact statuses
 
-Every contact has one of three statuses that control whether the AI will call them.
+Every contact has one of three statuses that controls whether the agent will call them.
 
 <CardGroup cols={3}>
   <Card title="Active" icon="circle-check">
-    The contact can be included in campaigns. This is the default status for newly added contacts.
+    The contact can be included in campaigns. Default status for new contacts.
   </Card>
-
   <Card title="Inactive" icon="circle-pause">
-    The contact is excluded from campaign dialing but remains in your CRM.
+    Excluded from campaign dialing but remains in your contacts.
   </Card>
-
   <Card title="Do not call" icon="ban">
-    The contact has opted out. Chattrvox will never dial a do-not-call contact, even if they appear in a campaign's contact source.
+    Chattrvox never dials a do-not-call contact, even if they appear in a campaign's contact list.
   </Card>
 </CardGroup>
 
 <Warning>
-  The do-not-call status is enforced automatically. If a contact asks not to be called during a campaign call, the AI marks them do-not-call immediately. This cannot be overridden at the campaign level.
+  Do-not-call is enforced automatically. If a contact asks not to be called during a call, Chattrvox marks them do-not-call immediately. This cannot be overridden at the campaign level.
 </Warning>
 
-## Creating a contact list
-
-Contact lists let you group contacts by audience, campaign, or any other criteria that makes sense for your workflow.
+## Create a contact list
 
 <Steps>
   <Step title="Open Contacts">
-    Navigate to **Contacts** in the sidebar.
+    Go to **Contacts** in the navbar.
   </Step>
   <Step title="Add a new list">
-    Select **\+ New List** in the list filter bar at the top of the page.
+    Click **+ New List** in the filter bar at the top of the page.
   </Step>
   <Step title="Name the list">
-    Enter a name for the list and confirm. The new list appears as a filter chip and is immediately available when creating a campaign.
+    Enter a name and confirm. The list appears as a filter chip and is available immediately when creating a campaign.
   </Step>
 </Steps>
 
-## Adding contacts manually
+## Add contacts manually
 
 <Steps>
   <Step title="Select a list">
     Click the list filter chip you want to add the contact to.
   </Step>
   <Step title="Open the add contact dialog">
-    Select **Add Contact** from the toolbar.
+    Click **Add Contact** in the toolbar.
   </Step>
-  <Step title="Fill in the contact details">
-    Enter the contact's first name, last name, phone number, and email address. Assign them to a list and set their initial status. Phone number is required.
+  <Step title="Fill in the details">
+    Enter the contact's first name, last name, phone number, and email. Phone number is required.
   </Step>
   <Step title="Save">
-    Select **Add Contact** to save. The contact appears in the table immediately.
+    Click **Add Contact**. The contact appears in the table immediately.
   </Step>
 </Steps>
 
-## Importing contacts from a CSV file
-
-CSV import is the fastest way to load a large number of contacts. You can import a CSV directly as a standalone file, or upload it into an existing contact list.
-
-### CSV file format
-
-Your CSV file must have a header row. The recognized column names are:
-
-| Column | Required | Description |
-| --- | --- | --- |
-| `first_name` | Yes | Contact's first name |
-| `last_name` | No | Contact's last name |
-| `phone` | Yes | Phone number in any standard format |
-| `email` | No | Email address |
-| `status` | No | `active`, `inactive`, or `do-not-call` (defaults to `active`) |
-| `do_not_call` | No | `true` or `false` |
-
-<Note>
-  Phone numbers are automatically normalized to E.164 format. You can provide numbers in formats like `07911123456`, `4407911123456`, or `+44 7911 123456` and they will be stored consistently.
-</Note>
-
-### Uploading a CSV
+## Import contacts from a CSV
 
 <Tabs>
   <Tab title="Quick upload">
-    Select **Upload CSV** from the contacts toolbar. Choose your file from the file picker. Chattrvox parses the file, imports all valid rows, and opens a preview showing the contacts in the file. The file is saved as a CSV import and can be selected as a contact source when creating a campaign.
+    Click **Upload CSV** in the contacts toolbar and select your file. Chattrvox imports all valid rows and saves the file as a CSV import. Select it as a contact source when creating a campaign.
   </Tab>
   <Tab title="Upload into a list">
-    Select **Upload List** to import a CSV and assign all contacts to a specific contact list at the same time. This creates individual contact records linked to the list you choose.
+    Click **Upload List** to import a CSV and assign all contacts to a specific list at the same time.
   </Tab>
 </Tabs>
 
-<Tip>
-  After uploading, use the CSV preview to verify the data looks correct before launching a campaign. Select **View Contacts** in the preview to switch back to the main contacts table.
-</Tip>
+### CSV format
 
-## Searching and filtering contacts
+Your file must have a header row. Recognized column names:
 
-The contacts toolbar provides several ways to narrow down what you see.
+| Column | Required | Notes |
+| --- | --- | --- |
+| `first_name` | Yes | Also accepts: `firstname`, `first`, `fname` |
+| `last_name` | No | Also accepts: `lastname`, `last`, `lname` |
+| `phone` | Yes (if no email) | Also accepts: `phone_number`, `telephone`, `mobile` |
+| `email` | Yes (if no phone) | Also accepts: `email_address` |
+| `status` | No | `active`, `inactive`, or `do-not-call`. Defaults to `active` |
+| `do_not_call` | No | `true` or `1` marks the contact do-not-call on import |
 
-- **Search** — type a name, email, or phone number to filter the table in real time.
-- **List filter** — click a list chip at the top to show only contacts in that list.
-- **Status filter** — filter by active, inactive, or do-not-call.
-- **Sort** — sort contacts by name, date added, or status, in ascending or descending order.
+<Note>
+  Chattrvox normalizes phone numbers automatically. Formats like `07911123456`, `+44 7911 123456`, and `4407911123456` all import correctly.
+</Note>
 
-## Viewing a contact's details
+## Search and filter contacts
 
-Click any row in the contacts table to open the detail panel on the right side of the screen. The panel shows the contact's full information, which list they belong to, their status, and a history of interactions.
+- **Search** — type a name, email, or phone number to filter in real time
+- **List filter** — click a list chip to show only contacts in that list
+- **Status filter** — filter by active, inactive, or do-not-call
+- **Sort** — sort by name, date added, or status
 
-From the detail panel you can edit the contact, change their list assignment, update their status, or delete them.
+## Contact details
 
-## Bulk actions
+Click any row to open the contact's detail panel. From here you can edit the name, phone, email, list assignment, and status, or delete the contact.
 
-Select one or more contacts using the checkboxes in the table to enable bulk actions in the toolbar.
+## Bulk delete
 
-<CardGroup cols={2}>
-  <Card title="Delete selected" icon="trash">
-    Permanently removes all selected contacts. This cannot be undone.
-  </Card>
-
-  <Card title="Select all" icon="check-square">
-    Use the header checkbox to select all contacts currently visible after applying your search and filter criteria.
-  </Card>
-</CardGroup>
+Select contacts using the checkboxes in the table, then click **Delete selected** in the toolbar.
 
 <Warning>
-  Bulk delete permanently removes the selected contacts and cannot be undone. Make sure you have selected the right contacts before confirming.
+  Bulk delete permanently removes the selected contacts. This cannot be undone.
 </Warning>
 
-## Launching a campaign from Contacts
+## Launch a campaign from Contacts
 
-When you have a list selected in the filter bar, a **Create Campaign** shortcut appears next to the list chips. Selecting it opens the new campaign dialog with that list pre-selected as the contact source, saving you from switching between pages.
+When you have a list selected in the filter bar, a **Create Campaign** button appears next to the list chips. Clicking it opens the new campaign dialog with that list pre-selected.
 
-## Deleting a CSV file
+## Delete a CSV import
 
-To remove a CSV import, hover over the file in the CSV imports section and select the delete option. If the CSV is being used as the contact source for any active campaigns, Chattrvox will warn you and list the affected campaigns before allowing you to proceed.
+Hover over a CSV file in the imports section and click the delete option. If the file is being used as the contact source for an active campaign, Chattrvox warns you before proceeding.
+
+## Next steps
+
+<Card title="Create a campaign" icon="megaphone" href="/campaigns/create">
+  Run outbound calls against your contact list.
+</Card>
