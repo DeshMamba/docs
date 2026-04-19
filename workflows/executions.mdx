@@ -1,0 +1,52 @@
+---
+title: "Executions"
+sidebarTitle: "Executions"
+description: "Monitor workflow runs, inspect per-node logs, and troubleshoot failures in the Chattrvox Composer."
+---
+
+Chattrvox logs every workflow execution so you can see exactly what ran, what succeeded, and what failed.
+
+## Viewing execution history
+
+From the **Workflows** page, click the **History** tab. Chattrvox shows a log of every execution across all your workflows.
+
+Filter by:
+- **Timeframe** — last 24 hours, 7 days, or 30 days
+- **Status** — All, Completed, Failed, or Running
+
+Each row shows the workflow name, execution status, duration, and when it ran.
+
+## Inspecting a single execution
+
+Click any execution row to expand it. Chattrvox shows a per-node breakdown of that run:
+
+| Field | Description |
+| --- | --- |
+| Node type | The type of action or trigger that ran |
+| Status | Completed or Failed |
+| Duration | How long the node took to execute |
+| Error | Error message if the node failed |
+
+Use this to pinpoint exactly which step in a workflow broke and why.
+
+## The Review tab
+
+The **Review** tab on the Workflows page surfaces workflows with recent consecutive failures. Check here first when something stops working — Chattrvox flags the affected workflows so you do not have to scan the full execution history.
+
+## Common failure causes
+
+- Agent has no phone number assigned (Call Lead node fails)
+- Phone number credentials disconnected (Send SMS node fails)
+- HubSpot or GoHighLevel connection expired (CRM nodes fail)
+- Required variable is empty at runtime (condition or field mismatch)
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Triggers" icon="bolt" href="/workflows/triggers">
+    Review trigger configuration to rule out setup issues.
+  </Card>
+  <Card title="Actions" icon="play" href="/workflows/actions">
+    Review action node requirements and configuration options.
+  </Card>
+</CardGroup>

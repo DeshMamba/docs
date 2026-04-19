@@ -1,95 +1,78 @@
 ---
-title: "Building Workflows"
-description: "Step-by-step guide to creating, configuring, saving, and deploying automation workflows in the Chattrvox visual Composer canvas editor."
+title: "Building workflows"
+sidebarTitle: "Building workflows"
+description: "Create, configure, and deploy automation workflows in the Chattrvox Composer canvas editor."
 ---
 
-The Composer editor is a drag-and-drop canvas where you assemble workflows from nodes connected by edges. Each node represents either a trigger (what starts the workflow) or an action (what the workflow does). You open the editor by clicking any workflow name from the Workflows list, or by creating a new workflow.
+The Composer is a visual canvas where you build workflows by connecting nodes.
 
-## Starting from scratch or a template
+Each node is either a trigger (what starts the workflow) or an action (what the workflow does). Go to **Workflows** in the navbar and click **Create** to open the editor.
 
-Before you reach the canvas, you choose how to start:
+## Create a workflow
 
 <Steps>
-  <Step title="Open the create dialog">
-    From the **Workflows** page, click **Create** in the top-right corner. Give your workflow a name and optional description, then pick a category to keep things organized.
+  <Step title="Name your workflow">
+    Enter a name and optional description. Pick a category to keep your workflows organized.
   </Step>
   <Step title="Choose a starting point">
-    Select **Start from scratch** to open an empty canvas, or browse the **Template gallery** to start from a pre-built flow. Templates include all nodes and connections already wired up — you only need to configure the fields specific to your account.
+    Select **Start from scratch** for an empty canvas, or pick a template from the gallery. Templates come pre-wired — configure the fields specific to your account and deploy.
   </Step>
   <Step title="Open the editor">
-    Click **Create** (or **Use template**) to open the canvas for your new workflow.
+    Click **Create** to open the canvas.
   </Step>
 </Steps>
 
-### Using the template gallery
-
-The gallery shows platform-provided templates and any templates you've saved yourself. Filter by **Platform** or **My Templates**, or search by name. Each card shows the number of steps in the template. Click a card to pre-load it into the create dialog.
-
-<Tip>
-  You can save any workflow you build as a template for reuse. Open the workflow, then use the **Export** option in the top toolbar.
-</Tip>
-
-## Understanding the canvas layout
-
-When the editor opens, you'll see three main areas:
+## The canvas layout
 
 | Area | Purpose |
 | --- | --- |
-| **Canvas (center)** | Where you place and connect nodes. Scroll or use trackpad gestures to navigate. |
-| **Left panel** | Appears when you click the **\+** button — lets you pick triggers and actions to add. |
-| **Right panel** | Appears when you click a node or connection — shows configuration fields for the selected element. |
+| **Canvas** | Where you place and connect nodes. Scroll or use trackpad gestures to navigate. |
+| **Left panel** | Opens when you click **+** — shows available triggers and actions to add. |
+| **Right panel** | Opens when you click a node — shows its configuration fields. |
 
-The toolbar at the top lets you switch between **Structured** layout (nodes are automatically arranged in a vertical flow) and **Free** layout (you position nodes manually).
+Switch between **Structured** layout (nodes arranged automatically) and **Free** layout (position nodes manually) using the toolbar at the top.
 
-## Adding your first trigger
+## Add a trigger
 
-Every workflow starts with exactly one trigger node. The trigger defines what event starts the workflow.
+Every workflow starts with exactly one trigger.
 
 <Steps>
   <Step title="Click the trigger placeholder">
-    On an empty canvas you'll see a prompt to add a trigger. Click it to open the left panel showing available trigger categories.
+    On an empty canvas, click the prompt to add a trigger. The left panel opens showing trigger categories.
   </Step>
-  <Step title="Pick a trigger type">
-    Triggers are grouped by category — Campaigns, Voice & Calls, Leads & Contacts, and Integrations. Click a category row to see the specific trigger options, then select one.
+  <Step title="Select a trigger">
+    Triggers are grouped by category: Campaigns, Voice & Calls, Leads & Contacts, and Integrations. Click a category to see the options, then select one.
   </Step>
   <Step title="Configure the trigger">
-    The right panel opens with the trigger's settings. Fill in any required fields (for example, selecting a specific HubSpot event type). The trigger node on the canvas updates to show your configuration.
+    The right panel opens with the trigger's settings. Fill in any required fields. The trigger node updates on the canvas as you configure it.
   </Step>
 </Steps>
 
-## Adding action nodes
-
-After the trigger, you build the sequence of things your workflow should do.
+## Add action nodes
 
 <Steps>
-  <Step title="Click the + button on the canvas">
-    Below any existing node you'll see a **\+** button. Click it to open the node selection panel showing available actions, grouped by category: Communication, Logic & Flow, CRM, and Connections.
+  <Step title="Click the + button">
+    Below any node, click **+** to open the action selection panel. Actions are grouped by category: Communication, Logic & Flow, CRM, and Connections.
   </Step>
   <Step title="Select an action">
-    Click an action category (for example, **SMS**) to add it directly, or click an integration like **HubSpot** to drill into its specific actions.
+    Click an action to add it to the canvas.
   </Step>
   <Step title="Configure the node">
-    Click the newly added node to open its configuration in the right panel. Fill in all required fields. Nodes with missing required configuration show an incomplete indicator on the canvas.
+    Click the node to open its configuration in the right panel. Nodes with missing required fields show an incomplete indicator on the canvas.
   </Step>
-  <Step title="Repeat for each step">
-    Continue adding nodes until your workflow is complete. You can add nodes between existing ones by clicking the **\+** button that appears when hovering over a connection line.
+  <Step title="Repeat">
+    Add nodes until your workflow is complete. Insert a node between existing ones by clicking **+** on any connection line.
   </Step>
 </Steps>
 
-## Connecting nodes with edges
+## Branch with conditions
 
-When you add a node using the **\+** button, Chattrvox automatically creates the connection (edge) between nodes. You can also drag from one node's output handle to another node's input handle to create a manual connection.
-
-### Setting conditions on connections
-
-Each connection can carry a condition that controls whether the next node runs. Click any connection line to open its settings in the right panel.
-
-Available conditions:
+Each connection between nodes can carry a condition that controls whether the next node runs. Click any connection line to set it.
 
 | Condition | When the next node runs |
 | --- | --- |
-| **Run Always** (default) | Every time, regardless of outcome |
-| **If Call Booked** | Only when an appointment was booked during the call |
+| **Run Always** | Every time, regardless of outcome |
+| **If Call Booked** | Only when an appointment was booked |
 | **If Call Not Booked** | Only when no appointment was booked |
 | **If Answered** | Only when the contact picked up |
 | **If No Answer** | Only when the call went unanswered |
@@ -99,36 +82,43 @@ Available conditions:
 | **If Not Interested** | Only when the contact declined |
 | **If Callback Requested** | Only when the contact asked to be called back |
 | **If Do Not Call** | Only when the contact opted out |
-| **If Evaluation Success** | Only when a condition node evaluated to true |
-| **If Evaluation Failed** | Only when a condition node evaluated to false |
-| **Custom Variable Condition** | Only when a custom expression you write evaluates to true (for example, `{status} == 'active'`) |
+| **If Evaluation Success** | Only when a Condition node evaluated to true |
+| **If Evaluation Failed** | Only when a Condition node evaluated to false |
+| **Custom Variable Condition** | Only when a custom expression evaluates to true |
 
 <Tip>
-  Use connection conditions to build branching logic without a Condition node — for example, send an SMS only if the call was booked, and skip it otherwise.
+  Use connection conditions to branch without a Condition node. For example: send an SMS only if the call was booked, skip it otherwise.
 </Tip>
 
-## Linking a workflow to an assistant
+## Link a workflow to an agent
 
-For call-triggered workflows, you need to attach the workflow to an assistant before it can run. In the editor toolbar, open the **assistant selector** dropdown and choose which assistant should fire this workflow. You can attach the same workflow to multiple assistants by editing the assignment from the assistant's settings page.
+For call-triggered workflows, open the **assistant selector** in the editor toolbar and choose which agent fires this workflow. You can assign the same workflow to multiple agents.
 
-## Saving and deploying
+## Save and deploy
 
 <Steps>
-  <Step title="Save your work">
-    Click **Save** in the top toolbar at any time. The editor also auto-saves as you work. A timestamp in the toolbar shows when the workflow was last saved.
+  <Step title="Save">
+    Click **Save** in the toolbar. The editor also auto-saves as you work.
   </Step>
-  <Step title="Deploy the workflow">
-    When you're ready to go live, click **Deploy** (the rocket icon). This changes the workflow status from **Draft** to **Active**. The workflow will now execute automatically when its trigger fires.
+  <Step title="Deploy">
+    Click **Deploy** (the rocket icon) to set the workflow from Draft to Active. Chattrvox executes it automatically from that point on.
   </Step>
-  <Step title="Pause or re-activate">
-    To temporarily stop a workflow without deleting it, click the status badge in the toolbar and select **Pause**. Click it again to set it back to **Active**.
+  <Step title="Pause or reactivate">
+    Click the status badge in the toolbar and select **Pause** to suspend the workflow without deleting it. Click again to set it back to Active.
   </Step>
 </Steps>
 
 <Warning>
-  Deploying a workflow makes it live immediately. Make sure all nodes are fully configured (no incomplete indicators on the canvas) before deploying.
+  Deploying makes the workflow live immediately. Make sure all nodes are fully configured before deploying.
 </Warning>
 
-## Reviewing execution history
+## Next steps
 
-After a workflow runs, you can inspect what happened. From the Workflows list page, switch to the **History** tab to see a log of every execution: which nodes ran, what data they received, and whether each step succeeded or failed. The **Review** tab surfaces workflows that have recent failures so you can spot and fix issues quickly.
+<CardGroup cols={2}>
+  <Card title="Triggers" icon="bolt" href="/workflows/triggers">
+    Every trigger type and how to configure each one.
+  </Card>
+  <Card title="Actions" icon="play" href="/workflows/actions">
+    Every action node and its configuration options.
+  </Card>
+</CardGroup>

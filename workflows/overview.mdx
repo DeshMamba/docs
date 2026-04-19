@@ -1,62 +1,51 @@
 ---
-title: "Workflows Overview"
-description: "Learn how Chattrvox Composer lets you build visual automations that run after calls, on CRM events, or on demand — no code required."
+title: "Workflows overview"
+sidebarTitle: "Overview"
+description: "Workflows automate what happens after calls, when contacts are created, or when events fire in your connected tools."
 ---
 
-Workflows (also called the **Composer**) are Chattrvox's visual automation builder. You connect a series of triggers and actions on a canvas to create sequences that run automatically — sending SMS follow-ups, updating your CRM, initiating callbacks, applying tags, or branching on call outcomes. Each workflow you build is attached to one or more AI assistants and fires whenever the attached event occurs.
+Workflows automate the actions that follow an event.
+
+Build a sequence of steps in the Composer — send an SMS, update your CRM, place a follow-up call, wait, branch on outcome — and Chattrvox runs it automatically every time the trigger fires.
 
 ## What you can automate
 
 <CardGroup cols={2}>
-  <Card title="Post-call SMS follow-up" icon="message">
-    Send a personalized text immediately after a call ends, using the contact's name, call summary, or appointment details pulled directly from the call.
+  <Card title="Post-call follow-up" icon="message">
+    Send a personalized SMS after every call using the contact's name, call summary, or appointment details.
   </Card>
-
   <Card title="CRM updates" icon="database">
-    Create or update contacts and deals in HubSpot or GoHighLevel the moment a call completes, keeping your CRM in sync automatically.
+    Create or update contacts and deals in HubSpot or GoHighLevel the moment a call completes.
   </Card>
-
   <Card title="Triggered outbound calls" icon="phone">
-    Respond to a Facebook lead ad or a new HubSpot contact by dispatching an AI outbound call within seconds of the event.
+    Respond to a new lead from Facebook or HubSpot by placing an AI call within seconds of the event.
   </Card>
-
   <Card title="Conditional branching" icon="git-branch">
-    Route contacts down different paths based on whether a call was booked, answered, went to voicemail, or matched a custom outcome.
+    Route contacts down different paths based on call outcome, sentiment, or any variable value.
   </Card>
 </CardGroup>
 
-## How workflows connect to AI assistants
-
-A workflow on its own doesn't run until you link it to an assistant. When a call handled by that assistant ends, the platform fires any active workflows attached to it. You can attach the same workflow to multiple assistants, or build assistant-specific flows for more targeted automation.
-
-<Note>
-  Workflows using a **Campaign** trigger are linked to a campaign rather than a specific assistant. They fire when a contact passes through that campaign.
-</Note>
-
 ## Workflow statuses
-
-Every workflow has one of three statuses:
 
 | Status | Meaning |
 | --- | --- |
-| **Draft** | Saved but not running. The workflow will not execute even if its trigger fires. Use this while you are building. |
-| **Active** | Deployed and live. The workflow executes automatically when the trigger condition is met. |
-| **Paused** | Temporarily suspended. The workflow is preserved but will not execute until you resume it. |
-
-You can toggle between active and paused at any time from the workflow list or from inside the editor.
+| **Draft** | Saved but not running. The workflow does not execute even if the trigger fires. |
+| **Active** | Live. Chattrvox executes the workflow automatically when the trigger condition is met. |
+| **Paused** | Temporarily suspended. The workflow is preserved but will not run until you resume it. |
 
 ## Next steps
 
 <CardGroup cols={2}>
   <Card title="Build a workflow" icon="hammer" href="/workflows/building">
-    Step-by-step guide to creating your first workflow in the Composer.
+    How to use the Composer canvas to build and deploy a workflow.
   </Card>
-
-  <Card title="Triggers and actions reference" icon="list" href="/workflows/triggers-actions">
-    Complete reference for every trigger type and action node available.
+  <Card title="Triggers" icon="bolt" href="/workflows/triggers">
+    Every trigger type available and how to configure each one.
   </Card>
-
-  <Card title="Using variables" icon="code" href="/workflows/variables">
-    Insert dynamic call data, contact info, and appointment details into your messages and actions.
+  <Card title="Actions" icon="play" href="/workflows/actions">
+    Every action node available and its configuration options.
+  </Card>
+  <Card title="Variables" icon="code" href="/workflows/variables">
+    Insert dynamic call data, contact info, and appointment details into your steps.
   </Card>
 </CardGroup>

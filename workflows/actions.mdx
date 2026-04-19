@@ -1,132 +1,143 @@
 ---
 title: "Actions"
-description: "Full reference for every action node available in the Chattrvox Composer, including configuration options for each node type."
+sidebarTitle: "Actions"
+description: "Every action node available in the Chattrvox Composer, with configuration options for each."
 ---
 
-**Actions** are steps that the workflow performs. This page documents all available node types and their configuration options.
+Actions are the steps your workflow performs after the trigger fires. Chain as many actions as needed and use connection conditions to branch between paths.
 
-<Tabs>
-  <Tab title="Actions">
-    Actions are the steps your workflow performs after the trigger fires. You can chain as many actions as needed, and use connection conditions to branch your logic.
+## Communication
 
-    <AccordionGroup>
-      <Accordion title="Call Lead">
-        Initiates an AI-powered outbound call to the contact. The call is placed using your connected Twilio number and dispatched to the AI assistant you select.
+<AccordionGroup>
 
-        **Configuration:**
+  <Accordion title="Call Lead">
+    Places an AI-powered outbound call to the contact.
 
-        - **Assistant** — the AI assistant that will handle the call
-        - **Phone number** — the number to dial (defaults to `{phone_number}` to use the contact's number on file)
-        - **Call script / context** — optional instructions or context to pass to the assistant for this specific call
+    **Configuration:**
+    - **Assistant** — the agent that handles the call
+    - **Phone number** — the number to dial (defaults to `{phone_number}`)
+    - **Recipient name** — name passed to the agent (defaults to `{name}`)
 
-        **Use case:** Automatically call a new Facebook lead within seconds of form submission, or call back a contact who requested a follow-up during a previous call.
-      </Accordion>
+    **Outputs:** Call Completed, Call Failed, Voicemail Detected. Connect different nodes to each branch to handle each outcome.
 
-      <Accordion title="Send SMS (Twilio)">
-        Sends an SMS message to the contact using your connected Twilio account.
+    **Use case:** Call a new Facebook lead within seconds of form submission, or call back a contact who requested a follow-up.
+  </Accordion>
 
-        **Configuration:**
+  <Accordion title="Send SMS">
+    Sends an SMS to the contact using your connected phone number.
 
-        - **To** — the recipient's phone number (defaults to `{phone_number}`)
-        - **Message body** — the text to send. Use the variable picker to insert dynamic values like `{name}`, `{summary}`, or `{appointment.start_time}`.
+    **Configuration:**
+    - **To** — recipient phone number (defaults to `{phone_number}`)
+    - **Message body** — the text to send. Use the variable picker to insert dynamic values like `{name}`, `{summary}`, or `{appointment.start_time}`.
 
-        **Requirements:** A Twilio account and phone number must be connected in **Settings → Integrations**.
+    <Tip>
+      Keep messages under 160 characters to avoid carrier splitting. Variable values count toward the limit at their resolved length.
+    </Tip>
+  </Accordion>
 
-        <Tip>
-          Keep SMS messages under 160 characters to avoid carrier splitting. Variable values count toward the character limit at their resolved length.
-        </Tip>
-      </Accordion>
+  <Accordion title="Slack">
+    Sends a message to a Slack channel or user. Requires Slack to be connected under **Settings → Integrations**.
 
-      <Accordion title="Condition">
-        Evaluates a true/false condition and routes the workflow down one of two branches. Use this when you need to take different actions depending on a value — for example, only sending a confirmation SMS when `{outcome}` equals "booked".
+    **Configuration:**
+    - **Channel** — channel name (e.g., `#general`) or user ID
+    - **Message** — message content. Supports variables.
+  </Accordion>
 
-        **Configuration:**
+</AccordionGroup>
 
-        - **Condition expression** — the rule to evaluate, using variable syntax (for example, `{sentiment} == 'positive'`)
+## Logic & flow
 
-        The node has two output handles: **True** and **False**. Connect different nodes to each handle to define what happens in each case.
-      </Accordion>
+<AccordionGroup>
 
-      <Accordion title="Router">
-        Splits the workflow into multiple branches based on per-branch conditions. Unlike the Condition node (which is binary), a Router supports as many branches as you need.
+  <Accordion title="Condition">
+    Evaluates a true/false condition and routes the workflow down one of two branches.
 
-        **Configuration:**
+    **Configuration:**
+    - **Condition expression** — the rule to evaluate using variable syntax (e.g., `{sentiment} == 'positive'`)
 
-        - Add a branch for each path you want to support
-        - Write a condition expression for each branch
-        - Connect each branch handle to the next action for that path
+    The node has two output handles: **True** and **False**. Connect different nodes to each to define what happens in each case.
+  </Accordion>
 
-        **Use case:** Route a contact to different follow-up sequences based on call outcome — one path for "booked", one for "interested but not booked", and one for "not interested".
-      </Accordion>
+  <Accordion title="Router">
+    Splits the workflow into multiple branches based on per-branch conditions. Use Router when you need more than two paths.
 
-      <Accordion title="Wait">
-        Pauses workflow execution for a specified duration before continuing to the next node.
+    **Configuration:**
+    - Add a branch for each path
+    - Set a condition expression for each branch: variable, operator (equals, not_equals, contains, not_contains), and value
+    - Connect each branch to its next action
 
-        **Configuration:**
+    **Use case:** Route contacts to different follow-up sequences based on call outcome — one path for booked, one for interested, one for not interested.
+  </Accordion>
 
-        - **Duration** — how long to wait
-        - **Unit** — seconds, minutes, or hours
+  <Accordion title="Wait">
+    Pauses workflow execution for a set duration before continuing to the next node.
 
-        **Use case:** Wait 30 minutes after a call before sending a follow-up SMS, so the message feels timely rather than immediate.
+    **Configuration:**
+    - **Duration** — how long to wait
+    - **Unit** — seconds, minutes, hours, or days
 
-        <Note>
-          The actual delay may be slightly longer than configured during periods of high platform load.
-        </Note>
-      </Accordion>
+    **Use case:** Wait 30 minutes after a call before sending a follow-up SMS.
+  </Accordion>
 
-      <Accordion title="Tag Contact">
-        Applies a tag to the current contact in your CRM. Tags help you segment contacts, filter lists, and trigger other automations.
+  <Accordion title="Tag Contact">
+    Applies a tag to the contact in your CRM.
 
-        **Configuration:**
+    **Configuration:**
+    - **Tag** — the label to apply
 
-        - **Tag** — the label to apply to the contact
+    **Use case:** Tag a contact as "interested" when the call outcome matches, then use that tag to filter a follow-up campaign list.
+  </Accordion>
 
-        **Use case:** Tag a contact as "interested" when the call outcome matches, then use that tag to filter your contact list for a follow-up campaign.
-      </Accordion>
+</AccordionGroup>
 
-      <Accordion title="HubSpot CRM actions">
-        Performs a write operation in your connected HubSpot account.
+## CRM
 
-        **Available actions:**
+<AccordionGroup>
 
-        - **Create Contact** — creates a new HubSpot contact with fields mapped from variables
-        - **Update Contact** — updates an existing contact's properties
-        - **Create Deal** — creates a new deal and associates it with a contact
-        - **Create Company** — creates a new company record
-        - **Create Associations** — links two existing HubSpot objects (for example, a contact to a deal)
+  <Accordion title="HubSpot">
+    Writes data to your connected HubSpot account. Requires HubSpot to be connected under **Settings → Integrations**.
 
-        **Requirements:** HubSpot must be connected in **Settings → Integrations** with a valid OAuth connection.
-      </Accordion>
+    **Available actions:**
+    - **Create Contact** — creates a new HubSpot contact with fields mapped from variables
+    - **Update Contact** — updates an existing contact's properties
+    - **Create Deal** — opens a new deal and associates it with a contact
+    - **Create Company** — creates a new company record
+    - **Create Associations** — links two HubSpot objects (e.g., a contact to a deal)
+  </Accordion>
 
-      <Accordion title="GoHighLevel CRM actions">
-        Performs a write operation in your connected GoHighLevel account.
+  <Accordion title="GoHighLevel">
+    Writes data to your connected GoHighLevel account. Requires GoHighLevel to be connected under **Settings → Integrations**.
 
-        **Available actions:**
+    **Available actions:**
+    - **Create Contact** — creates a new contact
+    - **Update Contact** — updates an existing contact's fields
+    - **Add to Campaign** — enrolls the contact in a GoHighLevel campaign
+    - **Add Tag** — applies a tag to the contact in GoHighLevel
+  </Accordion>
 
-        - **Create Contact** — creates a new contact
-        - **Update Contact** — updates an existing contact's fields
-        - **Add to Campaign** — enrolls the contact in a GoHighLevel campaign
-        - **Add Tag** — applies a tag to the contact in GoHighLevel
+</AccordionGroup>
 
-        **Requirements:** GoHighLevel must be connected in **Settings → Integrations**.
-      </Accordion>
+## Connections
 
-      <Accordion title="HTTP Request">
-        Makes an HTTP call to any external API or webhook URL. Use this to integrate with services that aren't natively supported in the Composer.
+<AccordionGroup>
 
-        **Available methods:**
+  <Accordion title="HTTP Request">
+    Makes an HTTP call to any external API or webhook URL. Use this to integrate with tools not natively supported in the Composer.
 
-        - GET, POST, PUT, PATCH, DELETE
+    **Configuration:**
+    - **URL** — the endpoint to call. Supports variables (e.g., `https://api.example.com/contacts/{phone_number}`)
+    - **Method** — GET, POST, PUT, PATCH, or DELETE
+    - **Headers** — key-value pairs for authorization or content type
+    - **Body** — JSON payload for POST/PUT/PATCH requests. Supports variables.
+    - **Expected outputs** — response field names to extract as variables for downstream nodes
 
-        **Configuration:**
+    **Use case:** Push call summaries to a custom webhook, update an external database, or trigger a notification in a third-party tool.
+  </Accordion>
 
-        - **URL** — the endpoint to call. Supports variables (for example, `https://api.example.com/contacts/{phone_number}`)
-        - **Method** — the HTTP method to use
-        - **Headers** — key-value pairs for authorization or content type
-        - **Body** — JSON payload for POST/PUT/PATCH requests. Use variables to inject dynamic data.
+</AccordionGroup>
 
-        **Use case:** Push call summaries to a custom webhook, update a record in a database, or trigger a notification in a third-party tool.
-      </Accordion>
-    </AccordionGroup>
-  </Tab>
-</Tabs>
+## Next steps
+
+<Card title="Variables" icon="code" href="/workflows/variables">
+  Insert dynamic call data, contact info, and appointment details into your actions.
+</Card>
