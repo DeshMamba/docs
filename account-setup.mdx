@@ -1,6 +1,6 @@
 ---
 title: "Account Setup"
-description: "Set up your Chattrvox account for your team: create workspaces, invite members with the right roles, and connect Twilio and calendar credentials."
+description: "Set up your Wave Runner account for your team: create workspaces, invite members with the right roles, and connect Twilio and calendar credentials."
 ---
 
 After completing the onboarding wizard, your next step is setting up your account for day-to-day use. This covers creating workspaces to organize your work, inviting your team and assigning roles, and connecting the external credentials your assistants need to make calls and book appointments.
@@ -13,7 +13,7 @@ A workspace is a container for your assistants, campaigns, contacts, workflows, 
 
 ### Workspace types
 
-There are two workspace types in Chattrvox:
+There are two workspace types in Wave Runner:
 
 - **Simple workspace** — The default type. Suitable for a single team or project. One workspace per account on most plans.
 - **Agency workspace** — Available on agency plans. An agency workspace can own multiple client workspaces. This lets you manage separate clients with isolated data, minute allocations, and member lists under a single account.
@@ -108,10 +108,10 @@ Twilio provides the phone numbers your assistants use to make and receive calls.
 3. Enter your **Account SID** and **Auth Token** from the [Twilio Console](https://console.twilio.com).
 4. Add a label (for example, "Main account") and click **Import from Twilio**.
 
-Chattrvox creates a SIP trunk in your Twilio account and imports your phone numbers. Your numbers are then available to assign to assistants from the assistant editor.
+Wave Runner creates a SIP trunk in your Twilio account and imports your phone numbers. Your numbers are then available to assign to assistants from the assistant editor.
 
 <Warning>
-  Do not delete or modify the SIP trunk that Chattrvox creates in your Twilio account. Removing it will break call routing for all assistants using that credential set.
+  Do not delete or modify the SIP trunk that Wave Runner creates in your Twilio account. Removing it will break call routing for all assistants using that credential set.
 </Warning>
 
 You can connect multiple Twilio accounts if needed — for example, one per client. Each credential set is labeled separately.
@@ -141,7 +141,7 @@ If your plan includes white-label capabilities, you can configure a custom domai
 White-label configuration covers:
 
 - Your brand name and logo
-- Custom domain (requires a DNS CNAME record pointing to Chattrvox)
+- Custom domain (requires a DNS CNAME record pointing to Wave Runner)
 - Colors and visual identity for your branded portal
 - Privacy policy and terms of service URLs shown on the login page
 

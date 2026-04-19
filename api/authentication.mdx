@@ -1,13 +1,13 @@
 ---
 title: 'API Authentication — API Keys, Tokens, and Workspace'
-description: 'Authenticate Chattrvox API requests with API keys or session JWTs. Learn the key format, how to generate keys, and how to scope requests to a workspace.'
+description: 'Authenticate Wave Runner API requests with API keys or session JWTs. Learn the key format, how to generate keys, and how to scope requests to a workspace.'
 ---
 
-Every request to the Chattrvox API requires an `Authorization` header. The API supports two bearer token types: API keys for integrations and long-lived programmatic access, and session JWTs for browser-based or session-scoped requests. API keys are the recommended choice for any external integration.
+Every request to the Wave Runner API requires an `Authorization` header. The API supports two bearer token types: API keys for integrations and long-lived programmatic access, and session JWTs for browser-based or session-scoped requests. API keys are the recommended choice for any external integration.
 
 ## API keys (recommended)
 
-API keys are long-lived tokens designed for machine-to-machine use. They work with AI clients (Claude Desktop, Cursor), scripts, webhooks, and the Chattrvox MCP endpoint.
+API keys are long-lived tokens designed for machine-to-machine use. They work with AI clients (Claude Desktop, Cursor), scripts, webhooks, and the Wave Runner MCP endpoint.
 
 ### Key format
 
@@ -67,7 +67,7 @@ The raw key value is never stored on the server and cannot be recovered after th
 
 ## JWT tokens (session-based)
 
-Session tokens are issued at login and are used by the Chattrvox web application for browser-based requests. You can use them for API calls during a session, but they expire (typically within an hour) and are not suitable for integrations or scripts.
+Session tokens are issued at login and are used by the Wave Runner web application for browser-based requests. You can use them for API calls during a session, but they expire (typically within an hour) and are not suitable for integrations or scripts.
 
 ```bash
 curl https://your-domain.com/api/v1/workflows \
@@ -82,7 +82,7 @@ The API automatically detects the token type by its prefix:
 
 ## Workspace scoping with `x-workspace-id`
 
-Chattrvox supports multiple workspaces per account. Pass the `x-workspace-id` header to scope your request to a specific workspace. Without this header, requests target your personal (non-workspace) context.
+Wave Runner supports multiple workspaces per account. Pass the `x-workspace-id` header to scope your request to a specific workspace. Without this header, requests target your personal (non-workspace) context.
 
 ```bash
 curl https://your-domain.com/api/v1/workflows \

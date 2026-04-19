@@ -1,9 +1,9 @@
 ---
-title: 'API Reference Overview — Chattrvox REST API'
-description: 'Complete reference for the Chattrvox REST API. Manage workflows, contacts, knowledge bases, campaigns, and usage programmatically.'
+title: 'API Reference Overview — Wave Runner REST API'
+description: 'Complete reference for the Wave Runner REST API. Manage workflows, contacts, knowledge bases, campaigns, and usage programmatically.'
 ---
 
-The Chattrvox REST API gives you programmatic access to the same capabilities available in the dashboard: create and trigger workflows, manage contacts, search knowledge bases, control campaigns, and query usage minutes. All endpoints are served under a single base URL and follow consistent conventions for authentication, headers, and error responses.
+The Wave Runner REST API gives you programmatic access to the same capabilities available in the dashboard: create and trigger workflows, manage contacts, search knowledge bases, control campaigns, and query usage minutes. All endpoints are served under a single base URL and follow consistent conventions for authentication, headers, and error responses.
 
 ## Base URL
 
@@ -11,11 +11,11 @@ The Chattrvox REST API gives you programmatic access to the same capabilities av
 https://your-domain.com/api/v1
 ```
 
-Replace `your-domain.com` with your Chattrvox domain or custom white-label domain. All endpoints are relative to this base.
+Replace `your-domain.com` with your Wave Runner domain or custom white-label domain. All endpoints are relative to this base.
 
 ## Authentication
 
-Every request requires an `Authorization` header with a Bearer token. Chattrvox supports two token types:
+Every request requires an `Authorization` header with a Bearer token. Wave Runner supports two token types:
 
 - **API keys** (`wr_live_...`) — recommended for integrations, scripts, and MCP clients
 - **JWT tokens** — session tokens for browser-based requests
@@ -29,7 +29,7 @@ curl https://your-domain.com/api/v1/workflows \
 
 ## Workspace scoping
 
-Chattrvox is multi-workspace. When you operate within a specific workspace, pass its UUID in the `x-workspace-id` header. Omitting this header targets your default (personal) context.
+Wave Runner is multi-workspace. When you operate within a specific workspace, pass its UUID in the `x-workspace-id` header. Omitting this header targets your default (personal) context.
 
 ```bash
 curl https://your-domain.com/api/v1/workflows \

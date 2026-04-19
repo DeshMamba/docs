@@ -6,7 +6,7 @@ description: "Campaigns run automated outbound calls against a contact list usin
 
 Campaigns run automated outbound calls against a contact list.
 
-Connect an agent to a list of contacts, set your calling schedule, and Chattrvox dials every contact automatically. After each call, outcomes are recorded and contact statuses update in real time.
+Connect an agent to a list of contacts, set your calling schedule, and Wave Runner dials every contact automatically. After each call, outcomes are recorded and contact statuses update in real time.
 
 ## How to run a campaign
 
@@ -18,7 +18,7 @@ Connect an agent to a list of contacts, set your calling schedule, and Chattrvox
     Choose which agent makes the calls. The agent's voice, prompt, and analysis settings apply to every call.
   </Step>
   <Step title="Set your schedule">
-    Pick calling days and hours, and set a daily cap. Chattrvox only dials within your configured window.
+    Pick calling days and hours, and set a daily cap. Wave Runner only dials within your configured window.
   </Step>
   <Step title="Launch and monitor">
     Start the campaign. Live metrics update as calls are placed, answered, and completed.
@@ -32,7 +32,7 @@ Connect an agent to a list of contacts, set your calling schedule, and Chattrvox
     The campaign has been created but not started. No calls are being placed.
   </Accordion>
   <Accordion title="Running">
-    The campaign is active. Chattrvox is dialing contacts according to your schedule and daily cap.
+    The campaign is active. Wave Runner is dialing contacts according to your schedule and daily cap.
   </Accordion>
   <Accordion title="Paused">
     Dialing has stopped. This happens manually, when the daily cap is reached, or when the current time is outside your calling hours. Resume at any time.
@@ -46,7 +46,7 @@ Connect an agent to a list of contacts, set your calling schedule, and Chattrvox
 </AccordionGroup>
 
 <Note>
-  Chattrvox pauses a campaign automatically when the daily cap is reached or when the current time falls outside your calling hours. It resumes on the next valid window.
+  Wave Runner pauses a campaign automatically when the daily cap is reached or when the current time falls outside your calling hours. It resumes on the next valid window.
 </Note>
 
 ## Live metrics
@@ -61,7 +61,7 @@ The campaigns list shows stats for every campaign without opening it.
     Contacts the agent classified as interested based on call outcome.
   </Card>
   <Card title="DNC" icon="ban">
-    Contacts who asked not to be called again. Chattrvox marks them do-not-call automatically.
+    Contacts who asked not to be called again. Wave Runner marks them do-not-call automatically.
   </Card>
   <Card title="Today's progress" icon="chart-bar">
     Calls placed today against your daily cap.
@@ -72,7 +72,7 @@ Open a campaign to see a full breakdown of every call: contact name, outcome, se
 
 ## Retry logic
 
-For simple campaigns (no workflow attached), configure Chattrvox to retry contacts who were not reached. Set the maximum number of attempts (1–10), the delay between attempts (in minutes), and which outcomes trigger a retry: No Answer, Busy, Voicemail, or Failed.
+For simple campaigns (no workflow attached), configure Wave Runner to retry contacts who were not reached. Set the maximum number of attempts (1–10), the delay between attempts (in minutes), and which outcomes trigger a retry: No Answer, Busy, Voicemail, or Failed.
 
 <Tip>
   The default is one attempt per contact. Contacts marked interested, not interested, or do-not-call are never retried.
@@ -84,7 +84,7 @@ Attach a workflow to a campaign to run a multi-step sequence instead of a simple
 
 ## Calling windows
 
-Chattrvox only dials when all three conditions are met:
+Wave Runner only dials when all three conditions are met:
 
 - The current day is one of your selected calling days
 - The current hour falls within your calling hours window

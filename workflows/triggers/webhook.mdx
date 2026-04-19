@@ -1,16 +1,16 @@
 ---
 title: "Webhook"
 sidebarTitle: "Webhook"
-description: "Start a workflow when an external system POSTs to your Chattrvox webhook URL."
+description: "Start a workflow when an external system POSTs to your Wave Runner webhook URL."
 ---
 
-The Webhook trigger fires when an external system sends an HTTP POST request to a Chattrvox-generated URL.
+The Webhook trigger fires when an external system sends an HTTP POST request to a Wave Runner-generated URL.
 
-Use it to connect Chattrvox to tools not natively integrated: Zapier, Make, n8n, custom backends, or any platform that can send a webhook.
+Use it to connect Wave Runner to tools not natively integrated: Zapier, Make, n8n, custom backends, or any platform that can send a webhook.
 
 ## Configuration
 
-Chattrvox generates a unique webhook URL for each workflow. Copy it from the trigger node in the Composer and paste it into the external system.
+Wave Runner generates a unique webhook URL for each workflow. Copy it from the trigger node in the Composer and paste it into the external system.
 
 - **Method:** POST only
 - **Body:** JSON
@@ -19,7 +19,7 @@ All fields in the request body are available as variables in downstream action n
 
 ## Available variables
 
-Variables from the webhook payload are accessible using the field names from the JSON body. In addition, Chattrvox makes standard contact data available if the payload includes a matching `phone_number` or `email`.
+Variables from the webhook payload are accessible using the field names from the JSON body. In addition, Wave Runner makes standard contact data available if the payload includes a matching `phone_number` or `email`.
 
 | Variable | Description |
 | --- | --- |
@@ -33,10 +33,10 @@ See [Variables](/workflows/variables) for full variable syntax.
 
 ## Use case
 
-A Zapier zap fires when a new row appears in a Google Sheet of inbound leads. It POSTs the row data to the Chattrvox webhook URL. The workflow receives the payload, a Call Lead action dials the phone number from the sheet, and a HubSpot action creates a contact with the call outcome.
+A Zapier zap fires when a new row appears in a Google Sheet of inbound leads. It POSTs the row data to the Wave Runner webhook URL. The workflow receives the payload, a Call Lead action dials the phone number from the sheet, and a HubSpot action creates a contact with the call outcome.
 
 ## Next steps
 
 <Card title="Actions" icon="play" href="/workflows/actions/overview">
-  Choose what Chattrvox does after the trigger fires.
+  Choose what Wave Runner does after the trigger fires.
 </Card>

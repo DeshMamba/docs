@@ -1,13 +1,13 @@
 ---
-title: "Connect an AI Client to Chattrvox MCP Server"
-description: "Step-by-step guide to connecting Claude Desktop, Cursor, or Windsurf to the Chattrvox MCP endpoint using an API key in about two minutes."
+title: "Connect an AI Client to Wave Runner MCP Server"
+description: "Step-by-step guide to connecting Claude Desktop, Cursor, or Windsurf to the Wave Runner MCP endpoint using an API key in about two minutes."
 ---
 
-Connecting your AI client to Chattrvox takes about two minutes. You generate an API key in your account settings, then paste a short configuration snippet into your client. Once connected, your AI assistant can create workflows, search knowledge bases, and manage your account through natural language.
+Connecting your AI client to Wave Runner takes about two minutes. You generate an API key in your account settings, then paste a short configuration snippet into your client. Once connected, your AI assistant can create workflows, search knowledge bases, and manage your account through natural language.
 
 <Steps>
   <Step title="Generate an API key">
-    In Chattrvox, go to **Settings → Integrations → API Keys** and click **Generate New Key**.
+    In Wave Runner, go to **Settings → Integrations → API Keys** and click **Generate New Key**.
 
     Give the key a label that identifies your client — for example, `Claude Desktop` or `Cursor`. Click **Create**, then copy the key from the highlighted field.
 
@@ -19,7 +19,7 @@ Connecting your AI client to Chattrvox takes about two minutes. You generate an 
   </Step>
 
   <Step title="Note your MCP server URL">
-    The Chattrvox MCP server is hosted at a permanent URL — you do not need to run anything locally:
+    The Wave Runner MCP server is hosted at a permanent URL — you do not need to run anything locally:
 
     ```
     https://mcp.waverunner.digital/mcp
@@ -59,7 +59,7 @@ Connecting your AI client to Chattrvox takes about two minutes. You generate an 
 
         Replace `wr_live_xxxxxxxxxxxxxxxxxxxx` with your actual API key.
 
-        Save the file, then **quit and relaunch Claude Desktop**. The Chattrvox tools appear in Claude's tool list after restart.
+        Save the file, then **quit and relaunch Claude Desktop**. The Wave Runner tools appear in Claude's tool list after restart.
 
         <Tip>
           If you already have other MCP servers in your config, add the `chattrvox` block alongside them inside the same `mcpServers` object.
@@ -99,7 +99,7 @@ Connecting your AI client to Chattrvox takes about two minutes. You generate an 
   <Step title="Test the connection">
     With your client open, type a simple prompt to confirm the tools are reachable:
 
-    > "List my Chattrvox workflows."
+    > "List my Wave Runner workflows."
 
     Your AI assistant should call the `list_workflows` tool and return a list of your workflows (or an empty list if you have not created any yet). This confirms the server URL and API key are both correct.
 
@@ -133,7 +133,7 @@ Connecting your AI client to Chattrvox takes about two minutes. You generate an 
   </Accordion>
 
   <Accordion title="I get an authentication error">
-    Your API key may have been revoked or entered incorrectly. Go to **Settings → Integrations → API Keys** in Chattrvox and check that the key you are using is still listed and shows no revocation date. If it was revoked, generate a new key and update your client configuration.
+    Your API key may have been revoked or entered incorrectly. Go to **Settings → Integrations → API Keys** in Wave Runner and check that the key you are using is still listed and shows no revocation date. If it was revoked, generate a new key and update your client configuration.
   </Accordion>
 
   <Accordion title="The health check returns a network error">
@@ -141,6 +141,6 @@ Connecting your AI client to Chattrvox takes about two minutes. You generate an 
   </Accordion>
 
   <Accordion title="I copied the wrong URL">
-    The correct server URL is always `https://mcp.waverunner.digital/mcp`. The Chattrvox dashboard also shows this URL in **Settings → Integrations → MCP Connection** for easy copying.
+    The correct server URL is always `https://mcp.waverunner.digital/mcp`. The Wave Runner dashboard also shows this URL in **Settings → Integrations → MCP Connection** for easy copying.
   </Accordion>
 </AccordionGroup>

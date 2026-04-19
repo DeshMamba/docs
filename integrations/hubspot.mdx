@@ -1,24 +1,25 @@
 ---
 title: "HubSpot"
-description: "Connect HubSpot to Chattrvox to trigger workflows from CRM events, sync call outcomes to contact records, and use contact data as variables."
+sidebarTitle: "HubSpot"
+description: "Connect HubSpot to Wave Runner to trigger workflows from CRM events and write call outcomes back to contact records."
 ---
 
-The HubSpot integration links your HubSpot portal to Chattrvox through OAuth. Once connected, you can fire automation workflows from over 20 HubSpot event types — contact created, deal stage changed, form submitted, and more — and write call summaries, transcripts, and outcomes back to the corresponding HubSpot contact record automatically.
+The HubSpot integration links your HubSpot portal to Wave Runner through OAuth. Once connected, HubSpot contact, deal, and company events fire Wave Runner workflows automatically, and call summaries, transcripts, and outcomes write back to the corresponding contact record.
 
 ## Connecting HubSpot
 
 <Steps>
   <Step title="Open the integrations page">
-    In Chattrvox, click **Settings** in the navbar, then select the **Integrations** tab.
+    In Wave Runner, click **Settings** in the navbar, then select the **Integrations** tab.
   </Step>
   <Step title="Click Connect on the HubSpot card">
-    Find the HubSpot card in the **CRM** section and click **Connect**. Chattrvox redirects you to HubSpot's OAuth authorization screen.
+    Find the HubSpot card in the **CRM** section and click **Connect**. Wave Runner redirects you to HubSpot's OAuth authorization screen.
   </Step>
-  <Step title="Authorize Chattrvox in HubSpot">
-    Log in to your HubSpot account if prompted, then review the requested permissions and click **Grant access**. Chattrvox requests read and write access to contacts, companies, deals, leads, line items, products, appointments, lists, tickets, conversations, and OAuth.
+  <Step title="Authorize Wave Runner in HubSpot">
+    Log in to your HubSpot account if prompted, review the requested permissions, and click **Grant access**. Wave Runner requests read and write access to contacts, companies, deals, leads, line items, products, appointments, lists, tickets, conversations, and OAuth.
   </Step>
   <Step title="Confirm the connection">
-    HubSpot redirects you back to Chattrvox. The HubSpot card status changes to **Connected**, showing your portal ID.
+    HubSpot redirects you back to Wave Runner. The HubSpot card status changes to **Connected**, showing your portal ID.
   </Step>
 </Steps>
 
@@ -26,15 +27,9 @@ The HubSpot integration links your HubSpot portal to Chattrvox through OAuth. On
   You must have **Super Admin** or **CRM Admin** permissions in HubSpot to authorize an OAuth app for your portal.
 </Note>
 
----
+## Trigger events
 
-## What the integration enables
-
-### HubSpot workflow triggers
-
-After connecting, you can use HubSpot events as the starting point for any Chattrvox workflow. In the **Workflow Builder**, add a **Trigger** node and select **HubSpot** from the integrations list.
-
-Available HubSpot trigger events:
+After connecting, select **HubSpot** as the trigger in any Wave Runner workflow. When a matching event fires in HubSpot, Wave Runner executes the workflow.
 
 | Category | Trigger |
 | --- | --- |
@@ -63,39 +58,33 @@ Available HubSpot trigger events:
 | Custom objects | New Custom Object |
 | Custom objects | New Custom Object Property Change |
 
-When a matching event fires in HubSpot, Chattrvox executes any active workflow that uses that trigger.
+## CRM action nodes
 
-### HubSpot CRM action nodes
+Add a **HubSpot** action node inside any workflow to write data back to your CRM:
 
-Inside a workflow, you can add **HubSpot** action nodes to write data back to your CRM:
-
-- **Create Contact** — creates a new contact in HubSpot with the data available from the workflow context
+- **Create Contact** — creates a new contact with data from the workflow context
 - **Update Contact** — updates properties on an existing contact record
 - **Create Company** — creates a company in HubSpot
 - **Create Deal** — opens a new deal and sets the initial stage
-- **Create Associations** — links objects together (for example, associating a contact with a company)
+- **Create Associations** — links two HubSpot objects (for example, a contact to a deal)
 
-### Call outcome sync
+## Call outcome sync
 
-When a workflow is triggered by a completed call (via the **End of Call** trigger), the following call data is available to pass to HubSpot action nodes:
+When a workflow starts from an **End of Call** trigger, the following call data is available to pass to HubSpot action nodes:
 
-- **Summary** — the AI-generated call summary
-- **Transcript** — the full call transcript
-- **Outcome** — the call result (e.g., booked, not interested, callback requested)
+- **Summary** — AI-generated call summary
+- **Transcript** — full call transcript
+- **Outcome** — call result (e.g. booked, not interested, callback requested)
 - **Sentiment** — detected caller sentiment
 - **Duration** — call length in seconds
 
-Use these in a **Create Note** or **Update Contact** node to keep HubSpot records current without any manual effort.
+Use these in an **Update Contact** node to keep HubSpot records current after every call.
 
----
+## Contact variables
 
-## Using HubSpot contact variables
+When a workflow starts from a HubSpot contact event, Wave Runner makes the contact's properties available as variables in any text field.
 
-When a workflow starts from a HubSpot contact event, Chattrvox makes the contact's properties available as variables you can insert into any text field — SMS message body, call script, email content, or webhook payload.
-
-To insert a variable, click **\+ Insert Variable** inside any text field in the **Node Config Panel** and select from the **HubSpot Contact** category.
-
-Available HubSpot contact variables:
+Click **+ Insert Variable** inside any node's text field and select from the **HubSpot Contact** category.
 
 | Variable | Description |
 | --- | --- |
@@ -112,16 +101,12 @@ Available HubSpot contact variables:
 | `{country}` | Country |
 
 <Tip>
-  You can combine HubSpot variables with call data variables in the same text field. For example, an SMS message body could read: "Hi `{firstname}`, here's a summary of our call: `{summary}`."
+  Combine HubSpot variables with call data variables in the same field. For example: "Hi `{firstname}`, here's a summary of our call: `{summary}`."
 </Tip>
-
----
 
 ## Two-way contact sync
 
-When Chattrvox receives a HubSpot contact event, it automatically checks whether the contact already exists in your Chattrvox contact list by matching phone number variants. If a match is found, Chattrvox updates the contact record. If no match is found, Chattrvox creates the contact and adds it to a **CRM Contacts** list. HubSpot is treated as the source of truth when the integration is active.
-
----
+When Wave Runner receives a HubSpot contact event, it checks whether the contact already exists by matching phone number variants. If a match is found, Wave Runner updates the record. If not, Wave Runner creates the contact and adds it to a **CRM Contacts** list. HubSpot is the source of truth when the integration is active.
 
 ## Disconnecting HubSpot
 
@@ -133,10 +118,10 @@ When Chattrvox receives a HubSpot contact event, it automatically checks whether
     The card shows **Configure** when a connection is active.
   </Step>
   <Step title="Remove the connection">
-    Click **Disconnect** or the trash icon next to the connection entry. Chattrvox immediately stops receiving webhook events from that HubSpot portal.
+    Click **Disconnect** or the trash icon next to the connection entry. Wave Runner immediately stops receiving webhook events from that HubSpot portal.
   </Step>
 </Steps>
 
 <Warning>
-  Disconnecting HubSpot does not pause active workflows. Workflows that use a HubSpot trigger will no longer fire, but they remain in draft status. Re-connecting HubSpot and re-deploying the workflow restores full functionality.
+  Disconnecting HubSpot does not pause active workflows. Workflows using a HubSpot trigger stop firing but remain in draft status. Reconnect HubSpot and redeploy the workflow to restore them.
 </Warning>

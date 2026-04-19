@@ -1,7 +1,7 @@
 ---
 title: "Create a campaign"
 sidebarTitle: "Create a campaign"
-description: "Build a Chattrvox campaign: choose an agent, pick a contact source, set calling hours, configure retry logic, and start dialing."
+description: "Build a Wave Runner campaign: choose an agent, pick a contact source, set calling hours, configure retry logic, and start dialing."
 ---
 
 Campaigns connect an agent to a contact list and dial automatically on a schedule you set.
@@ -27,15 +27,15 @@ Before you start, make sure you have an agent with a phone number assigned and a
   <Step title="Select an agent and set a daily cap">
     Choose the agent that handles the calls. The agent's voice, prompt, and analysis settings apply to every call in this campaign.
 
-    Set a **Daily Cap** — the maximum calls per day (1–1,000). The default is 100. Chattrvox pauses the campaign when this limit is reached and resumes the next calling day.
+    Set a **Daily Cap** — the maximum calls per day (1–1,000). The default is 100. Wave Runner pauses the campaign when this limit is reached and resumes the next calling day.
   </Step>
   <Step title="Select a contact source">
     <Tabs>
       <Tab title="Contact list">
-        Select a named list from your contacts. Chattrvox calls every active, non-DNC contact in that list.
+        Select a named list from your contacts. Wave Runner calls every active, non-DNC contact in that list.
       </Tab>
       <Tab title="CSV import">
-        Select a CSV file you have already uploaded to Contacts. Chattrvox calls every row not marked do-not-call.
+        Select a CSV file you have already uploaded to Contacts. Wave Runner calls every row not marked do-not-call.
       </Tab>
     </Tabs>
   </Step>
@@ -49,7 +49,7 @@ Before you start, make sure you have an agent with a phone number assigned and a
     </Warning>
   </Step>
   <Step title="Configure retry logic (simple campaigns only)">
-    Set Chattrvox to retry contacts who were not reached:
+    Set Wave Runner to retry contacts who were not reached:
 
     - **Max attempts** — how many times to try each contact (1–10)
     - **Delay between attempts** — minutes to wait before the next attempt (1–10,080)
@@ -60,7 +60,7 @@ Before you start, make sure you have an agent with a phone number assigned and a
     </Tip>
   </Step>
   <Step title="Create the campaign">
-    Click **Create Campaign**. The campaign saves with idle status. Chattrvox does not dial anyone until you start it.
+    Click **Create Campaign**. The campaign saves with idle status. Wave Runner does not dial anyone until you start it.
   </Step>
 </Steps>
 

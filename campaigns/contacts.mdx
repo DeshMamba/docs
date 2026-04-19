@@ -1,7 +1,7 @@
 ---
 title: "Contacts"
 sidebarTitle: "Contacts"
-description: "Import, organize, and manage the contacts your Chattrvox agents will call."
+description: "Import, organize, and manage the contacts your Wave Runner agents will call."
 ---
 
 Contacts stores every person your agents call.
@@ -20,12 +20,12 @@ Every contact has one of three statuses that controls whether the agent will cal
     Excluded from campaign dialing but remains in your contacts.
   </Card>
   <Card title="Do not call" icon="ban">
-    Chattrvox never dials a do-not-call contact, even if they appear in a campaign's contact list.
+    Wave Runner never dials a do-not-call contact, even if they appear in a campaign's contact list.
   </Card>
 </CardGroup>
 
 <Warning>
-  Do-not-call is enforced automatically. If a contact asks not to be called during a call, Chattrvox marks them do-not-call immediately. This cannot be overridden at the campaign level.
+  Do-not-call is enforced automatically. If a contact asks not to be called during a call, Wave Runner marks them do-not-call immediately. This cannot be overridden at the campaign level.
 </Warning>
 
 ## Create a contact list
@@ -63,7 +63,7 @@ Every contact has one of three statuses that controls whether the agent will cal
 
 <Tabs>
   <Tab title="Quick upload">
-    Click **Upload CSV** in the contacts toolbar and select your file. Chattrvox imports all valid rows and saves the file as a CSV import. Select it as a contact source when creating a campaign.
+    Click **Upload CSV** in the contacts toolbar and select your file. Wave Runner imports all valid rows and saves the file as a CSV import. Select it as a contact source when creating a campaign.
   </Tab>
   <Tab title="Upload into a list">
     Click **Upload List** to import a CSV and assign all contacts to a specific list at the same time.
@@ -84,7 +84,7 @@ Your file must have a header row. Recognized column names:
 | `do_not_call` | No | `true` or `1` marks the contact do-not-call on import |
 
 <Note>
-  Chattrvox normalizes phone numbers automatically. Formats like `07911123456`, `+44 7911 123456`, and `4407911123456` all import correctly.
+  Wave Runner normalizes phone numbers automatically. Formats like `07911123456`, `+44 7911 123456`, and `4407911123456` all import correctly.
 </Note>
 
 ## Search and filter contacts
@@ -112,7 +112,7 @@ When you have a list selected in the filter bar, a **Create Campaign** button ap
 
 ## Delete a CSV import
 
-Hover over a CSV file in the imports section and click the delete option. If the file is being used as the contact source for an active campaign, Chattrvox warns you before proceeding.
+Hover over a CSV file in the imports section and click the delete option. If the file is being used as the contact source for an active campaign, Wave Runner warns you before proceeding.
 
 ## Next steps
 

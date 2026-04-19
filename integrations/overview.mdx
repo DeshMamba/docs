@@ -1,97 +1,55 @@
 ---
-title: "Integrations Overview"
-description: "Connect Chattrvox to your CRM, calendar, phone, and messaging tools. Overview of every available integration and how to access them."
+title: "Integrations overview"
+sidebarTitle: "Overview"
+description: "Connect Wave Runner to your CRM, calendar, phone, and messaging tools."
 ---
 
-Chattrvox connects to the tools your team already uses — from CRM platforms and calendar apps to phone carriers and messaging channels. Once an integration is connected, you can use it as a workflow trigger, as a data source in your AI assistants, or as an action node that fires automatically after a call ends. You manage all connections from a single page in your account settings.
+Wave Runner connects to the tools your team already uses. Once an integration is connected, use it as a workflow trigger, a data source in your agents, or an action node that fires automatically after a call ends.
 
-## Accessing the integrations page
-
-Navigate to **Settings → Integrations** from the navbar. Each integration card shows its current status — **Available**, **Connected**, or **Configured** — and a **Connect** or **Configure** button.
+Navigate to **Settings → Integrations** to manage all connections. Each card shows its current status and a **Connect** or **Configure** button.
 
 <Note>
-  Only workspace members with the **Manager** role or higher can add or remove integrations. Viewers and members can see which integrations are connected but cannot change them.
+  Only workspace members with the **Manager** role or higher can add or remove integrations.
 </Note>
-
-## Available integrations
 
 <CardGroup cols={2}>
   <Card title="HubSpot" icon="hubspot" href="/integrations/hubspot">
-    Connect your HubSpot portal to use contact and deal events as workflow triggers and write call outcomes, summaries, and transcripts back to contact records.
+    Use HubSpot contact, deal, and company events as workflow triggers. Write call outcomes, summaries, and transcripts back to contact records.
   </Card>
-
   <Card title="GoHighLevel" icon="bolt" href="/integrations/gohighlevel">
-    Link a GoHighLevel location to trigger workflows when contacts are created, sync contact data, and capture Facebook Lead Ads through your GHL pipeline.
+    Trigger workflows when contacts are created in GHL. Sync contact data and capture Facebook Lead Ads through your GHL pipeline.
   </Card>
-
   <Card title="Google Calendar" icon="calendar" href="/integrations/calendar">
-    Let your AI assistant book appointments directly into Google Calendar during live calls, then use appointment data in post-call workflows.
+    Let your agent book appointments directly into Google Calendar during live calls, then use booking data in post-call workflows.
   </Card>
-
   <Card title="Cal.com" icon="calendar-check" href="/integrations/calendar">
-    Connect a Cal.com account with an API key and event type so your AI assistant can schedule meetings without any human handoff.
+    Connect a Cal.com account with an API key so your agent can schedule meetings without any human handoff.
   </Card>
-
   <Card title="Twilio" icon="phone" href="/integrations/overview#twilio">
-    Provide your Twilio credentials to assign phone numbers to AI assistants and send outbound SMS from workflow nodes.
+    Provide your Twilio credentials to assign phone numbers to agents and send outbound SMS from workflow nodes.
   </Card>
-
   <Card title="WhatsApp Business" icon="whatsapp" href="/integrations/overview#whatsapp">
-    Connect your WhatsApp Business number to receive and send messages from the Conversations panel and inside workflow nodes.
+    Connect your WhatsApp Business number to receive and send messages from the Conversations panel and workflow nodes.
   </Card>
-
   <Card title="Slack" icon="slack" href="/integrations/overview#slack">
-    Authorize your Slack workspace to send call summaries, notifications, and workflow alerts to any channel or direct message.
+    Authorize your Slack workspace to send call summaries and workflow alerts to any channel or direct message.
   </Card>
-
   <Card title="Facebook Lead Ads" icon="facebook" href="/integrations/overview#facebook-lead-ads">
-    Connect your Facebook account so that new Lead Ad submissions arrive in Chattrvox and trigger your outreach workflows automatically.
+    Connect your Facebook account so new Lead Ad submissions trigger your outreach workflows automatically.
   </Card>
-
   <Card title="SMTP email" icon="envelope" href="/integrations/overview#smtp">
-    Supply SMTP credentials to send transactional emails from workflow nodes — confirmation messages, follow-ups, or summaries.
+    Supply SMTP credentials to send emails from workflow nodes.
   </Card>
 </CardGroup>
 
----
-
-## CRM integrations
-
-### HubSpot
-
-The HubSpot integration uses OAuth. After you connect, Chattrvox listens for webhook events from your HubSpot portal and can write data back using the HubSpot API. You can use HubSpot contact properties as variables inside any workflow node — for example, `{firstname}`, `{email}`, and `{lifecyclestage}` — whenever the workflow is triggered by a HubSpot event.
-
-See the [HubSpot integration guide](/integrations/hubspot) for full setup instructions.
-
-### GoHighLevel
-
-The GoHighLevel integration also uses OAuth. Connecting a GHL location automatically registers a webhook so that contact creation events flow into Chattrvox in real time. Contact fields from GHL — name, email, phone — are available as variables in downstream workflow nodes.
-
-See the [GoHighLevel integration guide](/integrations/gohighlevel) for full setup instructions.
-
----
-
-## Calendar integrations
-
-Chattrvox supports two calendar providers for AI-powered appointment booking:
-
-- **Cal.com** — connect using a Cal.com API key. The event type is selected when you configure the assistant.
-- **Google Calendar** — connect using OAuth. The assistant books events directly into your Google Calendar.
-
-When a booking is made during a call, the appointment data is available in post-call workflows through variables like `{appointment.start_time}` and `{appointment.timezone}`.
-
-See the [Calendar integration guide](/integrations/calendar) for full setup instructions.
-
----
-
-## Phone and messaging integrations
+## Phone and messaging
 
 ### Twilio
 
-Twilio provides the underlying phone carrier for Chattrvox. You enter your **Account SID**, **Auth Token**, and **SIP Trunk SID** under **Settings → Integrations**. Once saved, you can assign Twilio numbers to your AI assistants and send SMS messages from workflow **Send SMS** nodes.
+Enter your **Account SID**, **Auth Token**, and **SIP Trunk SID** under **Settings → Integrations**. Once saved, assign Twilio numbers to your agents and send SMS from workflow **Send SMS** nodes.
 
 <Tip>
-  If you are on a managed Chattrvox plan, your platform administrator may have pre-configured Twilio for your workspace. Check with your admin before adding credentials.
+  If you are on a managed Wave Runner plan, your platform administrator may have pre-configured Twilio for your workspace. Check with your admin before adding credentials.
 </Tip>
 
 ### WhatsApp Business
@@ -100,20 +58,18 @@ Enter your WhatsApp Business phone number and API key under **Settings → Integ
 
 ### SMTP email
 
-Go to **Settings → Integrations → SMTP** and enter your mail server host, port, username, and password. Chattrvox encrypts the password at rest. Once configured, the **Send Email** node is available inside any workflow.
+Go to **Settings → Integrations → SMTP** and enter your mail server host, port, username, and password. Once configured, the **Send Email** node is available in any workflow.
 
----
-
-## Automation integrations
+## Automation
 
 ### Slack
 
-Click **Connect** on the Slack card and authorize the Chattrvox app in your Slack workspace. After authorization, workflow nodes can send messages to any channel or user your Slack bot can reach.
+Click **Connect** on the Slack card and authorize the Wave Runner app in your Slack workspace. Workflow nodes can then send messages to any channel or user your Slack bot can reach.
 
 ### Facebook Lead Ads
 
-Click **Connect** on the Facebook Leads card. A two-step OAuth flow first authenticates your Facebook account, then grants page-level permissions so Chattrvox can receive lead form submissions as webhook events. Each new lead can trigger a workflow that calls, texts, or updates your CRM immediately.
+Click **Connect** on the Facebook Leads card. A two-step OAuth flow authenticates your Facebook account and grants page-level permissions so Wave Runner receives lead form submissions as webhook events.
 
 <Note>
-  The Facebook Lead Ads integration requires your Facebook account to have admin access to at least one Facebook Page with an active Lead Ad form.
+  The Facebook Lead Ads integration requires admin access to at least one Facebook Page with an active Lead Ad form.
 </Note>

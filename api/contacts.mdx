@@ -1,9 +1,9 @@
 ---
 title: 'Contacts API — Update Records and Sync to CRM'
-description: 'Update contact records via the Chattrvox REST API. Changes sync automatically to any connected HubSpot or GoHighLevel account in the background.'
+description: 'Update contact records via the Wave Runner REST API. Changes sync automatically to any connected HubSpot or GoHighLevel account in the background.'
 ---
 
-The Contacts API lets you update individual contact records stored in Chattrvox. When you update a contact, the platform automatically syncs the change to any active CRM integration — HubSpot or GoHighLevel — in the background. The sync is fire-and-forget and does not block the API response.
+The Contacts API lets you update individual contact records stored in Wave Runner. When you update a contact, the platform automatically syncs the change to any active CRM integration — HubSpot or GoHighLevel — in the background. The sync is fire-and-forget and does not block the API response.
 
 Contact records include a name, phone number, email, list assignment, and status flags. Bulk contact management (CSV import, list creation) is handled in the dashboard under **Contacts**.
 
@@ -135,7 +135,7 @@ When a contact update succeeds, the platform fires asynchronous sync jobs to any
 
 **GoHighLevel:** The platform searches by phone number (including E.164 retry). If found, it updates the GHL contact. If not found and phone or email is present, it creates a new GHL contact.
 
-CRM sync failures are logged but do not affect the API response. Your Chattrvox contact record is always updated regardless of CRM sync outcome.
+CRM sync failures are logged but do not affect the API response. Your Wave Runner contact record is always updated regardless of CRM sync outcome.
 
 <Note>
 To connect HubSpot or GoHighLevel, go to **Settings → Integrations** and complete the OAuth flow. Once connected, all contact updates will sync automatically.
