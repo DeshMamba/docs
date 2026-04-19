@@ -1,93 +1,64 @@
 ---
-title: "Agents Overview"
-description: "Learn what Chattrvox AI assistants are, the use cases they support — inbound, outbound, scheduling — and how to go from creation to a live phone agent."
+title: "Agents overview"
+sidebarTitle: "Overview"
+description: "Agents are the AI voice assistants that handle your calls. Each one is fully configurable: prompt, voice, language, data capture, and phone number."
 ---
 
-AI assistants are the core of Chattrvox. Each assistant is a fully configurable AI voice agent that answers or places phone calls on your behalf, following the instructions you write, using the voice you choose, and capturing the data you care about after every conversation.
+Agents are the AI voice assistants that handle your calls.
 
-## What you can do with an assistant
+Each agent follows your instructions, speaks in the voice you choose, and captures the data you define after every conversation. Build one agent or dozens — each one is independent and configurable.
+
+## What an agent does
 
 <CardGroup cols={2}>
-  <Card title="Inbound support" icon="headset">
-    Handle incoming calls 24/7 — answer FAQs, collect caller information, and route to a human when needed.
+  <Card title="Handles inbound calls" icon="headset">
+    Answer calls 24/7, respond to questions from your knowledge base, and transfer to a human when needed.
   </Card>
-
-  <Card title="Outbound sales" icon="phone-arrow-up-right">
-    Dial contact lists automatically, deliver a consistent pitch, and log outcomes for every call.
+  <Card title="Runs outbound campaigns" icon="phone-arrow-up-right">
+    Dial contact lists automatically, deliver your script consistently, and log outcomes for every call.
   </Card>
-
-  <Card title="Appointment booking" icon="calendar">
-    Connect your Cal.com calendar and let the assistant book, confirm, and reschedule appointments in real time.
+  <Card title="Books appointments" icon="calendar">
+    Connect your Cal.com calendar and let the agent book, confirm, and reschedule in real time.
   </Card>
-
-  <Card title="Lead qualification" icon="filter">
-    Ask qualifying questions, score interest, and capture structured data like budget, timeline, and contact details.
+  <Card title="Qualifies leads" icon="filter">
+    Ask qualifying questions and capture structured data: budget, timeline, interest level, contact details.
   </Card>
 </CardGroup>
 
-## Key capabilities
-
-<AccordionGroup>
-  <Accordion title="Custom system prompt">
-    Write the instructions your assistant follows on every call. Define its persona, conversation goals, what to say when, and how to handle edge cases — all in plain language.
-  </Accordion>
-
-  <Accordion title="Voice selection">
-    Choose from a library of Cartesia voices across multiple languages and accents. Preview any voice before going live and adjust speaking speed to match your brand's tone.
-  </Accordion>
-
-  <Accordion title="Structured data extraction">
-    Configure fields — name, email, budget, appointment status, and more — that the AI automatically captures from the conversation transcript after every call.
-  </Accordion>
-
-  <Accordion title="Knowledge base">
-    Attach a knowledge base of PDFs, web pages, or plain text. The assistant retrieves relevant information during calls to answer questions accurately without hallucinating.
-  </Accordion>
-
-  <Accordion title="Post-call SMS">
-    Send an automatic SMS after every call using a customizable template. Useful for booking confirmations, follow-up links, or opt-in flows.
-  </Accordion>
-
-  <Accordion title="Call analysis">
-    After each call, the AI generates a plain-English summary, scores the call against your definition of success, and writes structured data to your call history — ready for workflows or CRM sync.
-  </Accordion>
-</AccordionGroup>
-
-## Assistant lifecycle
-
-Getting an assistant live takes four steps:
+## How to set up an agent
 
 <Steps>
   <Step title="Create">
-    Name your assistant and open the configuration wizard. You can start from scratch or pass a name and workflow ID via URL to pre-fill fields.
+    Go to **Agents** in the sidebar and click **New Agent**. Give it a name.
   </Step>
   <Step title="Configure">
-    Work through the three configuration tabs — **Model** (prompt, voice, language, integrations), **Analysis** (data capture, call scoring), and **Advanced** (call transfer, recording, web widget). Save at any point; your changes persist immediately.
+    Work through the three tabs: **Model** (prompt, voice, language), **Analysis** (data capture, call scoring), and **Advanced** (phone number, transfer rules, recording, web widget).
   </Step>
-  <Step title="Connect a phone number">
-    Import a Twilio number under **Agents → Phone Numbers**, then assign it to your assistant on the Advanced tab. The assistant will answer every inbound call to that number from the moment you save.
+  <Step title="Assign a phone number">
+    On the **Advanced** tab, select a Twilio number from the dropdown. The agent answers every inbound call to that number the moment you save.
   </Step>
-  <Step title="Go live">
-    Make a test call to verify the greeting, voice, and instructions work as expected. Once confirmed, your assistant is live and handling real calls.
+  <Step title="Test">
+    Make a test call to confirm the greeting, voice, and instructions work. Adjust and save. Changes take effect immediately.
   </Step>
 </Steps>
 
 <Note>
-  You need a Twilio account and at least one imported phone number to receive inbound calls. See **Agents → Phone Numbers** to add numbers, or connect your Twilio credentials under **Settings → Integrations**.
+  You need a Twilio account and at least one imported phone number before you can assign a number to an agent. Import numbers under **Agents → Phone Numbers**.
 </Note>
 
 ## Next steps
 
 <CardGroup cols={2}>
-  <Card title="Create an assistant" icon="plus" href="/assistants/create">
-    Step-by-step walkthrough of the creation wizard and all configuration options.
+  <Card title="Create an agent" icon="plus" href="/assistants/create">
+    Full walkthrough of every setting in the agent editor.
   </Card>
-
   <Card title="Voice settings" icon="waveform" href="/assistants/voice-settings">
-    Choose a voice, set speaking speed, and preview before going live.
+    Choose a voice, language, and speaking speed.
   </Card>
-
-  <Card title="Knowledge base" icon="database" href="/assistants/knowledge-base">
-    Upload documents so your assistant can answer questions accurately.
+  <Card title="Knowledge base" icon="book" href="/assistants/knowledge-base">
+    Give your agent documents to reference during calls.
+  </Card>
+  <Card title="Conversations" icon="comments" href="/conversations/overview">
+    View transcripts, recordings, and call outcomes.
   </Card>
 </CardGroup>

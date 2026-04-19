@@ -30,6 +30,15 @@
             ]
           },
           {
+            "group": "Conversations",
+            "pages": [
+              "conversations/overview",
+              "conversations/call-records",
+              "conversations/sms",
+              "conversations/filtering"
+            ]
+          },
+          {
             "group": "Campaigns",
             "pages": [
               "campaigns/overview",

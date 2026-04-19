@@ -1,105 +1,96 @@
 ---
-title: "Knowledge Base"
-description: "Create a knowledge base, upload documents or web pages, attach it to a Chattrvox assistant, and improve AI response accuracy during live calls."
+title: "Knowledge base"
+sidebarTitle: "Knowledge base"
+description: "Upload documents, web pages, or text so your Chattrvox agent can answer questions accurately during calls."
 ---
 
-A knowledge base gives your assistant access to accurate reference material during calls. Instead of relying solely on its training data, the assistant searches your uploaded content and uses what it finds to answer caller questions. This is especially useful for product documentation, FAQs, pricing sheets, clinic or service details, and any other information that changes frequently or is specific to your business.
+A knowledge base gives your agent accurate reference material to draw from during calls.
 
-## How it works
-
-When a caller asks a question, the assistant performs a semantic search over your knowledge base to find the most relevant passages. It then uses those passages as context when forming its response — so the answer comes from your content, not from a generic language model guess.
-
-<Note>
-  Documents go through a processing pipeline before they become searchable: upload → parse → chunk → embed. Processing typically takes a few seconds to a couple of minutes depending on file size. The assistant can only use a document once its status shows as **ready**.
-</Note>
+When a caller asks a question, the agent searches your uploaded content and uses what it finds to answer. Use it for FAQs, product details, pricing, service information, or anything specific to your business.
 
 ## Create a knowledge base
 
 <Steps>
   <Step title="Open the Knowledge Base tab">
-    Navigate to **Agents** in the sidebar, then click the **Knowledge Base** tab at the top of the page.
+    Go to **Agents** in the sidebar and click the **Knowledge Base** tab.
   </Step>
   <Step title="Create a new knowledge base">
-    Click **Create Knowledge Base**. Enter a name and an optional description, then confirm. The new knowledge base appears as a card in the grid.
+    Click **Create Knowledge Base**. Enter a name and optional description, then confirm.
   </Step>
-  <Step title="Open the editor">
-    Click the knowledge base card to open the editor, where you can add and manage content sources.
+  <Step title="Add content">
+    Click the knowledge base card to open the editor, then click **Add Source**.
   </Step>
 </Steps>
 
-## Add content to your knowledge base
-
-Inside the knowledge base editor, click **Add Source** to add content. There are three content types:
+## Content types
 
 <Tabs>
   <Tab title="Document upload">
     Upload a file from your computer. Supported formats: PDF, DOC, DOCX, TXT, CSV, JSON.
 
-    Give the document a **name** and optional **description** — these help the AI understand what the document is about and when to retrieve it.
-
-    After upload, the document goes through the processing pipeline. Once the status badge updates to ready, it is active and searchable.
+    Give the document a name and optional description. Chattrvox processes it automatically. Once the status shows **ready**, it is active and searchable.
   </Tab>
   <Tab title="Website URL">
-    Provide a URL and the system fetches and indexes the page content. Use this for product pages, help articles, or any publicly accessible web content you want the assistant to reference.
-
-    Enter a **name**, optional **description**, and the full URL. The page is fetched and processed automatically.
+    Enter a URL and Chattrvox fetches and indexes the page. Use this for product pages, help articles, or any publicly accessible content.
   </Tab>
   <Tab title="Plain text">
-    Paste or type content directly. Useful for FAQs, internal scripts, pricing information, or any content you want to write inline without managing a file.
-
-    Give it a **name** and paste the content into the text field.
+    Paste content directly. Use this for FAQs, pricing tables, or short reference lists you want to manage inline.
   </Tab>
 </Tabs>
 
-## Attach a knowledge base to an assistant
-
-Once you have at least one knowledge base, you can attach it to any assistant:
-
-1. Open the assistant's configuration (**Agents → \[assistant name\]**).
-2. On the **Model** tab, find **Knowledge Base** in the Agent Settings sidebar.
-3. Select your knowledge base from the dropdown.
-4. Click **Save**.
-
-From that point on, every call handled by this assistant includes a knowledge base search step whenever the conversation seems to call for reference information.
-
 <Note>
-  Each assistant can be attached to one knowledge base at a time. If you need to cover multiple topics, combine all relevant documents into a single knowledge base rather than creating separate ones.
+  Processing takes a few seconds to a couple of minutes depending on file size. The agent can only use a document once its status shows as **ready**.
 </Note>
 
-## Edit and manage content sources
+## Attach a knowledge base to an agent
 
-Inside the knowledge base editor, each source is shown as a card. Hover over a card to reveal **edit** and **delete** actions.
+<Steps>
+  <Step title="Open the agent">
+    Go to **Agents** and click the agent you want to update.
+  </Step>
+  <Step title="Select the knowledge base">
+    On the **Model tab**, find **Knowledge Base** in the Agent Settings sidebar. Select your knowledge base from the dropdown.
+  </Step>
+  <Step title="Save">
+    Click **Save**. The agent uses the knowledge base on every call from that point on.
+  </Step>
+</Steps>
 
-**To edit a source**, click the edit icon. You can update the name, description, and content. For document sources, you can upload a replacement file — the old document is removed and the new one is processed.
+<Note>
+  Each agent can use one knowledge base at a time. Combine all relevant documents into a single knowledge base if you need to cover multiple topics.
+</Note>
 
-**To delete a source**, click the delete icon on the card. The content is removed from the knowledge base and will no longer be retrieved during calls.
+## Manage content
 
-**To delete an entire knowledge base**, click **Delete** in the top-right corner of the editor. This also removes all associated documents and their embeddings.
+Hover over any source card to reveal edit and delete options.
+
+To update a document, click the edit icon and upload a replacement file. To remove a source, click delete. Chattrvox removes it immediately and the agent no longer retrieves it during calls.
+
+To delete an entire knowledge base, click **Delete** in the top-right corner of the editor.
 
 <Warning>
-  Deleting a knowledge base that is attached to one or more assistants will leave those assistants without reference content. Update the Knowledge Base setting on each affected assistant after deletion.
+  Deleting a knowledge base that is attached to an agent leaves that agent without reference content. Update the Knowledge Base setting on each affected agent after deletion.
 </Warning>
 
-## Best practices for knowledge base content
+## Tips for better results
 
 <AccordionGroup>
-  <Accordion title="Keep documents focused and well-structured">
-    Shorter, clearly organized documents produce better retrieval results than large, unstructured files. If you have a 50-page PDF, consider splitting it into topic-specific sections.
+  <Accordion title="Keep documents focused">
+    Shorter, clearly organized documents produce better results than large unstructured files. If you have a long PDF, split it into topic-specific sections.
   </Accordion>
-
-  <Accordion title="Write descriptive names and descriptions">
-    The name and description you give each source help the AI understand its purpose. A document named _"Pricing — Enterprise Plan Q2 2025"_ is easier to retrieve accurately than one named _"Document 3"_.
+  <Accordion title="Write descriptive names">
+    A document named "Pricing — Enterprise Plan 2025" is easier for the agent to retrieve than "Document 3". Names and descriptions inform when to use each source.
   </Accordion>
-
   <Accordion title="Keep content current">
-    Remove or update outdated documents promptly. Stale information in the knowledge base can cause the assistant to give incorrect answers confidently.
+    Remove or update outdated documents. Stale content causes the agent to give incorrect answers.
   </Accordion>
-
-  <Accordion title="Use plain text for structured data">
-    For FAQs, pricing tables, or short reference lists, the plain text content type produces cleaner chunks than uploading a formatted PDF. Bullet points and clear section headers work well.
-  </Accordion>
-
-  <Accordion title="Test retrieval with real questions">
-    After setting up a knowledge base, make a test call and ask questions a real caller would ask. If the assistant gives vague or incorrect answers, check whether the relevant document has finished processing and whether its content clearly covers the question.
+  <Accordion title="Test with real questions">
+    After setup, make a test call and ask questions a real caller would ask. If answers are vague or wrong, check that the document status is ready and that its content clearly covers the question.
   </Accordion>
 </AccordionGroup>
+
+## Next steps
+
+<Card title="Create an agent" icon="plus" href="/assistants/create">
+  Attach your knowledge base and configure all other agent settings.
+</Card>

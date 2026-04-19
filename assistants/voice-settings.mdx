@@ -1,106 +1,75 @@
 ---
-title: "Voice"
-description: "Select a voice, set speaking speed, configure language and accent, and preview your Chattrvox assistant's audio before going live with callers."
+title: "Voice settings"
+sidebarTitle: "Voice settings"
+description: "Choose a voice provider, voice, language, speaking speed, and response style for your Chattrvox agent."
 ---
 
-Voice settings control how your assistant sounds to callers. You choose from a library of Cartesia voices across multiple languages and accents, set the speaking speed, and pick the response style that best matches your use case. You can preview any voice before saving, so you always know exactly what callers will hear.
+Voice settings control how your agent sounds to callers.
 
-## Where to find voice settings
+Voice settings live on the **Model tab** of the agent editor, in the **Agent Settings** sidebar on the right.
 
-Voice controls live on the **Model tab** of the assistant configuration wizard, in the **Agent Settings** sidebar on the right side of the page. Open any assistant to edit, or start a new one at **Agents → New Agent**.
+## Voice providers
 
-## Selecting a voice
+Chattrvox supports multiple voice providers. Each offers different voices, accents, and settings.
 
-The **Voice** dropdown lists all available Cartesia voices for the selected language. Each voice entry shows:
-
-- The voice name
-- Gender badge (Female / Male)
-- Accent badge (e.g., American, British, Australian)
-
-**To preview a voice before selecting it**, click the play button to the left of the dropdown. The preview plays a short audio sample directly in the browser. Click again to stop playback. You can open the dropdown and preview individual voices from the list the same way.
-
-<Tip>
-  Preview voices with your target accent first. Accent consistency matters — a US-English assistant sounds more natural to American callers than a British-accented one, and vice versa.
-</Tip>
-
-## Language and accent
-
-Set the **Language** dropdown before choosing a voice. Available languages:
-
-| Language | Notes |
+| Provider | Notes |
 | --- | --- |
-| English | Default. All English-accented voices. |
-| English & Spanish | Bilingual mode. Voices from both English and Spanish libraries are available. |
-| Spanish | Spanish-language voices only. |
-| Portuguese |  |
-| French |  |
-| German |  |
-| Dutch |  |
-| Italian |  |
-| Hindi |  |
-| Chinese |  |
+| Cartesia | Wide language support. Recommended for most use cases. |
+| ElevenLabs | Highly expressive voices. Additional stability and clarity controls. |
+| Rime | Natural-sounding voices with low latency option. |
+| Hume | Emotionally expressive voices with speed and instant mode controls. |
+| Deepgram | Aura 2 voices optimized for real-time conversation. |
+
+Click the play button next to the voice dropdown to preview any voice before selecting it.
+
+## Language
+
+Set the **Language** dropdown before choosing a voice. The language setting also controls the speech-to-text transcription model.
+
+Available languages: English, Spanish, Portuguese, French, German, Dutch, Italian, Hindi, Chinese, English & Spanish.
 
 <Note>
-  The language setting also controls the speech-to-text transcription model, so set it accurately. If your callers speak both English and Spanish, select **English & Spanish** to handle code-switching gracefully.
+  If your callers speak both English and Spanish, select **English & Spanish** to handle code-switching.
 </Note>
 
 ## Speaking speed
 
-The **Speed** slider adjusts how fast the assistant speaks, ranging from **Slower** to **Faster** (0.5× to 2.0×, with 1.0× as the default).
+The **Speed** slider runs from 0.5× to 2.0×. Default is 1.0×.
 
-Use a slightly slower speed for:
-
-- Complex instructions or legal disclosures
-- Callers who are elderly or non-native speakers
-- Longer sentences where fast delivery sounds rushed
-
-Use a slightly faster speed for:
-
-- High-volume outbound campaigns where call time matters
-- Short, conversational exchanges
+Slower speeds work well for complex instructions, legal disclosures, or callers who are non-native speakers. Faster speeds suit high-volume outbound calls with short, conversational exchanges.
 
 <Tip>
-  Stay close to 1.0× for most use cases. Small adjustments (±0.2) make a noticeable difference without sounding unnatural.
+  Small adjustments — ±0.2 — make a noticeable difference. Stay close to 1.0× for most use cases.
 </Tip>
 
-## Response style (temperature)
+## Response style
 
-**Response Style** controls how consistent the assistant's phrasing is from call to call. Choose one of three presets:
+Response style controls how consistently the agent phrases its responses from call to call.
 
 | Style | Behavior | Best for |
 | --- | --- | --- |
-| **Focused** | Stays closely on-script. Minimal variation in phrasing. | Sales scripts, legal compliance, appointment booking |
-| **Balanced** | Natural variation in phrasing while staying on-topic. | Customer support, general inbound handling |
-| **Creative** | More expressive and varied, but less predictable. | Brand personas that benefit from personality |
+| **Focused** | Stays on-script. Minimal variation. | Sales scripts, compliance, appointment booking |
+| **Balanced** | Natural variation while staying on-topic. | Customer support, general inbound |
+| **Creative** | More expressive, less predictable. | Brand personas that need personality |
 
 <Note>
-  **Focused** is recommended for most voice agents. It produces the most reliable, consistent behavior and is easiest to test and debug.
+  Focused is the right choice for most agents. It produces the most consistent, testable behavior.
 </Note>
 
 ## Background sound
 
-The **Background Sound** option (in the Advanced tab under **Call Behavior**) plays ambient audio during calls. This reduces the "dead air" feeling that can make callers uncomfortable during brief processing pauses.
-
-Available options:
+Background sound lives in the **Advanced tab** under **Call behavior**. It plays ambient audio during calls to reduce silence between responses.
 
 | Option | Description |
 | --- | --- |
-| Off | No background sound |
+| Off | No background audio |
 | Office — Standard | Moderate office ambience |
-| Office — Quiet | Quieter, minimal office background |
-| Office — Busy | More active office ambience |
-| White Noise | Neutral white noise |
+| Office — Quiet | Quieter background |
+| Office — Busy | Active office ambience |
+| White Noise | Neutral, environment-neutral |
 
-<Tip>
-  Office sounds work well for sales and support scenarios. White noise is a neutral choice if you want to mask silence without implying a specific environment.
-</Tip>
+## Next steps
 
-## Testing your voice before going live
-
-After saving your assistant, make a test call by dialing the assigned phone number from your mobile phone, or use the **Test Call** button inside the assistant editor. Listen for:
-
-- Whether the voice sounds natural and matches your brand tone
-- Whether the speaking speed feels comfortable
-- Whether the opening greeting sounds polished
-
-Adjust the voice, speed, or greeting and save again. Changes take effect on the next call — there is no propagation delay.
+<Card title="Create an agent" icon="plus" href="/assistants/create">
+  Full walkthrough of every setting in the agent editor.
+</Card>

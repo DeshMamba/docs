@@ -1,0 +1,35 @@
+---
+title: "SMS"
+sidebarTitle: "SMS"
+description: "Send and receive SMS directly from a conversation thread."
+---
+
+SMS messages appear in the same thread as calls, in order, so you have the full contact history in one view.
+
+## Sending a message
+
+Open a conversation, type in the input at the bottom of the center panel, and press Enter or click **Send**.
+
+<Note>
+  You need a Twilio phone number connected before you can send SMS. Set this up under **Settings → Integrations**.
+</Note>
+
+## Inbound messages
+
+When a contact replies, the message appears in the thread instantly.
+
+## Delivery status
+
+Each outbound message shows whether it was sent, delivered, or failed. If a message fails, the reason appears next to it.
+
+## AI vs. manual messages
+
+Messages sent automatically by a workflow or post-call rule are labeled **AI**. Messages you type and send yourself are labeled **Manual**.
+
+## Automating SMS
+
+To send SMS automatically after calls, build a workflow with an SMS action. Set the trigger condition — for example, only when the outcome is "Qualified" — and Chattrvox sends the message.
+
+<Card title="Workflow actions" icon="diagram-project" href="/workflows/actions">
+  Set up automated SMS triggered by call outcomes.
+</Card>
